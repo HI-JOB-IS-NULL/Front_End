@@ -9,7 +9,7 @@ import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-
+import "../css/Navbar.css";
 export default function Navbar() {
   const links = [
     { name: "Home", link: "/" },
@@ -24,7 +24,7 @@ export default function Navbar() {
       <nav className="scrolled flex ">
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" className="nav--logo" />
           </div>
           <ul className="links flex">
             {links.map(({ name, link }) => {
@@ -81,10 +81,6 @@ export default function Navbar() {
 }
 
 const Container = styled.div`
-  /* .scrolled {
-    background-color: #abebc6;
-  } */
-
   nav {
     position: sticky;
     top: 0;

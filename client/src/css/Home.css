@@ -1,0 +1,28 @@
+main {
+  margin-top: 0;
+  padding: 0;
+  background-image: url(src/assets/HeaderImage.png);
+  background-repeat: no-repeat;
+  background-size: 60vw 100vh;
+  background-position: top right;
+  height: 900px;
+  align-items: center;
+}
+
+.title {
+  padding: 300px 90px;
+  max-width: 490px;
+}
+
+/* .title--star {
+  width: 1000px;
+} */
+
+.cards--list {
+  display: flex;
+  max-width: 120vw;
+  flex-wrap: wrap;
+  padding: 5%;
+  gap: 40px;
+  overflow-x: auto;
+}
