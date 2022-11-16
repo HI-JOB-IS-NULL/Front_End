@@ -1,0 +1,136 @@
+section {
+    padding: 2rem;
+    align-items: center;
+  }
+  
+  label {
+    margin-left: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 2px dotted black;
+    border-radius: 20px;
+    width: 10rem;
+    height: 10rem;
+    cursor: pointer;
+    font-size: large;
+    font-family: pretenard;
+  }
+  
+  label span {
+    font-weight: lighter;
+    font-size: small;
+    padding-top: 0.5rem;
+  }
+  
+  input {
+    display: none;
+  }
+  
+  img {
+    padding: 0;
+    margin: 0;
+  }
+  
+  .images {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image {
+    margin: 1rem 0.5rem;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  }
+  
+  .image button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    cursor: pointer;
+    border: none;
+    color: white;
+    background-color: lightcoral;
+  }
+  
+  .image button:hover {
+    background-color: red;
+  }
+  
+  .image p {
+    padding: 0 0.5rem;
+    margin: 0;
+  }
+  
+  .upload-btn {
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    border: none;
+    border-radius: 20px;
+    width: 10rem;
+    height: 3rem;
+    color: white;
+    background-color: green;
+  }
+  
+  label:hover,
+  .upload-btn:hover {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  }
+  
+  .error {
+    text-align: center;
+  }
+  
+  .error span {
+    color: red;
+  }
+  
+  /*#root {*/
+  /*  max-width: 1280px;*/
+  /*  margin: 0 auto;*/
+  /*  padding: 2rem;*/
+  /*  text-align: center;*/
+  /*}*/
+  
+  /*.logo {*/
+  /*  height: 6em;*/
+  /*  padding: 1.5em;*/
+  /*  will-change: filter;*/
+  /*}*/
+  /*.logo:hover {*/
+  /*  filter: drop-shadow(0 0 2em #646cffaa);*/
+  /*}*/
+  /*.logo.react:hover {*/
+  /*  filter: drop-shadow(0 0 2em #61dafbaa);*/
+  /*}*/
+  
+  /*@keyframes logo-spin {*/
+  /*  from {*/
+  /*    transform: rotate(0deg);*/
+  /*  }*/
+  /*  to {*/
+  /*    transform: rotate(360deg);*/
+  /*  }*/
+  /*}*/
+  
+  /*@media (prefers-reduced-motion: no-preference) {*/
+  /*  a:nth-of-type(2) .logo {*/
+  /*    animation: logo-spin infinite 20s linear;*/
+  /*  }*/
+  /*}*/
+  
+  /*.card {*/
+  /*  padding: 2em;*/
+  /*}*/
+  
+  /*.read-the-docs {*/
+  /*  color: #888;*/
+  /*}*/
+  
