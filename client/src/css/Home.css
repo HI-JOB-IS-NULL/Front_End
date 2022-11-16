@@ -9,20 +9,27 @@ main {
   align-items: center;
 }
 
-.title {
+.home--stats {
   padding: 300px 90px;
-  max-width: 490px;
 }
 
-/* .title--star {
-  width: 1000px;
-} */
+.home--title {
+  font-size: 3vw;
+  max-width: 490px;
+}
 
 .cards--list {
   display: flex;
   max-width: 120vw;
   flex-wrap: wrap;
+  justify-content: flex-start;
   padding: 5%;
   gap: 40px;
   overflow-x: auto;
+}
+
+@media (max-width: 400px) {
+  .home--title {
+    max-width: 1px;
+  }
 }
