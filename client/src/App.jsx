@@ -6,11 +6,14 @@ import PantryReadyRecipes from "./pages/PantryReadyRecipes";
 import MealPlanner from "./pages/MealPlanner";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import WriteRecipe from "./pages/WriteRecipe";
+
 function App() {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
+        <Route exact path="/writeRecipe" element={<WriteRecipe/>}/>
         <Route exact path="/readyToCook" element={<PantryReadyRecipes />} />
         <Route exact path="/mealPlanner" element={<MealPlanner />} />
         <Route exact path="/shop" element={<ShopIngredients />} />
