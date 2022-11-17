@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "../css/Home.css";
 import Card from "../components/Card";
 import data from "../cardData.js";
+import Axios from "axios";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
 export default function Home() {
-  const cards = data.map((item) => {
-    return <Card key={item.id} {...item} />;
+  const [randomRecipes, setRandomRecipes] = useState([]);
+
+  useEffect(() => {
+    Axios.get("http://10.20.33.134:9111/RecipeDB/random_recipe").then(
+      (response) => {
+        setRandomRecipes(response.data.recipes);
+      }
+    );
+  }, []);
+
+  // const cards = data.map((item) => {
+  //   return <Card key={item.id} {...item} />;
+  // });
+
+  const cards = randomRecipes.map((item) => {
+    return <Card {...item} />;
   });
 
   return (

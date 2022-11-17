@@ -25,8 +25,8 @@ export default function IngredientInfo() {
 
 const Container = styled.div`
   .ingredientInfo--wrapper {
-    margin-top: 50px;
     margin-left: 30px;
+    padding: 8px 0;
     display: flex;
     align-items: center;
     gap: 5px;

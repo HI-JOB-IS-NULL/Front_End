@@ -1,9 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import IngredientInfo from "./IngredientInfo";
+import AddToPlan from "./AddToPlan";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
+import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
 
 export default function Ingredients() {
   const [isImperial, setIsImperial] = useState(true);
+  const [isMade, setIsMade] = useState(false);
+  const [isAllAdded, setIsAllAdded] = useState(false);
   return (
     <Container>
       <div className="ingredients-wrapper">
@@ -30,6 +37,55 @@ export default function Ingredients() {
           </div>
         </div>
         <IngredientInfo />
+        <IngredientInfo />
+        <IngredientInfo />
+        <IngredientInfo />
+        <IngredientInfo />
+        <IngredientInfo />
+        <IngredientInfo />
+        <IngredientInfo />
+        <div className="ingredients--footer">
+          <button className="order--button btn--font">
+            <ShoppingBagOutlinedIcon />
+            Order Ingredients
+          </button>
+          <div
+            className="madeIt--section"
+            onClick={() => setIsMade((prevState) => !prevState)}
+          >
+            {isMade ? (
+              <span className="hover--text">Made it</span>
+            ) : (
+              <span className="hover--text">Did you make this?</span>
+            )}
+            <CheckCircleOutlineOutlinedIcon
+              fontSize="large"
+              className={` ${isMade ? "color--green" : ""}`}
+            />
+          </div>
+          <div className="bottom--section">
+            <div
+              className="cart--section hover--text"
+              onClick={() => setIsAllAdded((prevState) => !prevState)}
+            >
+              <div>
+                {isAllAdded ? (
+                  <RemoveShoppingCartOutlinedIcon />
+                ) : (
+                  <AddShoppingCartOutlinedIcon />
+                )}
+              </div>
+              <div>
+                {isAllAdded ? (
+                  <span>Remove All from Shopping List</span>
+                ) : (
+                  <span>Add All to Shopping List</span>
+                )}
+              </div>
+            </div>
+            <AddToPlan />
+          </div>
+        </div>
       </div>
     </Container>
   );
@@ -37,8 +93,9 @@ export default function Ingredients() {
 
 const Container = styled.div`
   .ingredients-wrapper {
-    padding: 70px 300px 0 300px;
+    padding: 70px 300px;
     .ingredients--header {
+      margin-bottom: 40px;
       display: flex;
       align-items: center;
       .unit-serving-wrapper {
@@ -55,6 +112,46 @@ const Container = styled.div`
             margin-left: 20px;
             margin-right: 20px;
           }
+        }
+      }
+    }
+    .ingredients--footer {
+      margin-left: 20px;
+      margin-top: 20px;
+
+      .order--button {
+        cursor: pointer;
+
+        border-radius: 6px;
+        border: solid #195a00;
+        width: 222px;
+        height: 58px;
+        border-width: 2px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .madeIt--section {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 20px 0;
+      }
+
+      .bottom--section {
+        display: flex;
+        margin-top: 10px;
+        padding: 20px 0;
+        border-top: 1px solid #bababa;
+        border-bottom: 1px solid #bababa;
+        .cart--section {
+          margin-right: auto;
+          display: flex;
+          gap: 10px;
         }
       }
     }

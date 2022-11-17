@@ -9,7 +9,8 @@
 
 .card--image {
   height: 200px;
-  border-radius: 9px;
+  border-radius: 10px;
+  object-fit: cover;
 }
 
 .card--title {

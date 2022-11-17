@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "../css/RecipeDetailes.css";
 import styled from "styled-components";
+import AddToPlan from "./AddToPlan";
+import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
+import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 
 export default function RecipeDetails() {
+  const [isBooked, setIsBooked] = useState(false);
   return (
     <Container>
       <div className="recipe-summary-wrapper">
@@ -23,6 +27,19 @@ export default function RecipeDetails() {
               <span className=" font-light h2-text">340</span>
               <span className=" font-normal p-text">Calories</span>
             </div>
+          </div>
+          <div className="recipe--detailes-mealPlan">
+            <AddToPlan />
+          </div>
+          <div
+            className="recipe--detailes-bookmark"
+            onClick={() => setIsBooked(!isBooked)}
+          >
+            {isBooked ? (
+              <BookmarkOutlinedIcon fontSize="large" />
+            ) : (
+              <TurnedInNotOutlinedIcon fontSize="large" />
+            )}
           </div>
         </div>
 
@@ -47,7 +64,7 @@ const Container = styled.div`
     justify-content: center;
 
     .recipe--detailes {
-      margin-top: 15%;
+      margin-top: 13%;
 
       .summary-item-wrapper {
         display: flex;
@@ -59,6 +76,17 @@ const Container = styled.div`
           flex-direction: column;
           text-align: center;
         }
+      }
+      .recipe--detailes-mealPlan {
+        margin-top: 40px;
+      }
+
+      .recipe--detailes-bookmark {
+        margin-top: 50px;
+        cursor: pointer;
+      }
+      .recipe--detailes-bookmark:hover {
+        color: #a8bca1;
       }
     }
     .recipe-details-image {

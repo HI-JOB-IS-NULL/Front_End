@@ -29,3 +29,21 @@ body {
 .bold {
   font-weight: bold;
 }
+
+.btn--font {
+  font-family: Inter;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 119%;
+  color: #195a00;
+}
+
+.hover--text:hover {
+  color: #195a00;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.color--green {
+  color: #195a00;
+}
