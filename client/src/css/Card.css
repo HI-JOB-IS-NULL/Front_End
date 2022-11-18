@@ -1,0 +1,41 @@
+.card {
+  width: 200px;
+  height: 300px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card--image {
+  width: 200px;
+  /* height: 300px; */
+  height: 200px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.card--title {
+  overflow: hidden;
+  font-size: 0.9vw;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  padding: 4%;
+}
+
+.card:hover {
+  transform: translateY(-0.5rem);
+  box-shadow: 0.5rem 0.75rem 1.5rem #bbbbbb;
+  border-radius: 9px;
+}
+
+.card--bookmark {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+}
+
+.card--bookmark:hover {
+  color: #a8bca1;
+}
