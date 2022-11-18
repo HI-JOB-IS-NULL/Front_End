@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import {  Button } from 'antd';
 import styled from "styled-components";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
+import axios from "axios";
+import noimage from "../assets/noimage.png";
 
 //레시피 공유 상세 페이지
 const toDetail = () => {
@@ -11,6 +13,24 @@ const toDetail = () => {
 }
 
 function communityCard(props){
+
+    // community데이터 받아오
+    // const [comu, setComu] = useState([]);
+    // useEffect(()=> {
+    //     axios({
+    //       method: 'GET',
+    //       url:''
+    //     }).then(response => setComu(response.data))
+    // })
+
+    const [image, setImage] = useState();
+    
+    useEffect(()=> {
+        console.log(props.cardInfo);
+        setImage(props.cardInfo.uploadImgResult);
+    },[])
+
+
     const [isBooked, setIsBooked] = useState(false);
     const [like, setLike] = useState(props.cardInfo.like_rate),
     [isLike, setIsLike] = useState(false),
@@ -20,13 +40,13 @@ function communityCard(props){
     };
     return(
         <Contain>
-        <Card onClick={toDetail} style={{width:"30vw", display:"flex", flexDirection:"row", height:'15vw'}}>
-              <Card.Img className='img' variant="top" src={(props.cardInfo.image)} style={{width:'20vw', height:'14vw'}}/>
-              <Card.Body style={{padding:20}}>
-                <Card.Title>{props.cardInfo.recipeT_title}</Card.Title>
+        <Card onClick={toDetail} style={{width:"500px", display:"flex", flexDirection:"row", height:'230px'}}>
+              <Card.Img className='img' variant="top" src={image != null && image.length != 0 ? image[0].realImageUrl : noimage} style={{width:'300px', height:'230px'}}/>
+              <Card.Body style={{}}>
+                <Card.Title style={{}}>{props.cardInfo.recipeT_title}</Card.Title>
                 
-                <div style={{display:"flex"}}>
-                <Button
+                <div style={{display:"flex",margin:"0.5vw"}}>
+                <Button 
                     className={"like-button " + (isLike ? "liked" : "")}
                     onClick={onLikeButtonClick}
                     >
@@ -47,9 +67,11 @@ function communityCard(props){
                     {isBooked ? <BookmarkOutlinedIcon/> : <TurnedInNotOutlinedIcon />}
                 </div>
                 </div>
-                {props.cardInfo.nick_name}<br/>
                 
-                
+                {props.cardInfo.recipe_content}
+                <br/>
+                <br/>
+                {props.cardInfo.nick_name}
               </Card.Body>
               
         </Card>
