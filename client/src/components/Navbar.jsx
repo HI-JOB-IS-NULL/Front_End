@@ -10,7 +10,7 @@ import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBullet
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import "../css/Navbar.css";
-export default function Navbar() {
+export default function Navbar({ isScrolled }) {
   const links = [
     { name: "Home", link: "/" },
     { name: "Pantry Ready Recipes", link: "/readyToCook" },
@@ -21,7 +21,7 @@ export default function Navbar() {
   return (
     <Container>
       {/* navbar left side */}
-      <nav className="scrolled flex ">
+      <nav className={`${isScrolled ? "scrolled" : ""} flex`}>
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
             <img src={logo} alt="Logo" className="nav--logo" />
@@ -81,17 +81,22 @@ export default function Navbar() {
 }
 
 const Container = styled.div`
+  .scrolled {
+    background-color: gray;
+  }
   nav {
-    position: sticky;
+    /* position: relative; */
     top: 0;
     height: 5.5rem;
     width: 100%;
     justify-content: space-between;
     position: fixed;
     z-index: 2;
-    padding: 0 2rem;
+    padding: 0 3rem;
     align-items: center;
     transition: 0.3s ease-in-out;
+    display: flex;
+    max-width: 2500px;
     .left {
       gap: 2rem;
       .brand {

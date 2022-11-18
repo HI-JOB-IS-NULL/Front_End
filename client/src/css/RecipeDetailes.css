@@ -1,0 +1,24 @@
+.h2-text {
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.p-text {
+  font-size: 14px;
+  line-height: 1.714285714285714;
+}
+
+.font-light {
+  font-size: 2rem;
+  font-weight: lighter;
+}
+
+.font-normal {
+  font-size: 1rem;
+}
+
+.unit {
+  border-left: 1px solid #bababa;
+  border-right: 1px solid #bababa;
+  padding: 0 40px 0 40px;
+}
