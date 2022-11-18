@@ -2,24 +2,17 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "../css/Home.css";
 import Card from "../components/Card";
-import data from "../cardData.js";
 import Axios from "axios";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
+import { ServeIP } from "../IP";
 export default function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://10.20.33.134:9111/RecipeDB/random_recipe").then(
-      (response) => {
-        setRandomRecipes(response.data.recipes);
-      }
-    );
+    Axios.get(`${ServeIP}/RecipeDB/random_recipe`).then((response) => {
+      setRandomRecipes(response.data.recipes);
+    });
   }, []);
-
-  // const cards = data.map((item) => {
-  //   return <Card key={item.id} {...item} />;
-  // });
 
   const cards = randomRecipes.map((item) => {
     return <Card {...item} />;
@@ -67,5 +60,14 @@ const Container = styled.div`
       justify-content: center;
       left: 15px;
     }
+  }
+
+  a:link {
+    text-decoration: none;
+    color: black;
+  }
+
+  a:visited {
+    color: green;
   }
 `;

@@ -22,7 +22,7 @@ function App() {
         <Route exact path="/mealPlanner" element={<MealPlanner />} />
         <Route exact path="/shop" element={<ShopIngredients />} />
         <Route exact path="/community" element={<Community />} />
-        <Route exact path="/recipe" element={<Recipe />} />
+        <Route exact path="/recipe/:recipeId" element={<Recipe />} />
         <Route exact path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
