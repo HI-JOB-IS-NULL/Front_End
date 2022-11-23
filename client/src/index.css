@@ -1,4 +1,6 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import 'antd/dist/antd.css';
+
 * {
   box-sizing: border-box;
   font-family: pretendard;

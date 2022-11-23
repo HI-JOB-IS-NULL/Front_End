@@ -7,6 +7,8 @@ import MealPlanner from "./pages/MealPlanner";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Recipe from "./pages/Recipe";
+import WriteRecipe from "./pages/WriteRecipe";
+
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   window.onscroll = () => {
@@ -18,6 +20,7 @@ function App() {
       <Navbar isScrolled={isScrolled} />
       {/* <div style={{ marginTop: "100px" }}></div> */}
       <Routes>
+        <Route exact path="/writeRecipe" element={<WriteRecipe/>}/>
         <Route exact path="/readyToCook" element={<PantryReadyRecipes />} />
         <Route exact path="/mealPlanner" element={<MealPlanner />} />
         <Route exact path="/shop" element={<ShopIngredients />} />
