@@ -41,7 +41,7 @@ function communityCard(props){
     return(
         <Contain>
         <Card onClick={toDetail} style={{width:"500px", display:"flex", flexDirection:"row", height:'230px'}}>
-              <Card.Img className='img' variant="top" src={image != null && image.length != 0 ? image[0].realImageUrl : noimage} style={{width:'300px', height:'230px'}}/>
+              <Card.Img className='img' variant="top" src={image != null && props.cardInfo.uploadImgResult.length != 0 ? image[0].realImageUrl : noimage} style={{width:'300px', height:'230px'}}/>
               <Card.Body style={{}}>
                 <Card.Title style={{}}>{props.cardInfo.recipeT_title}</Card.Title>
                 

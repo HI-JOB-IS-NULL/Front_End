@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Card from './communityCard';
 import styled from 'styled-components';
 import axios from 'axios';
 import { ServeIP } from '../IP';
+
 
 // community데이터 받아오
 
@@ -229,32 +230,45 @@ import { ServeIP } from '../IP';
 //  }
 
 
-
-function GridExample(props) {
-   const [posts, setPosts] = useState([]);  
-
-    useEffect(()=> {
-        axios({
-          method: 'GET',
-          url:`${ServeIP}/CustomRecipe/list?page=`+localStorage.getItem("pro")
-        }).then(response => setPosts(response.data.dtoList))
-    },[])
+export default function GridExample(props) {
+    const [posts, setPosts] = useState([]);  
+    const [copyPosts, setCopyPosts] = useState([]);
     
-    console.log(props.info);
+
+    useEffect(() => {
+        if(!props.url){
+            axios({
+                method: 'GET',
+                url:`${ServeIP}/CustomRecipe/list?page=`+props.info
+        }).then(response => setPosts(response.data.dtoList))
+        }
+        else{
+            axios({
+                method: 'GET',
+                url:props.url
+            }).then(response => setCopyPosts(response.data.dtoList))
+        }
+    }, [props])
+
     return (
         <Container>
+            {}
             <div style={{display:"flex", flexWrap:"wrap"}}>
-                {
+                {posts && !props.url ?
                     posts.map((a, i) => { 
                         return <Card cardInfo={posts[i]} />
                     })
+                :
+                    copyPosts.map((a, i) =>{
+                        return <Card cardInfo={copyPosts[i]}/>
+                    })
                 }
+                {console.log(copyPosts)}
             </div>
         </Container>
     )
 }
 
-export default GridExample;
 
 const Container = styled.div`
     width:auto;

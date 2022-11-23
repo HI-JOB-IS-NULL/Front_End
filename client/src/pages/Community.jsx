@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import Recipe from '../components/RecipeReviewCard';
-import { Input, Tag } from 'antd';
+import { Input, Tag, Spin, Select } from 'antd';
 import Communitycss from '../css/Community.css';
 import Button from '@mui/material/Button';
 import Pagination from 'react-js-pagination';
 import axios from 'axios';
+import { ServeIP } from '../IP';
+import { useDispatch } from 'react-redux';
+import Paging from '../css/Paging.css';
 
+// const [loading, setLoading] = useState(false)
 const { CheckableTag } = Tag;
 const tagsData = ['Vegan', 'Vegetarian', 'low Calorie', 'noodle', 'seafood', 'meat'];
-
-//검색어 
-const onSearch = (value) => console.log(value);
 
 //커뮤니티 글작성
 const toShare = () => {
@@ -20,9 +21,25 @@ const toShare = () => {
 
 const {Search} = Input;
 
-export default function Community() {
 
+
+export default function Community() {
   const [page, setPage] = useState(1);
+  const [url, setUrl] = useState();
+  const [type, setType] = useState();
+  const [items, setItems] = useState([]);
+  //검색어 
+  const onSearch = async (keyword) => {
+    setUrl(`${ServeIP}/CustomRecipe/list?type=${type}&keyword=${keyword}`);
+    console.log(url)
+  }
+
+  useEffect(()=> {
+    axios({
+      method: 'GET',
+      url: `${ServeIP}/CustomRecipe/list?page=`+page
+    }).then(res => setItems(res.data.dtoList))
+  }, [])
 
   const handlePageChange = (page) => {
     localStorage.setItem("pro", page);
@@ -31,37 +48,56 @@ export default function Community() {
   };
 
   const [selectedTags, setSelectedTags] = useState(['low Calorie']);
+
   const handleChange = (tag, checked) => {
     const nextSelectedTags = checked
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
-    console.log('You are interested in: ', nextSelectedTags);
+    
     setSelectedTags(nextSelectedTags);
   };
+  
+  const toDetail = () =>{
+    window.location.href="/"
+  }
+
   return (
     <Container>
       <div>
+        <div>
+          {/* {loading &&
+          <Spin tip="Loading...">
+
+          </Spin>
+          } */}
+        </div>
         <List>
-          <Recipe info={page}/>
+          <Recipe info={page} url={url} onClick={toDetail}/>
         </List>
         <Pagination
-      activePage={page}
-      itemsCountPerPage={3}
-      totalItemsCount={30}
-      pageRangeDisplayed={3}
-      prevPageText={"‹"}
-      nextPageText={"›"}
-      onChange={handlePageChange}/>
+        lastPageText={false}
+        firstPageText={false}
+        activePage={page}
+        itemsCountPerPage={10}
+        totalItemsCount={items.length}
+        pageRangeDisplayed={3}
+        prevPageText={"<"}
+        nextPageText={">"}
+        onChange={handlePageChange}
+        />
       </div>
 
       <FloatingBtn>
-   
+        <Select onChange={setType}>
+          <Option value='t'>Title</Option>
+          <Option value='w'>Writer</Option>
+          <Option value='c'>Contents</Option>
+        </Select>
         <Search id="search"
         placeholder="input search Recipe"
-        onSearch={onSearch}
+        onSearch={(e)=>onSearch(e)}
         style={{width: "25%"}}/>
         <br/><br/>
-      
         <span
         style={{
           marginRight: 8,
@@ -74,7 +110,7 @@ export default function Community() {
           key={tag}
           checked={selectedTags.indexOf(tag) > -1}
           onChange={(checked) => handleChange(tag, checked)}
-        >
+>
           {tag}
         </CheckableTag>
       ))}

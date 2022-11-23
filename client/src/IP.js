@@ -1,1 +1,1 @@
-export const ServeIP = "http://172.16.32.211:9111";
+export const ServeIP = "http://automealbackend-env.eba-ikpeu3mz.ap-northeast-2.elasticbeanstalk.com";
