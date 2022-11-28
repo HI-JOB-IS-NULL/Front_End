@@ -39,3 +39,12 @@
 .card--bookmark:hover {
   color: #a8bca1;
 }
+
+a:link {
+  text-decoration: none;
+  color: black;
+}
+
+a:visited {
+  color: green;
+}

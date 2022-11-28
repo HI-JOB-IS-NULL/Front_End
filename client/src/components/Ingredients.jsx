@@ -1,92 +1,103 @@
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 import IngredientInfo from "./IngredientInfo";
 import AddToPlan from "./AddToPlan";
+import { getRecipeInfoById } from "../Fetchers";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
 
-export default function Ingredients() {
+export default function Ingredients({ recipeId }) {
+  const { data, isLoading } = useQuery("recipeInfo", () =>
+    getRecipeInfoById(recipeId)
+  );
+
   const [isImperial, setIsImperial] = useState(true);
   const [isMade, setIsMade] = useState(false);
   const [isAllAdded, setIsAllAdded] = useState(false);
+
   return (
     <Container>
-      <div className="ingredients-wrapper">
-        <div className="ingredients--header">
-          <h1>Ingredients</h1>
+      {data ? (
+        <div className="ingredients-wrapper">
+          <div className="ingredients--header">
+            <h1>Ingredients</h1>
 
-          <div className="unit-serving-wrapper">
-            <div
-              className={` units ${
-                isImperial ? "units--imperial" : "units--metric"
-              }`}
-            >
-              <span
-                onClick={() => setIsImperial(true)}
-                className="ingredients--unit first"
+            <div className="unit-serving-wrapper">
+              <div
+                className={` units ${
+                  isImperial ? "units--imperial" : "units--metric"
+                }`}
               >
-                US
-              </span>
-              <span onClick={() => setIsImperial(false)} className="last">
-                METRIC
-              </span>
+                <span
+                  onClick={() => setIsImperial(true)}
+                  className="ingredients--unit first"
+                >
+                  US
+                </span>
+                <span onClick={() => setIsImperial(false)} className="last">
+                  METRIC
+                </span>
+              </div>
+              <span>{data.Recipe_Information.servings} SERVINGS</span>
             </div>
-            <span>9 SERVINGS</span>
           </div>
-        </div>
-        <IngredientInfo />
-        <IngredientInfo />
-        <IngredientInfo />
-        <IngredientInfo />
-        <IngredientInfo />
-        <IngredientInfo />
-        <IngredientInfo />
-        <IngredientInfo />
-        <div className="ingredients--footer">
-          <button className="order--button btn--font">
-            <ShoppingBagOutlinedIcon />
-            Order Ingredients
-          </button>
-          <div
-            className="madeIt--section"
-            onClick={() => setIsMade((prevState) => !prevState)}
-          >
-            {isMade ? (
-              <span className="hover--text">Made it</span>
-            ) : (
-              <span className="hover--text">Did you make this?</span>
-            )}
-            <CheckCircleOutlineOutlinedIcon
-              fontSize="large"
-              className={` ${isMade ? "color--green" : ""}`}
-            />
-          </div>
-          <div className="bottom--section">
+          {data.Recipe_Information.extendedIngredients.map((item) => {
+            return (
+              <IngredientInfo
+                isImperial={isImperial}
+                {...item}
+                isAllAdded={isAllAdded}
+              />
+            );
+          })}
+
+          <div className="ingredients--footer">
+            <button className="order--button btn--font">
+              <ShoppingBagOutlinedIcon />
+              Order Ingredients
+            </button>
             <div
-              className="cart--section hover--text"
-              onClick={() => setIsAllAdded((prevState) => !prevState)}
+              className="madeIt--section"
+              onClick={() => setIsMade((prevState) => !prevState)}
             >
-              <div>
-                {isAllAdded ? (
-                  <RemoveShoppingCartOutlinedIcon />
-                ) : (
-                  <AddShoppingCartOutlinedIcon />
-                )}
-              </div>
-              <div>
-                {isAllAdded ? (
-                  <span>Remove All from Shopping List</span>
-                ) : (
-                  <span>Add All to Shopping List</span>
-                )}
-              </div>
+              {isMade ? (
+                <span className="hover--text">Made it</span>
+              ) : (
+                <span className="hover--text">Did you make this?</span>
+              )}
+              <CheckCircleOutlineOutlinedIcon
+                fontSize="large"
+                className={` ${isMade ? "color--green" : ""}`}
+              />
             </div>
-            <AddToPlan />
+            <div className="bottom--section">
+              <div
+                className="cart--section hover--text"
+                onClick={() => setIsAllAdded((prevState) => !prevState)}
+              >
+                <div>
+                  {isAllAdded ? (
+                    <RemoveShoppingCartOutlinedIcon />
+                  ) : (
+                    <AddShoppingCartOutlinedIcon />
+                  )}
+                </div>
+                <div>
+                  {isAllAdded ? (
+                    <span>Remove All from Shopping List</span>
+                  ) : (
+                    <span>Add All to Shopping List</span>
+                  )}
+                </div>
+              </div>
+              <AddToPlan />
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </Container>
   );
 }
@@ -121,7 +132,6 @@ const Container = styled.div`
 
       .order--button {
         cursor: pointer;
-
         border-radius: 6px;
         border: solid #195a00;
         width: 222px;

@@ -1,34 +1,63 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import RecipeDetails from "../components/RecipeDetailes";
 import Ingredients from "../components/Ingredients";
+import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getRecipeInfoById } from "../Fetchers";
+import Direction from "../components/Direction";
 import styled from "styled-components";
-import { useSearchParams } from "react-router-dom";
-import axios from "axios";
-import { ServeIP } from "../IP";
 
 export default function Recipe() {
-  const [searchParams] = useSearchParams();
-  const [recipeInfo, setRecipeInfo] = useState({});
+  const { recipeId } = useParams();
+  let stepsDetail;
+  let steps;
 
-  // Axios.get(`${ServeIP}/RecipeDB/random_recipe`).then((response) => {
-  useEffect(() => {
-    axios
-      .get(
-        `${ServeIP}/RecipeDB/detail_recipe?recipeId=${searchParams.recipeId}`
-      )
-      .then((response) => {
-        console.log(response.data);
+  const { data, isLoading } = useQuery("recipeInfo", () =>
+    getRecipeInfoById(recipeId)
+  );
+
+  if (data) console.log(data);
+  if (data) {
+    stepsDetail = data.Recipe_Information.analyzedInstructions;
+    if (stepsDetail.length) {
+      steps = stepsDetail.map((items) => {
+        return items.steps.map((item, index) => {
+          return (
+            <>
+              <Direction key={index} stepNum={index + 1} {...item} />
+
+              <br />
+            </>
+          );
+        });
       });
-  }, []);
-
-  console.log(searchParams.recipeId);
+    }
+  }
 
   return (
     <Container>
-      <RecipeDetails />
-      <Ingredients />
+      <RecipeDetails recipeId={recipeId} />
+      <Ingredients recipeId={recipeId} />
+      <div className="directions--wrapper">
+        <h1 className="directions-wrapper-text">Directions</h1>
+        {steps ? (
+          <section className="direction--section">{steps}</section>
+        ) : (
+          <h1>No Directions...</h1>
+        )}
+      </div>
     </Container>
   );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  .directions--wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 0 300px;
+
+    .directions-wrapper-text {
+      margin: 0 0 30px;
+    }
+  }
+`;

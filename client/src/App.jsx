@@ -20,12 +20,13 @@ function App() {
       <Navbar isScrolled={isScrolled} />
       {/* <div style={{ marginTop: "100px" }}></div> */}
       <Routes>
-        <Route exact path="/writeRecipe" element={<WriteRecipe/>}/>
+        <Route exact path="/writeRecipe" element={<WriteRecipe />} />
         <Route exact path="/readyToCook" element={<PantryReadyRecipes />} />
         <Route exact path="/mealPlanner" element={<MealPlanner />} />
         <Route exact path="/shop" element={<ShopIngredients />} />
         <Route exact path="/community" element={<Community />} />
         <Route exact path="/recipe/:recipeId" element={<Recipe />} />
+        <Route exact path="/searchRecipes" element={<SearchRecipes />} />
         <Route exact path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

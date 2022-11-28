@@ -85,7 +85,6 @@ const Container = styled.div`
     background-color: gray;
   }
   nav {
-    /* position: relative; */
     top: 0;
     height: 5.5rem;
     width: 100%;

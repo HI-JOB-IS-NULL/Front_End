@@ -1,57 +1,79 @@
 import React, { useState } from "react";
+import { useQuery } from "react-query";
 import "../css/RecipeDetailes.css";
 import styled from "styled-components";
 import AddToPlan from "./AddToPlan";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
+import { apiKey3 } from "../IP";
+import axios from "axios";
+import { getRecipeInfoById } from "../Fetchers";
 
-export default function RecipeDetails() {
+export default function RecipeDetails({ recipeId }) {
+  const { data, isLoading } = useQuery("recipeInfo", () =>
+    getRecipeInfoById(recipeId)
+  );
+
   const [isBooked, setIsBooked] = useState(false);
+
+  if (data) {
+    console.log(data);
+  }
   return (
     <Container>
-      <div className="recipe-summary-wrapper">
-        <div className="recipe--detailes">
-          <div className="recipe--title bold">
-            <h1>Recipe name here</h1>
-          </div>
-          <div className="summary-item-wrapper">
-            <div className="recipe-summary-item h2-text">
-              <span className=" font-light h2-text">5</span>
-              <span className=" font-normal p-text">Ingredients</span>
+      {data ? (
+        <>
+          <div className="recipe-summary-wrapper">
+            <div className="recipe--detailes">
+              <div className="recipe--title bold">
+                <h1>{data.Recipe_Information.title}</h1>
+              </div>
+              <div className="summary-item-wrapper">
+                <div className="recipe-summary-item h2-text">
+                  <span className=" font-light h2-text">
+                    {data.Recipe_Information.extendedIngredients.length}
+                  </span>
+                  <span className=" font-normal p-text">Ingredients</span>
+                </div>
+                <div className="recipe-summary-item unit h2-text">
+                  <span className=" font-light h2-text">
+                    {data.Recipe_Information.readyInMinutes}
+                  </span>
+                  <span className=" font-normal p-text">Minutes</span>
+                </div>
+                <div className="recipe-summary-item h2-text">
+                  <span className=" font-light h2-text">
+                    {data.Recipe_Information.nutrition.nutrients[0].amount}
+                  </span>
+                  <span className=" font-normal p-text">Calories</span>
+                </div>
+              </div>
+              <div className="recipe--detailes-mealPlan">
+                <AddToPlan />
+              </div>
+              <div
+                className="recipe--detailes-bookmark"
+                onClick={() => setIsBooked(!isBooked)}
+              >
+                {isBooked ? (
+                  <BookmarkOutlinedIcon fontSize="large" />
+                ) : (
+                  <TurnedInNotOutlinedIcon fontSize="large" />
+                )}
+              </div>
             </div>
-            <div className="recipe-summary-item unit h2-text">
-              <span className=" font-light h2-text">35</span>
-              <span className=" font-normal p-text">Minutes</span>
-            </div>
-            <div className="recipe-summary-item h2-text">
-              <span className=" font-light h2-text">340</span>
-              <span className=" font-normal p-text">Calories</span>
-            </div>
-          </div>
-          <div className="recipe--detailes-mealPlan">
-            <AddToPlan />
-          </div>
-          <div
-            className="recipe--detailes-bookmark"
-            onClick={() => setIsBooked(!isBooked)}
-          >
-            {isBooked ? (
-              <BookmarkOutlinedIcon fontSize="large" />
-            ) : (
-              <TurnedInNotOutlinedIcon fontSize="large" />
-            )}
-          </div>
-        </div>
 
-        <div className="recipe-details-image">
-          <img
-            src="/src/assets/profile.png"
-            alt="Recipe Image"
-            className="recipe--image"
-          />
-        </div>
-      </div>
-      <hr />
+            <div className="recipe-details-image">
+              <img
+                src={data.Recipe_Information.image}
+                alt="Recipe Image"
+                className="recipe--image"
+              />
+            </div>
+          </div>
+          <hr />
+        </>
+      ) : null}
     </Container>
   );
 }
@@ -65,6 +87,9 @@ const Container = styled.div`
 
     .recipe--detailes {
       margin-top: 13%;
+      .recipe--title {
+        max-width: 400px;
+      }
 
       .summary-item-wrapper {
         display: flex;
