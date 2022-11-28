@@ -56,10 +56,7 @@ export default function Community() {
     
     setSelectedTags(nextSelectedTags);
   };
-  
-  const toDetail = () =>{
-    window.location.href="/"
-  }
+
 
   return (
     <Container>
@@ -72,7 +69,7 @@ export default function Community() {
           } */}
         </div>
         <List>
-          <Recipe info={page} url={url} onClick={toDetail}/>
+          <Recipe info={page} url={url}/>
         </List>
         <Pagination
         lastPageText={false}
@@ -88,7 +85,7 @@ export default function Community() {
       </div>
 
       <FloatingBtn>
-        <Select onChange={setType}>
+        <Select onChange={setType} style={{minWidth:100}} placeholder="choose option">
           <Option value='t'>Title</Option>
           <Option value='w'>Writer</Option>
           <Option value='c'>Contents</Option>

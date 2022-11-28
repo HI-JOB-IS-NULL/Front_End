@@ -4,7 +4,7 @@ import styled from "styled-components"
 
 const DetailDiv = styled.div`
   div {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     width: 25vw;
   }
 `
@@ -16,8 +16,7 @@ const DetailList = (props) => {
   return (
     <DetailDiv>
       {props.countList && props.countList.map((item, i) => (
-        <div key={i}>
-          
+        <div key={i}>    
             <div>
               <TextArea
                 autoSize={{ minRows: 6, maxRows: 6 }}

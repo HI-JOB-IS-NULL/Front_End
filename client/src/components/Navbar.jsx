@@ -48,8 +48,10 @@ export default function Navbar({ isScrolled }) {
               />
               <ul>
                 <li className="sub-item">
+                  <Link to='./mypage'>
                   <AccountCircleOutlinedIcon className="material-icon" />
                   <p>My Profile</p>
+                  </Link>
                 </li>
                 <li className="sub-item">
                   <ManageAccountsOutlinedIcon className="material-icon" />
