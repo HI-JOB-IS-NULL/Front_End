@@ -12,12 +12,14 @@ import {
   Spin,
 } from 'antd';
 import axios from 'axios'
-
+import Item from 'antd/lib/list/Item';
+import { ServeIP } from '../IP';
 
 // const { TextArea } = Input;
 
 const WriteRecipe = () => {
   const [countList, setCountList] = useState([0])
+
 const onAddDetailDiv = () => {
     let countArr = [...countList]
     let counter = countArr.slice(-1)[0]
@@ -25,6 +27,7 @@ const onAddDetailDiv = () => {
     countArr.push(counter)	
     setCountList(countArr)
 }
+
 const onDeleteDiv = () => {
   console.log(countArr);
 }
@@ -33,7 +36,7 @@ const onDeleteDiv = () => {
   const [recipeName, setrecipeName] = useState('');
   const [recipeTime, setRecipeTime] = useState('');
   const [recipeExplan, setRecipeExplan] = useState('');
-  const [Image, setImage] = useState([]);
+  const [Image, setImage] = useState();
 
   const InputName = (e) =>{
     setName(e.target.value)
@@ -56,23 +59,48 @@ const onDeleteDiv = () => {
   }
 
   const InputImage = (e) => {
-    const ImageList = e.target.files;
-    console.log(ImageList);
-    const UrlList = [...Image];
-    for (let i = 0; i < ImageList.length; i+=1){
-      // const nowImage = URL.createObjectURL(ImageList[i]);
-      // UrlList.push(nowImage);
-      setImage(ImageList[i]);
-    }
+    
+    //console.log(e.target);
+    console.log(e);
+    console.log(e.fileList);
+   // const ImageList = e.target.files;
+    //e.file.status='done';
+    //console.log(ImageList);
+    //const UrlList = [...Image];
+    // for (let i = 0; i < ImageList.length; i+=1){
+    //   // const nowImage = URL.createObjectURL(ImageList[i]);
+    //   // UrlList.push(nowImage);
+    //   Image.push(e.target.files[0])
+    //   setImage(Image=>[...Image]);
+    // }
+  
+    const ImageList=e.file;
+    
+    // for(let i =0;i<ImageList.lenght;i+=1){
+    //   Image.push(e.file);
+    
+    // }
+    // if(e.file.status=='error'){
+    //   setImage(e.file);
+    // }
+    // Image.push(e.file);
+    setImage(Array.from(e.fileList));
    // setImage(UrlList);
    // setImage(ImageList[0]);
+   console.log(Image)
+   console.log(e.file.status);
  
   }
 
 
 
+
+
   const onsubmit = (e) => {
     console.log("start")
+    console.log(Image);
+    console.log(typeof Image);
+    console.log(Image[0]);
     e.preventDefault();
     const formData = new FormData();
 
@@ -83,14 +111,38 @@ const onDeleteDiv = () => {
     formData.append("recipeT_title", recipeName);
     // formData.append("time", recipeTime);
     formData.append("recipe_content", recipeExplan);
-    formData.append("uploadFiles01",Image)
+    //formData.append("uploadFiles",Image);
+    //formData.append("uploadFiles",Image[0]);
+    Image.forEach((item) =>{
+      formData.append("uploadFiles",item.originFileObj)
+      console.log('item',item.originFileObj)
+    })
+    // Array.from(Image).forEach((item) =>{
+    //   formData.append('uploadFiles',item)
+    //   console.log('item',item)
+    //   console.log(formData.get('uploadFiles'));
+    // })
+    // for(let i=0;i<Image.length;i++){
+    //   formData.append("uploadFiles",Image[i]);
+    // }
+
+    // Image.map((item)=>{
+    //   console.log(typeof item);
+    //   formData.append(`uploadFiles`,item)
+      
+    // });
+
+    //a formData.append('uploadFiles',Image);
+
     console.log(formData.get('nick_name'));
-    console.log(formData.get('uploadFiles'));
+    console.log(formData.getAll('uploadFiles'));
+    
+
     
 
       axios({
         method: 'POST',
-        url: 'http://10.20.33.122:5000/CustomRecipe/register',
+        url: `${ServeIP}/CustomRecipe/register`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -134,10 +186,10 @@ const onDeleteDiv = () => {
             </div>
           </CreateListDiv>
           <p>recipe Image</p>
-          <span onChange={InputImage}>
+          {/* <span onChange={InputImage}> */}
           <Upload name="img"
+            onChange={InputImage}
             type='file'
-            
             listType="picture-card"
             accept=".png, .jpeg, .doc, .jpg" 
             beforeUpload={(file) => {
@@ -158,7 +210,7 @@ const onDeleteDiv = () => {
                 </div>
               </div>
           </Upload>
-          </span>
+          {/* </span> */}
           <center style={{marginTop:'8%'}}>
           <Button onClick={onsubmit} style={{marginBottom:'10%'}} type='submit'>Recipe Share</Button>
           </center>
@@ -175,7 +227,7 @@ const Container = styled.div`
   margin-left: 38%
 `
 const CreateListDiv = styled.div`
-  padding: 3rem;
+  padding: 1rem;
   width: 100%;
   display: flex;
   align-items: center;

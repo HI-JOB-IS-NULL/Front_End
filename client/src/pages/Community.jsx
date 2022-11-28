@@ -56,10 +56,7 @@ export default function Community() {
     
     setSelectedTags(nextSelectedTags);
   };
-  
-  const toDetail = () =>{
-    window.location.href="/"
-  }
+
 
   return (
     <Container>
@@ -72,7 +69,7 @@ export default function Community() {
           } */}
         </div>
         <List>
-          <Recipe info={page} url={url} onClick={toDetail}/>
+          <Recipe info={page} url={url}/>
         </List>
         <Pagination
         lastPageText={false}
