@@ -1,6 +1,4 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@import 'antd/dist/antd.css';
-
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 * {
   box-sizing: border-box;
   font-family: pretendard;
@@ -9,7 +7,6 @@ body {
   margin: 0;
   height: 0;
   padding: 0;
-  /* overflow: hidden; */
 }
 
 .flex {
@@ -48,4 +45,49 @@ body {
 
 .color--green {
   color: #195a00;
+}
+
+.gray--font {
+  color: #707070;
+  font-size: 1.5rem;
+}
+
+.light-gray-font {
+  color: #bababa;
+}
+
+.normal-text {
+  font-size: 1rem;
+  line-height: 1.625;
+  color: black;
+}
+
+.title-text-small {
+  /* font-size: 18px; */
+  font-size: 2rem;
+  line-height: 1.666666666666667;
+}
+
+.green-button {
+  padding: 10px 20px;
+  border-radius: 50px;
+  border: none;
+  background-color: #3a9691;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+}
+
+.green-button:hover {
+  font-weight: bold;
+}
+
+.cards--list {
+  display: flex;
+  max-width: 120vw;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 5%;
+  gap: 40px;
+  overflow-x: auto;
 }

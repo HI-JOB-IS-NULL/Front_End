@@ -4,70 +4,102 @@ import "../css/Home.css";
 import Card from "../components/Card";
 import Axios from "axios";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { ServeIP } from "../IP";
+import banner from "../assets/default_bkg.png";
+
+import bannerImg from "../assets/banner_img.png";
+import { ServeIP, apiKey3 } from "../IP";
+import HomeModal from "../components/HomeModal";
 export default function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
-    Axios.get(`${ServeIP}/RecipeDB/random_recipe`).then((response) => {
+    Axios.get(
+      `https://api.spoonacular.com/recipes/random?${apiKey3}&number=10`
+    ).then((response) => {
       setRandomRecipes(response.data.recipes);
     });
   }, []);
 
-  const cards = randomRecipes.map((item) => {
-    return <Card {...item} />;
+  const cards = randomRecipes.map((item, index) => {
+    return <Card key={index} {...item} />;
   });
 
   return (
     <Container>
-      <main>
-        <div className="home--stats">
-          <div className="home--search">
-            <SearchOutlinedIcon className="home--icon" />
-            <input
-              type="text"
-              placeholder="Search recipes"
-              className="home--input"
-            />
+      <section className="home--banner">
+        <div className="banner--wrapper">
+          <div className="banner--content">
+            <button className="search--opener" onClick={() => setModal(true)}>
+              <SearchOutlinedIcon />
+              <span>Search Recipes</span>
+            </button>
+
+            <h1 className="banner-content-text">
+              Enjoy Healthy Life & Testy Food.
+            </h1>
           </div>
 
-          <h1 className="home--title">Enjoy Healthy Life & Testy Food.</h1>
+          <img src={bannerImg} alt="Banner Image" className="banner--img" />
         </div>
-      </main>
+      </section>
+      {modal && <HomeModal setModal={setModal} />}
+
       <section className="cards--list">{cards}</section>
     </Container>
   );
 }
 const Container = styled.div`
-  .home--search {
-    cursor: pointer;
+  .home--banner {
     position: relative;
-    display: flex;
-    align-items: center;
 
-    .home--input {
-      border: 2px solid #eee;
-      font-size: 15px;
-      line-height: 20px;
-      display: block;
-      padding: 5px 10px 5px 50px;
-      border-radius: 50px;
+    .banner--wrapper {
+      display: flex;
+      .banner--content {
+        position: absolute;
+        top: 40%;
+        left: 5%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .search--opener {
+          width: 400px;
+          padding: 2%;
+          border-radius: 50px;
+          border: none;
+          background-color: #fff;
+          cursor: pointer;
+          box-shadow: 0 4px 10px rgb(0 0 0 / 12%), 0 0 1px rgb(0 0 0 / 5%) inset;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding-left: 20px;
+        }
+
+        .banner-content-text {
+          font-size: 32px;
+          max-width: 300px;
+        }
+      }
     }
 
-    .home--icon {
-      position: absolute;
-      align-items: center;
-      justify-content: center;
-      left: 15px;
+    .banner--img {
+      width: 50%;
+      height: 50%;
+      position: relative;
+      display: block;
+      margin-left: auto;
+      margin-top: -50px;
+      margin-right: -35px;
     }
   }
 
-  a:link {
+  /* a:link {
     text-decoration: none;
     color: black;
   }
 
   a:visited {
     color: green;
-  }
+  } */
 `;

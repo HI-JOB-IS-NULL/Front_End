@@ -1,12 +1,33 @@
-main {
+/* main {
   margin-top: 0;
   padding: 0;
   background-image: url(src/assets/HeaderImage.png);
   background-repeat: no-repeat;
   background-size: 60vw 100vh;
   background-position: top right;
-  height: 900px;
-  align-items: center;
+  /* height: 900px; */
+/* align-items: center;
+} */
+
+/* .banner--img {
+  background-image: url(src/assets/banner_img.png);
+  position: absolute;
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+.home--banner {
+  background-image: url(src/assets/default_bkg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 .home--stats {
@@ -18,7 +39,7 @@ main {
   max-width: 490px;
 }
 
-.cards--list {
+/* .cards--list {
   display: flex;
   max-width: 120vw;
   flex-wrap: wrap;
@@ -26,7 +47,7 @@ main {
   padding: 5%;
   gap: 40px;
   overflow-x: auto;
-}
+} */
 
 @media (max-width: 400px) {
   .home--title {
