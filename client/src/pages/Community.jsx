@@ -85,7 +85,7 @@ export default function Community() {
       </div>
 
       <FloatingBtn>
-        <Select onChange={setType}>
+        <Select onChange={setType} style={{minWidth:100}} placeholder="choose option">
           <Option value='t'>Title</Option>
           <Option value='w'>Writer</Option>
           <Option value='c'>Contents</Option>

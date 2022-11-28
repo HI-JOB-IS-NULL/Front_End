@@ -11,6 +11,7 @@ import WriteRecipe from "./pages/WriteRecipe";
 import CommunityDetailes from "./components/communityDetailes";
 import Mypage from "./pages/Mypage";
 import SurveyComponent from "./components/Survey";
+import SearchRecipes from "./pages/SearchRecipes";
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
