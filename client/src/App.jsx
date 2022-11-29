@@ -13,7 +13,6 @@ import Mypage from "./pages/Mypage";
 import SurveyComponent from "./components/Survey";
 import SearchRecipes from "./pages/SearchRecipes";
 
-import SearchRecipes from "./pages/SearchRecipes";
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   window.onscroll = () => {
