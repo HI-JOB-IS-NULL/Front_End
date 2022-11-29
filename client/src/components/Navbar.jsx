@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBullet
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import "../css/Navbar.css";
+import LoginModal from "./LoginModal";
 export default function Navbar({ isScrolled }) {
   const links = [
     { name: "Home", link: "/" },
@@ -18,6 +19,9 @@ export default function Navbar({ isScrolled }) {
     { name: "Shop Ingredients", link: "/shop" },
     { name: "Community", link: "community" },
   ];
+
+  const [loginModal, setLoginModal] = useState(false);
+
   return (
     <Container>
       {/* navbar left side */}
@@ -38,7 +42,10 @@ export default function Navbar({ isScrolled }) {
         </div>
         {/* navbar right side */}
         <div className="right flex a-center">
-          <ShoppingBasketOutlinedIcon className="material-icon margin-right" />
+          <div onClick={() => setLoginModal(true)}>
+            <ShoppingBasketOutlinedIcon className="material-icon margin-right" />
+          </div>
+
           <ul>
             <li>
               <img
@@ -48,9 +55,9 @@ export default function Navbar({ isScrolled }) {
               />
               <ul>
                 <li className="sub-item">
-                  <Link to='./mypage'>
-                  <AccountCircleOutlinedIcon className="material-icon" />
-                  <p>My Profile</p>
+                  <Link to="./mypage">
+                    <AccountCircleOutlinedIcon className="material-icon" />
+                    <p>My Profile</p>
                   </Link>
                 </li>
                 <li className="sub-item">
@@ -78,6 +85,7 @@ export default function Navbar({ isScrolled }) {
           </ul>
         </div>
       </nav>
+      {loginModal && <LoginModal setLoginModal={setLoginModal} />}
     </Container>
   );
 }

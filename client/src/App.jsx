@@ -29,11 +29,15 @@ function App() {
         <Route exact path="/mealPlanner" element={<MealPlanner />} />
         <Route exact path="/shop" element={<ShopIngredients />} />
         <Route exact path="/community" element={<Community />} />
-        <Route exact path="CommunityDetailes/:csRecipeId" element={<CommunityDetailes/>}/>
+        <Route
+          exact
+          path="CommunityDetailes/:csRecipeId"
+          element={<CommunityDetailes />}
+        />
         <Route exact path="/recipe/:recipeId" element={<Recipe />} />
         <Route exact path="/searchRecipes" element={<SearchRecipes />} />
-        <Route exact path="/mypage" element={<Mypage/>}/>
-        <Route exact path="/survey" element={<SurveyComponent/>}/>
+        <Route exact path="/mypage" element={<Mypage />} />
+        <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>
