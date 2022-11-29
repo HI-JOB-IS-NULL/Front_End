@@ -62,11 +62,11 @@ export default function Navbar({ isScrolled }) {
                 className="nav--profile"
               />
               <ul>
-                <li className="sub-item">
-                  <Link to="./mypage">
-                    <AccountCircleOutlinedIcon className="material-icon" />
-                    <p>My Profile</p>
-                  </Link>
+                <li className="sub-item" >
+                  <a href='./mypage'style={{whiteSpace:'nowrap', display:'flex', gap:10}}>
+                  <AccountCircleOutlinedIcon className="material-icon" />
+                  <p>My Profile</p>
+                  </a>
                 </li>
                 <li className="sub-item">
                   <ManageAccountsOutlinedIcon className="material-icon" />
