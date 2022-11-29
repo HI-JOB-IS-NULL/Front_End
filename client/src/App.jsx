@@ -12,6 +12,7 @@ import CommunityDetailes from "./components/communityDetailes";
 import Mypage from "./pages/Mypage";
 import SurveyComponent from "./components/Survey";
 import SearchRecipes from "./pages/SearchRecipes";
+import SocialLogin from "./pages/SocialLogin";
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,6 +40,7 @@ function App() {
         <Route exact path="/mypage" element={<Mypage />} />
         <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
+        <Route exact path="sociallogin" element={<SocialLogin/>}/>
       </Routes>
     </BrowserRouter>
   );
