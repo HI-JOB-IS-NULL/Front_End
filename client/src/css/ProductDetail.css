@@ -1,0 +1,11 @@
+.control-dots{
+    display: none;
+}
+
+.carousel-status{
+    display: none;
+}
+.carousel-root{
+    width: 600px;
+    justify-content: center; 
+}

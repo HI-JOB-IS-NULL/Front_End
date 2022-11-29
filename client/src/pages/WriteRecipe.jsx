@@ -15,7 +15,7 @@ import axios from 'axios'
 import Item from 'antd/lib/list/Item';
 import { ServeIP } from '../IP';
 
-// const { TextArea } = Input;
+const { TextArea } = Input;
 
 const WriteRecipe = () => {
   const [countList, setCountList] = useState([0])
@@ -34,7 +34,7 @@ const onDeleteDiv = () => {
 
   const [name, setName] = useState('');
   const [recipeName, setrecipeName] = useState('');
-  const [recipeTime, setRecipeTime] = useState('');
+  const [recipeTime, setRecipeTime] = useState();
   const [recipeExplan, setRecipeExplan] = useState('');
   const [Image, setImage] = useState();
 
@@ -49,6 +49,9 @@ const onDeleteDiv = () => {
   }
 
   const InputTime = (e) => {
+
+
+    
     setRecipeTime(e.target.value)
     console.log(recipeTime)
   } 
@@ -59,37 +62,9 @@ const onDeleteDiv = () => {
   }
 
   const InputImage = (e) => {
-    
-    //console.log(e.target);
-    console.log(e);
-    console.log(e.fileList);
-   // const ImageList = e.target.files;
-    //e.file.status='done';
-    //console.log(ImageList);
-    //const UrlList = [...Image];
-    // for (let i = 0; i < ImageList.length; i+=1){
-    //   // const nowImage = URL.createObjectURL(ImageList[i]);
-    //   // UrlList.push(nowImage);
-    //   Image.push(e.target.files[0])
-    //   setImage(Image=>[...Image]);
-    // }
-  
-    const ImageList=e.file;
-    
-    // for(let i =0;i<ImageList.lenght;i+=1){
-    //   Image.push(e.file);
-    
-    // }
-    // if(e.file.status=='error'){
-    //   setImage(e.file);
-    // }
-    // Image.push(e.file);
     setImage(Array.from(e.fileList));
-   // setImage(UrlList);
-   // setImage(ImageList[0]);
-   console.log(Image)
-   console.log(e.file.status);
- 
+    console.log(Image)
+    console.log(e.file.status);
   }
 
 
@@ -97,6 +72,7 @@ const onDeleteDiv = () => {
 
 
   const onsubmit = (e) => {
+    console.log(recipeExplan)
     console.log("start")
     console.log(Image);
     console.log(typeof Image);
@@ -117,29 +93,9 @@ const onDeleteDiv = () => {
       formData.append("uploadFiles",item.originFileObj)
       console.log('item',item.originFileObj)
     })
-    // Array.from(Image).forEach((item) =>{
-    //   formData.append('uploadFiles',item)
-    //   console.log('item',item)
-    //   console.log(formData.get('uploadFiles'));
-    // })
-    // for(let i=0;i<Image.length;i++){
-    //   formData.append("uploadFiles",Image[i]);
-    // }
-
-    // Image.map((item)=>{
-    //   console.log(typeof item);
-    //   formData.append(`uploadFiles`,item)
-      
-    // });
-
-    //a formData.append('uploadFiles',Image);
-
-    console.log(formData.get('nick_name'));
+    
+    console.log(formData.get('recipe_content'));
     console.log(formData.getAll('uploadFiles'));
-    
-
-    
-
       axios({
         method: 'POST',
         url: `${ServeIP}/CustomRecipe/register`,
@@ -165,16 +121,16 @@ const onDeleteDiv = () => {
           <Input style={{marginBottom:30}} name="recipe" value={recipeName} onChange={InputRecipe}/>   
 
           <p>cooking Time</p>
-          <Select name="time" onSelect={InputTime} placeholder="How long take" style={{marginBottom:30}}>
-            <Select.Option value="5">5 min</Select.Option>
-            <Select.Option value="10">10 min</Select.Option>
-            <Select.Option value="30">30 min</Select.Option>
-            <Select.Option value="60">1 hour</Select.Option>
+          <Select name="time" onChange={InputTime} value={recipeTime} placeholder="How long take" style={{marginBottom:30}}>
+            <option value="5">5 min</option>
+            <option value="10">10 min</option>
+            <option value="30">30 min</option>
+            <option value="60">1 hour</option>
           </Select>
 
           <p>recipe Explan (write in order)</p>
-          {/* <TextArea name="explan" rows={4} onChange={InputExplan} placeholder="Please explain in 4 lines" style={{marginBottom:30}}/> */}
-          <CreateListDiv>
+          <TextArea name="explan" rows={4} onChange={InputExplan} placeholder="Please explain in 4 lines" style={{marginBottom:30}}/>
+          {/* <CreateListDiv>
             <DetailList countList={countList} />
             <div style={{display:"flex", gap:'1vw'}}>
             <Button onClick={onAddDetailDiv}>
@@ -184,7 +140,7 @@ const onDeleteDiv = () => {
               delete
             </Button>
             </div>
-          </CreateListDiv>
+          </CreateListDiv> */}
           <p>recipe Image</p>
           {/* <span onChange={InputImage}> */}
           <Upload name="img"
