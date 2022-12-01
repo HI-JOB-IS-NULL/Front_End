@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-// import { getRecipeByIngredients } from "../Fetchers";
+
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -9,50 +9,52 @@ import {
   FloatingButtonWithImage,
   FloatingButton,
 } from "../components/FloatingButtons";
-import { useQuery } from "react-query";
 import axios from "axios";
 import { ServeIP } from "../IP";
 import Card from "../components/Card";
+import { Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import ImageAnalyzResult from "../components/ImageAnalyzResult";
+import Spinner from "react-bootstrap/Spinner";
+
+// import imageData from "../imageData";
 export default function PantryReadyRecipes() {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [tags, setTags] = useState([]);
   const [data, setData] = useState();
   const [ingredientsData, setIngredientsData] = useState([]);
-  // const { data, isLoading, refetch } = useQuery("recipeWithIngredients", () =>
-  //   getRecipeByIngredients(tags)
-  // );
-  // console.log(data);
+  const [showUploadImg, setShowUploadImg] = useState(false);
+  const [image, setImage] = useState();
+  const [imageResult, setImageResult] = useState();
+  const [uploadIsClicked, setUploadIsClicked] = useState(false);
 
   useEffect(() => {
-    const formData = new FormData();
+    if (ingredientsData.length === 0) {
+      setIngredientsData(IngredientsData);
+    }
+  }, []);
+
+  useEffect(() => {
+    const ingredientsData = new FormData();
     const ingredientsArr = tags.map((tag) => {
       return tag.name;
     });
     const ingredients = ingredientsArr.toString();
-    formData.append("includeIngredients", ingredients);
+    ingredientsData.append("includeIngredients", ingredients);
     axios({
       method: "post",
       url: `${ServeIP}/RecipeDB/searchRecipes`,
-      data: formData,
+      data: ingredientsData,
     }).then(function (res) {
       console.log(res);
       setData(res);
     });
   }, [tags]);
 
-  console.log(data);
   const cards = data?.data.results.map((item) => {
     return <Card key={item.id} {...item} />;
   });
-
-  // useEffect(() => {
-  //   refetch();
-  // }, [tags]);
-
-  useEffect(() => {
-    setIngredientsData(IngredientsData);
-  }, []);
 
   function addTags(item) {
     setTags([...tags, { id: item.id, name: item.name, image: item.image }]);
@@ -67,7 +69,7 @@ export default function PantryReadyRecipes() {
 
   function removeFromTags(item) {
     setTags(tags.filter((element) => element.id !== item.id));
-    addData(item);
+    if (item.id < 50) addData(item);
   }
 
   function addData(item) {
@@ -77,7 +79,31 @@ export default function PantryReadyRecipes() {
     ]);
   }
 
-  console.log(tags);
+  const InputImage = (e) => {
+    setImage(Array.from(e.fileList));
+  };
+
+  const handleUploadClick = () => {
+    uploadImg();
+    setUploadIsClicked(true);
+  };
+
+  const uploadImg = () => {
+    const imageData = new FormData();
+    image.forEach((item) => {
+      imageData.append("uploadFile", item.originFileObj);
+    });
+    axios({
+      method: "post",
+      url: `${ServeIP}/RecipeDB/ingredientDetection`,
+      data: imageData,
+    }).then(function (res) {
+      console.log(res);
+      setImageResult(res);
+    });
+    // setImageResult(imageData);
+  };
+
   return (
     <Container>
       <div className="pantry-ready-page">
@@ -90,6 +116,46 @@ export default function PantryReadyRecipes() {
             salt, pepper, and olive oil.
           </p>
         </div>
+        <div className="upload-image-button">
+          <button
+            className="green-button"
+            onClick={() => setShowUploadImg(true)}
+          >
+            Upload Your Ingredients image to find your recipe easily
+          </button>
+        </div>
+        {showUploadImg && (
+          <div className="search-with-image">
+            <div className="upload-image">
+              <Upload listType="picture-card" onChange={InputImage}>
+                <div>
+                  <PlusOutlined />
+                </div>
+              </Upload>
+              <button className="simple-button" onClick={handleUploadClick}>
+                Upload Image
+              </button>
+            </div>
+            <div className="show-image-result">
+              {uploadIsClicked && imageResult === undefined && (
+                <Spinner variant="success" />
+              )}
+              {imageResult != undefined
+                ? imageResult.data.map((item, index) => {
+                    console.log(tags);
+                    return (
+                      <ImageAnalyzResult
+                        key={index}
+                        {...item}
+                        setTags={setTags}
+                        tags={tags}
+                      />
+                    );
+                  })
+                : null}
+            </div>
+          </div>
+        )}
         <div className="pantry-ingredient-search">
           <div className="search-header">
             <div
@@ -140,6 +206,7 @@ export default function PantryReadyRecipes() {
                 <HighlightOffOutlinedIcon
                   fontSize="small"
                   className={` ${isFocused ? "display" : ""} close-icon y-icon`}
+                  onClick={() => setIsFocused(false)}
                 />
               </div>
             </div>
@@ -155,9 +222,9 @@ export default function PantryReadyRecipes() {
                 ))}
               </div>
             </div>
-            <div className="submit-search"></div>
           </div>
         </div>
+
         <div className="cards--list">{cards}</div>
       </div>
     </Container>
@@ -171,6 +238,7 @@ const Container = styled.div`
     width: 100%;
     box-sizing: border-box;
     padding: 0 80px;
+
     .pantry-ready-content {
       .pantry-ready-title {
         margin-bottom: 32px;
@@ -180,6 +248,25 @@ const Container = styled.div`
         max-width: 75%;
         margin-bottom: 32px;
       }
+    }
+
+    .search-with-image {
+      margin-top: 40px;
+
+      .upload-image {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-right: 20px;
+      }
+      .show-image-result {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-top: 30px;
+      }
+
+      /* max-height: 190px;
+      overflow-y: auto; */
     }
 
     .pantry-ingredient-search {
@@ -219,25 +306,12 @@ const Container = styled.div`
             position: relative;
             display: inline-block;
             .ingredient-suggest-input {
-              /* padding-bottom: 10px;
-                padding-left: 47px;
-                background: #fff;
-                border: 0;
-                font-size: 14px;
-                padding-top: 16px;
-                outline: none; */
-
               box-sizing: border-box;
-              /* padding-bottom: 4px; */
-              /* padding-left: 47px; */
               background: #fff;
               border: 0;
               font-size: 14px;
-              /* padding-top: 16px; */
-
               width: 100%;
               padding: 10px 30px 10px 45px;
-
               outline: none;
               transition: border 400ms ease-in, box-shadow 400ms ease-in;
             }
@@ -270,9 +344,6 @@ const Container = styled.div`
           }
 
           .input-icon {
-            /* color: #3a9691;
-              left: 15px;
-              position: absolute; */
             position: absolute;
             left: -9px;
             order: 1;
@@ -281,7 +352,6 @@ const Container = styled.div`
             color: #3a9691;
             z-index: 1;
             font-size: 16px;
-            /* padding: 0px 20px 0px; */
 
             pointer-events: none;
 

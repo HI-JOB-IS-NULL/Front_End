@@ -68,6 +68,19 @@ body {
   line-height: 1.666666666666667;
 }
 
+.simple-button {
+  cursor: pointer;
+  border-radius: 6px;
+  border: solid #195a00;
+  width: 222px;
+  height: 58px;
+  border-width: 2px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 .green-button {
   padding: 10px 20px;
   border-radius: 50px;
