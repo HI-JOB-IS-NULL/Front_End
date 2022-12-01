@@ -55,7 +55,7 @@ export default function Ingredients({ recipeId }) {
           })}
 
           <div className="ingredients--footer">
-            <button className="order--button btn--font">
+            <button className="simple-button btn--font">
               <ShoppingBagOutlinedIcon />
               Order Ingredients
             </button>
@@ -130,7 +130,7 @@ const Container = styled.div`
       margin-left: 20px;
       margin-top: 20px;
 
-      .order--button {
+      /* .order--button {
         cursor: pointer;
         border-radius: 6px;
         border: solid #195a00;
@@ -142,7 +142,7 @@ const Container = styled.div`
         justify-content: center;
         align-items: center;
         gap: 10px;
-      }
+      } */
 
       .madeIt--section {
         cursor: pointer;
