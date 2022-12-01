@@ -5,7 +5,7 @@ import axios from "axios";
 import { ServeIP } from "../IP";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
-import { Carousel } from 'antd';
+import { Button, Carousel } from 'antd';
 import "../css/RecipeDetailes.css";
 import Comment from "./Comment";
 import 'antd/dist/antd.css';
@@ -19,10 +19,20 @@ const contentStyle = {
   background: '#364d79',
 };
 function communityDetailes(){
-  
+    const [comment, setComment] = useState('');
     const [isBooked, setIsBooked] = useState(false);
     const {csRecipeId} = useParams();
     const [info, setInfo] = useState([]); 
+
+    const InputText = (e) => {
+      setComment(e.target.value)
+      console.log(comment);
+    }
+    
+    const commit = () =>{
+      window.sessionStorage.setItem("com", comment)
+    }
+
     useEffect(()=> {
         axios
         .get(
@@ -33,6 +43,9 @@ function communityDetailes(){
             setInfo(response.data.dtoList[0])
         });
     }, []);
+    const enter = () =>{
+      alert('hi')
+    }
     const imgurl = info.uploadImgResult && info.uploadImgResult[0].realImageUrl
     console.log(info.uploadImgResult && info.uploadImgResult)
     return(
@@ -77,16 +90,23 @@ function communityDetailes(){
         </div>
       </div>
     <hr />
+
     <div>
+      <center>
       <h2>Recipe</h2>
-      <div></div>
-    </div>
-    <Content>
+      {console.log(info)}
       <h4>{info.recipe_content}</h4>
-    </Content>
-    <Comment/>
+      
+      </center>
+
+      <div style={{marginLeft:'35vw', display:'block'}}>
+        <Comment comment = {comment}/>
+        <TextArea value={comment} onChange={InputText} style={{width:'600px'}}/>
+        <Button type="primary" onPressEnter={commit} onClick={commit}>Enter</Button>
+      </div>
+
+    </div>
     </Container>
-    
   );
 }
 
@@ -127,7 +147,7 @@ const Container = styled.div`
       }
     }
     .recipe-details-image {
-      margin-top: 200px;
+      margin-top: 150px;
     }
     .recipe-details-image > img {
       width: 400px;
@@ -140,6 +160,3 @@ const Container = styled.div`
     margin: 50px 100px 0 100px;
   }
 `;
-
-const Content = styled.div`
-`

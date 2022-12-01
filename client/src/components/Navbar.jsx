@@ -11,6 +11,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import "../css/Navbar.css";
 import LoginModal from "./LoginModal";
+import LoginIcon from '@mui/icons-material/Login';
 export default function Navbar({ isScrolled }) {
   const links = [
     { name: "Home", link: "/" },
@@ -21,6 +22,13 @@ export default function Navbar({ isScrolled }) {
   ];
 
   const [loginModal, setLoginModal] = useState(false);
+
+  const logout = () =>{
+    sessionStorage.setItem("ACCESS_TOKEN",null);
+    window.location.href="/";
+  }
+
+  const accessToken=sessionStorage.getItem("ACCESS_TOKEN");
 
   return (
     <Container>
@@ -54,11 +62,11 @@ export default function Navbar({ isScrolled }) {
                 className="nav--profile"
               />
               <ul>
-                <li className="sub-item">
-                  <Link to="./mypage">
-                    <AccountCircleOutlinedIcon className="material-icon" />
-                    <p>My Profile</p>
-                  </Link>
+                <li className="sub-item" >
+                  <a href='./mypage'style={{whiteSpace:'nowrap', display:'flex', gap:10}}>
+                  <AccountCircleOutlinedIcon className="material-icon" />
+                  <p>My Profile</p>
+                  </a>
                 </li>
                 <li className="sub-item">
                   <ManageAccountsOutlinedIcon className="material-icon" />
@@ -78,7 +86,7 @@ export default function Navbar({ isScrolled }) {
                 </li>
                 <li className="sub-item">
                   <LogoutOutlinedIcon className="material-icon" />
-                  <p>Log Out</p>
+                  <p onClick={logout}>Log Out</p>
                 </li>
               </ul>
             </li>

@@ -8,9 +8,6 @@ import {
 } from '@ant-design/icons';
 import styled from 'styled-components';
 
-
-const {TextArea} = Input;
-
 export default function CommentForm () {
     const [likesCount, setLikesCount] = useState(0);
   
@@ -22,10 +19,7 @@ export default function CommentForm () {
 
     return(
         <Container>
-        <div style={{
-            display: 'block', width: 700, padding: 30
-          }}>
-       
+        <div style={{display: 'block', width: 700}}>
             <Comment
               author={<a>Gourav Hammad</a>}
               avatar={<Avatar style={{ backgroundColor: 'green' }}>G</Avatar>}
@@ -62,7 +56,6 @@ export default function CommentForm () {
               datetime={'30-05-2021 11:09AM'}
             />
           </div>
-          <TextArea styled={{width:"30%"}}/>
         </Container>
     )
 }

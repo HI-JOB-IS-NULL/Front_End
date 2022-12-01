@@ -5,6 +5,18 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import kakaoLogo from "../assets/kakaotalk_logo.png";
 import naverLogo from "../assets/naver_logo.png";
 export default function LoginModal({ setLoginModal }) {
+
+  function socialLogin(provider){
+    const frontendUrl = window.location.protocol+"//"+window.location.host;
+    window.location.href="http://localhost:5000" + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
+  }
+
+  const handleSocialLogin=(provider)=>{
+    console.log(provider);
+    socialLogin(provider);
+  }
+
+
   return (
     <Container>
       <div className="overlay">
@@ -20,13 +32,13 @@ export default function LoginModal({ setLoginModal }) {
           </div>
           <ul className="login-buttons">
             <li>
-              <button className="button naver ">Connect With Naver</button>
+              <button className="button naver " onClick={()=> handleSocialLogin("naver")}>Connect With Naver</button>
             </li>
             <li>
-              <button className="button google ">Connect With Google</button>
+              <button className="button google " onClick={()=> handleSocialLogin("google")}>Connect With Google</button>
             </li>
             <li>
-              <button className="button kakaotalk ">
+              <button className="button kakaotalk " onClick={()=> handleSocialLogin("kakao")}>
                 Connect With Kakaotalk
               </button>
             </li>

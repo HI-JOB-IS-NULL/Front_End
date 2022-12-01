@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ShopIngredients from "./pages/ShopIngredients";
 import Community from "./pages/Community";
@@ -13,6 +12,8 @@ import CommunityDetailes from "./components/communityDetailes";
 import Mypage from "./pages/Mypage";
 import SurveyComponent from "./components/Survey";
 import SearchRecipes from "./pages/SearchRecipes";
+import SocialLogin from "./pages/SocialLogin";
+import ProductDetail from "./components/ProductDetail";
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -35,11 +36,22 @@ function App() {
           path="CommunityDetailes/:csRecipeId"
           element={<CommunityDetailes />}
         />
+        <Route
+          exact
+          path="CommunityDetailes/:csRecipeId"
+          element={<CommunityDetailes />}
+        />
+        <Route
+          exact
+          path="/ProductDetailes/:product_id"
+          element={<ProductDetail />}
+        />
         <Route exact path="/recipe/:recipeId" element={<Recipe />} />
         <Route exact path="/searchRecipes" element={<SearchRecipes />} />
         <Route exact path="/mypage" element={<Mypage />} />
         <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
+        <Route exact path="sociallogin" element={<SocialLogin />} />
       </Routes>
     </BrowserRouter>
   );

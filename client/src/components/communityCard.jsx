@@ -35,7 +35,7 @@ function communityCard(props){
       setIsLike(!isLike);
     };
     return(
-        <Contain>
+        <Container>
         <a href={`/CommunityDetailes/${props.cardInfo.csRecipeId}`} style={{textDecoration:'none', color:'black'}}>
             <Card  style={{width:"500px", display:"flex", flexDirection:"row", height:'230px'}}>
               <Card.Img className='img' variant="top" src={image != null && props.cardInfo.uploadImgResult.length != 0 ? image[0].realImageUrl : noimage} style={{width:'300px', height:'230px'}}/>
@@ -50,17 +50,17 @@ function communityCard(props){
                     >
                         {"Like"} | {like}
                 </Button>
-                                                                                                                                                            <style>{`
-                                                                                                                                                                .like-button {
-                                                                                                                                                                    font-size: 1rem;
-                                                                                                                                                                    padding: 5px 10px;
-                                                                                                                                                                    color:  #585858;
-                                                                                                                                                                }
-                                                                                                                                                                .liked {
-                                                                                                                                                                    font-weight: bold;
-                                                                                                                                                                    color: #1565c0;
-                                                                                                                                                                }
-                                                                                                                                                            `}</style>
+                    <style>{`
+                        .like-button {
+                            font-size: 1rem;
+                            padding: 5px 10px;
+                            color:  #585858;
+                        }
+                        .liked {
+                            font-weight: bold;
+                            color: #1565c0;
+                        }
+                    `}</style>
                 <div  onClick={() => setIsBooked(!isBooked)}>
                     {isBooked ? <BookmarkOutlinedIcon/> : <TurnedInNotOutlinedIcon />}
                 </div>
@@ -73,12 +73,12 @@ function communityCard(props){
               </Card.Body>          
             </Card>
         </a>
-        </Contain>
+        </Container>
     )
 }
 export default communityCard
 
-const Contain = styled.div`
+const Container = styled.div`
     margin-left:1%;
     margin-right:1%;
     margin-bottom:5%;
