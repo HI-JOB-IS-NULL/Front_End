@@ -1,7 +1,6 @@
 import React from "react";
 import { FloatingButtonWithImage } from "./FloatingButtons";
 import styled from "styled-components";
-import { toast } from "react-toastify";
 
 export default function ImageAnalyzResult(props) {
   const { tags, setTags, base64Img, detectionList } = props;
