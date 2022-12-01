@@ -2,12 +2,8 @@ import React from "react";
 import { FloatingButtonWithImage } from "./FloatingButtons";
 import styled from "styled-components";
 import { toast } from "react-toastify";
-import Spinner from "react-bootstrap/Spinner";
 
 export default function ImageAnalyzResult(props) {
-  console.log(props.base64Img);
-  console.log(props.detectionList);
-  console.log(props.tags);
   const { tags, setTags, base64Img, detectionList } = props;
   function handleClick(item) {
     props.setTags([
