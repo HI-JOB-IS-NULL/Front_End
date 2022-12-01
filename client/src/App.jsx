@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ShopIngredients from "./pages/ShopIngredients";
 import Community from "./pages/Community";
@@ -37,14 +36,31 @@ function App() {
           path="CommunityDetailes/:csRecipeId"
           element={<CommunityDetailes />}
         />
+<<<<<<< HEAD
         <Route exact path="CommunityDetailes/:csRecipeId" element={<CommunityDetailes/>}/>
         <Route exact path="/ProductDetailes/:product_id" element={<ProductDetail/>}/>
+=======
+        <Route
+          exact
+          path="CommunityDetailes/:csRecipeId"
+          element={<CommunityDetailes />}
+        />
+        <Route
+          exact
+          path="/ProductDetailes/:product_id"
+          element={<ProductDetail />}
+        />
+>>>>>>> 545147c (commit)
         <Route exact path="/recipe/:recipeId" element={<Recipe />} />
         <Route exact path="/searchRecipes" element={<SearchRecipes />} />
         <Route exact path="/mypage" element={<Mypage />} />
         <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
+<<<<<<< HEAD
         <Route exact path="sociallogin" element={<SocialLogin/>}/>
+=======
+        <Route exact path="sociallogin" element={<SocialLogin />} />
+>>>>>>> 545147c (commit)
       </Routes>
     </BrowserRouter>
   );

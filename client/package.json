@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@craco/craco": "^7.0.0",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.10.9",
