@@ -6,6 +6,13 @@
     display: none;
 }
 .carousel-root{
-    width: 600px;
-    justify-content: center; 
+    width: 700px;
+}
+
+.control-arrow{
+    display: none;
+}
+
+.thumbs{
+    margin-left: 11%;
 }

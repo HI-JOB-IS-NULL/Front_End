@@ -49,9 +49,6 @@ const onDeleteDiv = () => {
   }
 
   const InputTime = (e) => {
-
-
-    
     setRecipeTime(e.target.value)
     console.log(recipeTime)
   } 
@@ -66,11 +63,7 @@ const onDeleteDiv = () => {
     console.log(Image)
     console.log(e.file.status);
   }
-
-
-
-
-
+  
   const onsubmit = (e) => {
     console.log(recipeExplan)
     console.log("start")

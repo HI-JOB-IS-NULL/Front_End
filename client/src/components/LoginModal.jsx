@@ -4,18 +4,19 @@ import logo from "../assets/logo.png";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import kakaoLogo from "../assets/kakaotalk_logo.png";
 import naverLogo from "../assets/naver_logo.png";
+import { ServeIP } from "../IP";
+
 export default function LoginModal({ setLoginModal }) {
 
   function socialLogin(provider){
     const frontendUrl = window.location.protocol+"//"+window.location.host;
-    window.location.href="http://localhost:5000" + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
+    window.location.href= ServeIP + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
   }
 
   const handleSocialLogin=(provider)=>{
     console.log(provider);
     socialLogin(provider);
   }
-
 
   return (
     <Container>

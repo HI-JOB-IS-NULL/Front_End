@@ -14,6 +14,8 @@ import axios from "axios";
 import { ServeIP } from "../IP";
 import PaymentMethods from '../components/PaymentMethods';
 import DataTableRowExpansionDemo from '../components/DataTableRowExpansionDemo';
+import Checkout from '../components/Checkout';
+import Payment from '../components/RequestPay';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -34,6 +36,7 @@ function TabPanel(props) {
     </div>
   );
 }
+
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -76,10 +79,7 @@ export default function Mypage() {
     console.log("change Img")
   }
 
-  const correction = () => {
-    console.log(tag)
-  }
-
+ 
   const onFinish = (values) => {
     console.log('Success', values);
 
@@ -289,6 +289,7 @@ export default function Mypage() {
         <TabPanel value={value} index={2}>
           Item Three
         </TabPanel>
+
         <TabPanel value={value} index={3}>
           <DataTableRowExpansionDemo/>
         </TabPanel>
