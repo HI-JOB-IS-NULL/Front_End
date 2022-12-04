@@ -14,6 +14,7 @@ import SurveyComponent from "./components/Survey";
 import SearchRecipes from "./pages/SearchRecipes";
 import SocialLogin from "./pages/SocialLogin";
 import ProductDetail from "./components/ProductDetail";
+import Checkout from "./components/Checkout";
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,43 +25,22 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar isScrolled={isScrolled} />
-      {/* <div style={{ marginTop: "100px" }}></div> */}
       <Routes>
         <Route exact path="/writeRecipe" element={<WriteRecipe />} />
         <Route exact path="/readyToCook" element={<PantryReadyRecipes />} />
         <Route exact path="/mealPlanner" element={<MealPlanner />} />
         <Route exact path="/shop" element={<ShopIngredients />} />
         <Route exact path="/community" element={<Community />} />
-        <Route
-          exact
-          path="CommunityDetailes/:csRecipeId"
-          element={<CommunityDetailes />}
-        />
-<<<<<<< HEAD
         <Route exact path="CommunityDetailes/:csRecipeId" element={<CommunityDetailes/>}/>
         <Route exact path="/ProductDetailes/:product_id" element={<ProductDetail/>}/>
-=======
-        <Route
-          exact
-          path="CommunityDetailes/:csRecipeId"
-          element={<CommunityDetailes />}
-        />
-        <Route
-          exact
-          path="/ProductDetailes/:product_id"
-          element={<ProductDetail />}
-        />
->>>>>>> 545147c (commit)
         <Route exact path="/recipe/:recipeId" element={<Recipe />} />
+        <Route exact path="/checkout/:product_id" element={<Checkout/>}/>
         <Route exact path="/searchRecipes" element={<SearchRecipes />} />
         <Route exact path="/mypage" element={<Mypage />} />
         <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
-<<<<<<< HEAD
         <Route exact path="sociallogin" element={<SocialLogin/>}/>
-=======
         <Route exact path="sociallogin" element={<SocialLogin />} />
->>>>>>> 545147c (commit)
       </Routes>
     </BrowserRouter>
   );

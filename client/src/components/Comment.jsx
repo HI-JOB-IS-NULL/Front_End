@@ -10,7 +10,6 @@ import styled from 'styled-components';
 
 export default function CommentForm () {
     const [likesCount, setLikesCount] = useState(0);
-  
     // To maintain Dislike state
     const [dislikesCount, setDislikesCount] = useState(0);
   

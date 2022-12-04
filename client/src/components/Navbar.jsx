@@ -24,7 +24,7 @@ export default function Navbar({ isScrolled }) {
   const [loginModal, setLoginModal] = useState(false);
 
   const logout = () =>{
-    sessionStorage.setItem("ACCESS_TOKEN",null);
+    sessionStorage.clear("ACCESS_TOKEN");
     window.location.href="/";
   }
 
@@ -63,7 +63,7 @@ export default function Navbar({ isScrolled }) {
               />
               <ul>
                 <li className="sub-item" >
-                  <a href='/mypage'style={{whiteSpace:'nowrap', display:'flex', gap:10}}>
+                  <a href='../mypage'style={{whiteSpace:'nowrap', display:'flex', gap:10}}>
                   <AccountCircleOutlinedIcon className="material-icon" />
                   <p>My Profile</p>
                   </a>
