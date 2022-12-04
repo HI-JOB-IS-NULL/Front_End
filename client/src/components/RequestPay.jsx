@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Button } from 'antd';
 
 const Payment = (effect, deps) => {
   useEffect(() => {
@@ -13,29 +14,31 @@ const Payment = (effect, deps) => {
     }
   }, []);
   
-const onClickPayment = () => {
+const onClickPayment = (props) => {
   const { IMP } = window;
-  IMP.init([['본인 가맹점 식별코드']]); // 결제 데이터 정의
+  IMP.init([['imp60214404']]); // 결제 데이터 정의
   const data = {
     pg: 'html5_inicis', // PG사 (필수항목)
     pay_method: 'card', // 결제수단 (필수항목)
-    merchant_uid: `mid_${new Date().getTime()}`, // 결제금액 (필수항목)
+    merchant_uid: `mid_${new Date().getTime()}`,
     name: '결제 테스트', // 주문명 (필수항목)
-    amount: '1000', // 금액 (필수항목)
+    amount: '100', // 금액 (필수항목)
     custom_data: { name: '부가정보', desc: '세부 부가정보' },
-    buyer_name: [[이름]], // 구매자 이름
-    buyer_tel: [[전화번호]], // 구매자 전화번호 (필수항목)
-    buyer_email: [[이메일]], // 구매자 이메일
-    buyer_addr: [[주소]],
-    buyer_postalcode: [[우편번호]]
+    buyer_name: [[]], // 구매자 이름
+    buyer_tel: [[]], // 구매자 전화번호 (필수항목)
+    buyer_email: [[]], // 구매자 이메일
+    buyer_addr: [[]],
+    buyer_postalcode: [[]]
   };
   IMP.request_pay(data, callback);
 }
   
   const callback = (response) => {
     const {success, error_msg, imp_uid, merchant_uid, pay_method, paid_amount, status} = response;
+    console.log(response)
     if (success) {
       alert('결제 성공');
+      
     } else {
       alert(`결제 실패 : ${error_msg}`);
     }
@@ -43,7 +46,7 @@ const onClickPayment = () => {
   
   return (
     <>
-      <button onClick={onClickPayment}>결제하기</button>
+      <Button onClick={onClickPayment}>Payment</Button>
     </>
    );
 }

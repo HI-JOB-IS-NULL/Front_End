@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,18 +15,64 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Review from "./Review";
 import AddressForm from "./AddressForm"
 import Payment from "./RequestPay";
-  
-const steps = ['Shipping address', 'Review your order'];
+import axios from "axios";  
+import { ServeIP } from "../IP";
+import { useParams } from "react-router-dom";
+
+const steps = ['Shipping address', 'Review your order', 'Payment'];
   
 function getStepContent(step) {
-switch (step) {
-    case 0:
-        return <AddressForm />;
-    case 1:
-        return <Review />;
-    default:
-        throw new Error('Unknown step');
+
+    const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
+    const {product_id} = useParams();
+    const [products, setProducts] = useState([]);
+    const [userInfo ,setUserInfo] = useState([]);
+    useEffect(()=> {
+      axios
+      .get(
+          `${ServeIP}/shop/productFindByPId?productId=${product_id}`
+      )
+      .then((res) => {
+          setProducts(res.data);
+      });
+  }, []);
+
+  useEffect(() => {
+    console.log("accessToken", accessToken);
+    let config = null;
+    if (accessToken && accessToken !== null) {
+      //headers.append("Authorization",`Bearer ${accessToken}`);//여기 뛰어쓰기 안하면 안됨 주의 요망
+      axios.post(`${ServeIP}/profile`, {}, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }).then(function (res) {
+        console.log("sd");
+        if (res.status === 200) {
+          console.log(res.data);
+          setUserInfo(res.data);
+          // return response.json();
+        } else if (res.status === 403) {
+          //window.location.href = "/login"; // redirect
+        } else {
+          new Error(res);
+        }
+
+      });
     }
+  }, []);
+  console.log(userInfo)
+  console.log(products)
+    switch (step) {
+        case 0:
+            return <AddressForm />;
+        case 1:
+            return <Review />;
+        case 2:
+            return <Payment info ={userInfo} product = {products}/>;
+        default:
+            throw new Error('Unknown step');
+        }
   }
   
   const theme = createTheme();
@@ -35,9 +81,6 @@ switch (step) {
     const [activeStep, setActiveStep] = React.useState(0);
   
     const handleNext = () => {
-        if(activeStep === steps.length - 1){
-            return <Payment/>
-        }
         setActiveStep(activeStep + 1);
     };
   

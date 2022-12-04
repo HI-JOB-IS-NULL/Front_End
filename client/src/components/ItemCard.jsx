@@ -12,10 +12,41 @@ function ItemCard(props){
     const [cart, setCart] = useState();
  
     const onBasket = () =>{
-        axios.post(`${ServeIP}/cart?productId=${props.items.product_id}`)
-        .then((res => {
-            setCart(res.data)
-        }))
+        if(accessToken != null){
+            setCart(true)
+            axios({
+                method: 'POST',
+                url:`${ServeIP}/cart`,
+                data: { "productId" : product_id , "count" : 1 } ,
+                headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+            },
+            }).then(res => setCartId(res.data)) 
+            alert(iteminfo.productName,'Get Item')
+        }
+        else{
+            setLoginModal(true)
+        }
+    }
+
+    const Basket = () =>{
+        if(accessToken != null){
+            setCart(true)
+            axios({
+                method: 'POST',
+                url:`${ServeIP}/cart`,
+                data: { "productId" : product_id , "count" : 1 } ,
+                headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+            },
+            }).then(res => setCartId(res.data)) 
+            alert(iteminfo.productName,'Get Item')
+        }
+        else{
+            setLoginModal(true)
+        }
     }
 
     const onLike = () =>{
@@ -43,7 +74,7 @@ function ItemCard(props){
                         <div style={{ display:'flex'}}>
                             <Button style={{border:'none'}} onClick={onBasket}>
                                 {basket === 0 ?
-                                    <ShoppingOutlined/> : <ShoppingFilled/>
+                                    <ShoppingOutlined /> : <ShoppingFilled/>
                                 }
                             </Button>
                             <Button style={{border:'none'}} onClick={onLike}>

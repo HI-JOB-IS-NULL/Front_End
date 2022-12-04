@@ -123,17 +123,6 @@ const onDeleteDiv = () => {
 
           <p>recipe Explan (write in order)</p>
           <TextArea name="explan" rows={4} onChange={InputExplan} placeholder="Please explain in 4 lines" style={{marginBottom:30}}/>
-          {/* <CreateListDiv>
-            <DetailList countList={countList} />
-            <div style={{display:"flex", gap:'1vw'}}>
-            <Button onClick={onAddDetailDiv}>
-              add
-            </Button>
-            <Button onClick={onDeleteDiv}>
-              delete
-            </Button>
-            </div>
-          </CreateListDiv> */}
           <p>recipe Image</p>
           {/* <span onChange={InputImage}> */}
           <Upload name="img"

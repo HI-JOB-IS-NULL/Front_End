@@ -321,7 +321,7 @@ export default function ShopIngredients() {
     else if(e ==='al'){
       setDairy(temp.sort((a, b) => {
         if(a.product_name > b.product_name) return 1;
-        if(a.product_name< b.product_name) return -1;
+        if(a.product_name < b.product_name) return -1;
         return 0;
       }))
     }
