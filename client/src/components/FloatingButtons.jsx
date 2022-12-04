@@ -7,10 +7,12 @@ export function FloatingButtonWithImage(props) {
     <Container>
       <div className="suggested-ingredient floating button">
         <div className="ingredient-content">
-          <img
-            src={`/src/assets/ingredients/${props.image}`}
-            className="ingredient-image"
-          />
+          {props.image && (
+            <img
+              src={`/src/assets/ingredients/${props.image}`}
+              className="ingredient-image"
+            />
+          )}
           <span className="ingredient-name">{props.name}</span>
         </div>
       </div>
