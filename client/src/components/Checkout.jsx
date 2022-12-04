@@ -22,7 +22,6 @@ import { useParams } from "react-router-dom";
 const steps = ['Shipping address', 'Review your order', 'Payment'];
   
 function getStepContent(step) {
-
     const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
     const {product_id} = useParams();
     const [products, setProducts] = useState([]);
@@ -41,7 +40,6 @@ function getStepContent(step) {
     console.log("accessToken", accessToken);
     let config = null;
     if (accessToken && accessToken !== null) {
-      //headers.append("Authorization",`Bearer ${accessToken}`);//여기 뛰어쓰기 안하면 안됨 주의 요망
       axios.post(`${ServeIP}/profile`, {}, {
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -51,10 +49,8 @@ function getStepContent(step) {
         if (res.status === 200) {
           console.log(res.data);
           setUserInfo(res.data);
-          // return response.json();
-        } else if (res.status === 403) {
-          //window.location.href = "/login"; // redirect
-        } else {
+        } else if (res.status === 403) {}
+          else {
           new Error(res);
         }
 
@@ -69,7 +65,7 @@ function getStepContent(step) {
         case 1:
             return <Review />;
         case 2:
-            return <Payment info ={userInfo} product = {products}/>;
+            return <Payment style={{marginLeft:100}}/>;
         default:
             throw new Error('Unknown step');
         }
@@ -79,7 +75,12 @@ function getStepContent(step) {
   
   export default function Checkout() {
     const [activeStep, setActiveStep] = React.useState(0);
-  
+    const [pay, setPay] = useState(false);
+
+    const payment = () =>{
+        setPay(true)
+    }
+
     const handleNext = () => {
         setActiveStep(activeStep + 1);
     };
@@ -144,6 +145,7 @@ function getStepContent(step) {
                   )}
   
                   <Button
+                    disabled = {payment}
                     variant="contained"
                     onClick={handleNext}
                     sx={{ mt: 3, ml: 1 }}>

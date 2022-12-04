@@ -41,7 +41,7 @@ const DataTableRowExpansionDemo = () => {
         if (accessToken && accessToken !== null) {
             axios({
                 method: 'POST',
-                url: `${ServeIP}/order/cancel`,
+                url: `http://10.20.32.1:5000/order/cancel`,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -77,13 +77,13 @@ const DataTableRowExpansionDemo = () => {
         if (accessToken && accessToken !== null) {
             axios({
                 method: 'GET',
-                url: `${ServeIP}/order`,
+                url: `http://10.20.32.1:5000/order`,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
             }).then(function (res) {
                 if (res.status === 200) {
-                    // console.log(res.data);
+                    console.log(res.data);
                     setProducts(res.data.orders.content);
                 } else if (res.status === 403) {
                     alert("잘못된 접근입니다");

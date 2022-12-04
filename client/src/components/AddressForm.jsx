@@ -9,6 +9,7 @@ export default function AddressForm(){
   const [address, setAddress] = useState('')
   const InputAdrss = (e) =>{
     setAddress(e.target.value)
+    
   }
   console.log(address)
     return (
