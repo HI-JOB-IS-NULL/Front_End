@@ -63,7 +63,7 @@ export default function Navbar({ isScrolled }) {
               />
               <ul>
                 <li className="sub-item" >
-                  <a href='./mypage'style={{whiteSpace:'nowrap', display:'flex', gap:10}}>
+                  <a href='/mypage'style={{whiteSpace:'nowrap', display:'flex', gap:10}}>
                   <AccountCircleOutlinedIcon className="material-icon" />
                   <p>My Profile</p>
                   </a>

@@ -13,6 +13,7 @@ import SurveyComponent from '../components/Survey';
 import axios from "axios";
 import { ServeIP } from "../IP";
 import PaymentMethods from '../components/PaymentMethods';
+import DataTableRowExpansionDemo from '../components/DataTableRowExpansionDemo';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -229,7 +230,7 @@ export default function Mypage() {
                               <Form.Item
                                 name='phoneNum'
                               >
-                              <Input/>
+                              <Input pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}"/>
                               </Form.Item>
                             </MDBCol>
                           </MDBRow>
@@ -289,7 +290,7 @@ export default function Mypage() {
           Item Three
         </TabPanel>
         <TabPanel value={value} index={3}>
-          Item Four
+          <DataTableRowExpansionDemo/>
         </TabPanel>
       </Box>
     </Container>
