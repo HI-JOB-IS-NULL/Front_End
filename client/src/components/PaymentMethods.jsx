@@ -14,21 +14,142 @@ import {
   MDBRow,
   MDBTooltip,
   MDBTypography,
-  } from "mdb-react-ui-kit";
-  import React from "react";
-  import AddIcon from '@mui/icons-material/Add';
-  import RemoveIcon from '@mui/icons-material/Remove';
-  
-  export default function PaymentMethods() {
-  return (
-  <section className="h-100 gradient-custom">
+} from "mdb-react-ui-kit";
+import React, { useEffect, useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import axios from "axios";
+import { ServeIP } from "../IP";
+import logo from "../assets/logo.png";
+import RemoveShoppingCartTwoToneIcon from '@mui/icons-material/RemoveShoppingCartTwoTone';
+import LocalShippingTwoToneIcon from '@mui/icons-material/LocalShippingTwoTone';
+import { RingLoader } from "react-spinners";
+
+export default function PaymentMethods() {
+  const [loading, setLoading] = useState(false);
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
+  const [cartData, setCartData] = useState([]);
+  const [changeData, setChangeData] = useState(true);
+
+  function getCurrentDate(separator = '.') {
+
+    let newDate = new Date()
+    let date = newDate.getDate();
+    let month = newDate.getMonth() + 1;
+    let year = newDate.getFullYear();
+
+    return `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}`
+  }
+
+  function addDays(separator = '.') {
+    let result = new Date();
+    result.setDate(result.getDate() + 7);
+    let date = result.getDate();
+    let month = result.getMonth() + 1;
+    let year = result.getFullYear();
+    return `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}`
+  }
+  function goMall() {
+    window.location.href = "/shop"
+  }
+
+  function cntUp(items, e) {
+    items.count = e.target.value;
+    if (accessToken && accessToken !== null) {
+      axios({
+        method: 'PUT',
+        url: `${ServeIP}/cart/updateCartItem`,
+        data: items,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }).then(function (res) {
+        if (res.status === 200) {
+          if (changeData == true) {
+            setChangeData(false);
+          } else {
+            setChangeData(true);
+          }
+        } else if (res.status === 403) {
+          alert("잘못된 접근입니다");
+        } else {
+          new Error(res);
+        }
+
+      });
+    }
+  }
+
+  function deleteItem(items, e) {
+    console.log(items);
+    if (accessToken && accessToken !== null) {
+      axios({
+        method: 'DELETE',
+        url: `${ServeIP}/cart/deleteCartItem`,
+        data: items,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }).then(function (res) {
+        if (res.status === 200) {
+          if (changeData == true) {
+            setChangeData(false);
+          } else {
+            setChangeData(true);
+          }
+        } else if (res.status === 403) {
+          alert("잘못된 접근입니다");
+        } else {
+          new Error(res);
+        }
+
+      });
+    }
+  }
+  function totalPrice(datas) {
+    let total = 0;
+    datas.map((items) => {
+      total += (items.price * items.count);
+    });
+    return total;
+  }
+
+  useEffect(() => {
+    console.log("accessToken", accessToken);
+
+    if (accessToken && accessToken !== null) {
+      axios({
+        method: 'GET',
+        url: `${ServeIP}/cart`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log("sd");
+        if (res.status === 200) {
+          console.log(res.data);
+          setCartData(res.data);
+          setLoading(true);
+        } else if (res.status === 403) {
+          alert("잘못된 접근입니다");
+        } else {
+          new Error(res);
+        }
+      });
+    }
+  }, [changeData]);
+
+  let noCart = (
     <MDBContainer className="py-8 h-100">
       <MDBRow className="justify-content-center my-4">
         <MDBCol md="8">
-          <MDBCard className="mb-4" style={{width:"auto"}}>
+          <MDBCard className="mb-4" style={{ width: "auto" }}>
             <MDBCardHeader className="py-3">
               <MDBTypography tag="h5" className="mb-0">
-                Cart - 2 items
+                Cart is Empty
               </MDBTypography>
             </MDBCardHeader>
             <MDBCardBody>
@@ -36,115 +157,115 @@ import {
                 <MDBCol lg="3" md="12" className="mb-4 mb-lg-0">
                   <MDBRipple rippleTag="div" rippleColor="light"
                     className="bg-image rounded hover-zoom hover-overlay">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/12a.webp"
-                      className="w-100" />
-                    <a href="#!">
-                      <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" , }}>
-                      </div>
-                    </a>
+                    <img src={logo} alt="Logo" style={{ width: "5000px" }} />
                   </MDBRipple>
                 </MDBCol>
-  
-                <MDBCol lg="5" md="6" className=" mb-4 mb-lg-0">
-                  <p>
-                    <strong>Blue denim shirt</strong>
-                  </p>
-                  <p>Color: blue</p>
-                  <p>Size: M</p>
-  
-                  <MDBTooltip wrapperProps={{ size: "sm" }} wrapperClass="me-1 mb-2"
-                    title="Remove item">
-                    <MDBIcon fas icon="trash" />
-                  </MDBTooltip>
-  
-                  <MDBTooltip wrapperProps={{ size: "sm" , color: "danger" }} wrapperClass="me-1 mb-2"
-                    title="Move to the wish list">
-                    <MDBIcon fas icon="heart" />
-                  </MDBTooltip>
+
+                <MDBCol lg="8" md="3" className="justify-content-center my-4">
+                  <button onClick={goMall}>
+                    <StorefrontIcon fontSize="large" />
+                    pick up stuff from Shop Ingredients
+                  </button>
                 </MDBCol>
                 <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
-                  <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
-                    <MDBBtn className="px-3 me-2">
-                      <MDBIcon fas icon="minus" />
-                    </MDBBtn>
-  
-                    <MDBInput defaultValue={1} min={0} type="number" label="Quantity" />
-  
-                    <MDBBtn className="px-3 ms-2">
-                      <MDBIcon fas icon="plus" />
-                    </MDBBtn>
-                  </div>
-  
-                  <p className="text-start text-md-center">
-                    <strong>$17.99</strong>
-                  </p>
                 </MDBCol>
               </MDBRow>
-  
-              <hr className="my-4" />
-  
+
               <MDBRow>
                 <MDBCol lg="3" md="12" className="mb-4 mb-lg-0">
                   <MDBRipple rippleTag="div" rippleColor="light"
                     className="bg-image rounded hover-zoom hover-overlay">
-                    <img
-                      src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Vertical/13a.webp"
-                      className="w-100" />
-                    <a href="#!">
-                      <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" , }}>
-                      </div>
-                    </a>
+
                   </MDBRipple>
-                </MDBCol>
-  
-                <MDBCol lg="5" md="6" className=" mb-4 mb-lg-0">
-                  <p>
-                    <strong>Red hoodie</strong>
-                  </p>
-                  <p>Color: red</p>
-                  <p>Size: M</p>
-  
-                  <MDBTooltip wrapperProps={{ size: "sm" }} wrapperClass="me-1 mb-2"
-                    title="Remove item">
-                    <MDBIcon fas icon="trash" />
-                  </MDBTooltip>
-  
-                  <MDBTooltip wrapperProps={{ size: "sm" , color: "danger" }} wrapperClass="me-1 mb-2"
-                    title="Move to the wish list">
-                    <MDBIcon fas icon="heart" />
-                  </MDBTooltip>
-                </MDBCol>
-                <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
-                  <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
-                    <MDBBtn className="px-3 me-2">
-                      <RemoveIcon/>
-                    </MDBBtn>
-  
-                    <MDBInput defaultValue={1} min={0} type="number" label="Quantity" />
-  
-                    <MDBBtn className="px-3 ms-2">
-                      <AddIcon />
-                    </MDBBtn>
-                  </div>
-  
-                  <p className="text-start text-md-center">
-                    <strong>$17.99</strong>
-                  </p>
                 </MDBCol>
               </MDBRow>
             </MDBCardBody>
           </MDBCard>
-  
-          <MDBCard className="mb-4" style={{width:"auto"}}>
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
+  );
+
+  let yesCart = (
+    <MDBContainer className="py-8 h-100">
+      <MDBRow className="justify-content-center my-4">
+        <MDBCol md="8">
+          <MDBCard className="mb-4" style={{ width: "auto" }}>
+            <MDBCardHeader className="py-3">
+              <MDBTypography tag="h5" className="mb-0">
+                <MDBRow>
+                  <MDBCol>
+                    <div style={{ "textAlign": "left" }}>
+                      Cart - {cartData.length} items
+                    </div>
+                  </MDBCol>
+                  <MDBCol>
+                    <div style={{ "textAlign": "right" }}>
+                      <button onClick={goMall}>
+                        <StorefrontIcon fontSize="large" />
+                        shop more
+                      </button>
+                    </div>
+                  </MDBCol>
+                </MDBRow>
+              </MDBTypography>
+            </MDBCardHeader>
+
+            <MDBCardBody>
+
+              {cartData.map((items) => (
+                <div>
+                  <MDBRow>
+                    <MDBCol lg="3" md="12" className="mb-4 mb-lg-0">
+                      <MDBRipple rippleTag="div" rippleColor="light"
+                        className="bg-image rounded hover-zoom hover-overlay">
+                        <img
+                          src={items.imgUrl}
+                          className="w-100" />
+                        <a href="#!">
+                          <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)", }}>
+                          </div>
+                        </a>
+                      </MDBRipple>
+                    </MDBCol>
+
+                    <MDBCol lg="5" md="6" className=" mb-4 mb-lg-0">
+                      <p>
+                        <strong>{items.productNm}</strong>
+                      </p>
+
+                      <MDBBtn onClick={(e) => deleteItem(items, e)} style={{ backgroundColor: "red" }}>
+                        <RemoveShoppingCartTwoToneIcon />
+                      </MDBBtn>
+
+                    </MDBCol>
+                    <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
+                      <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
+                        <MDBInput onChange={(e) => cntUp(items, e)} defaultValue={items.count} min={1} type="number" label="Quantity" />
+                      </div>
+
+                      <p className="text-start text-md-center">
+                        <strong>₩{items.price * items.count}</strong>
+                      </p>
+                    </MDBCol>
+                  </MDBRow>
+                  <hr className="my-4" />
+                </div>
+              ))
+
+              }
+            </MDBCardBody>
+          </MDBCard>
+
+          <MDBCard className="mb-4" style={{ width: "auto" }}>
             <MDBCardBody>
               <p>
                 <strong>Expected shipping delivery</strong>
               </p>
-              <p className="mb-0">12.10.2020 - 14.10.2020</p>
+              <p className="mb-0">{getCurrentDate()} - {addDays()}</p>
             </MDBCardBody>
           </MDBCard>
-  
+
           <MDBCard className="mb-4 mb-lg-0">
             <MDBCardBody>
               <p>
@@ -154,19 +275,19 @@ import {
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
                 alt="Visa" />
               <MDBCardImage className="me-2" width="45px"
-                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                alt="American Express" />
-              <MDBCardImage className="me-2" width="45px"
                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
                 alt="Mastercard" />
               <MDBCardImage className="me-2" width="45px"
-                src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.png"
-                alt="PayPal acceptance mark" />
+                src="https://play-lh.googleusercontent.com/QAtwQ3pzH4VOo3mPNuIvS83w9cgtTKcpsCZj3UPgU8tKRK4dS1DzlsZl3wDFTAaOQPI=w240-h480-rw"
+                alt="KB pay" />
+              <MDBCardImage className="me-2" width="45px"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Samsung_Pay_icon.svg/300px-Samsung_Pay_icon.svg.png"
+                alt="Samsung pay" />
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
         <MDBCol md="4">
-          <MDBCard className="mb-4" style={{width:"auto"}}>
+          <MDBCard className="mb-4" style={{ width: "auto" }}>
             <MDBCardHeader>
               <MDBTypography tag="h5" className="mb-0">
                 Summary
@@ -176,12 +297,12 @@ import {
               <MDBListGroup flush>
                 <MDBListGroupItem
                   className="d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                  Products
-                  <span>$53.98</span>
+                  Products:
+                  <span>₩{totalPrice(cartData)}</span>
                 </MDBListGroupItem>
                 <MDBListGroupItem className="d-flex justify-content-between align-items-center px-0">
-                  Shipping
-                  <span>Gratis</span>
+                  <LocalShippingTwoToneIcon />Shipping
+                  <span>Fee ₩3000</span>
                 </MDBListGroupItem>
                 <MDBListGroupItem
                   className="d-flex justify-content-between align-items-center border-0 px-0 mb-3">
@@ -192,11 +313,11 @@ import {
                     </strong>
                   </div>
                   <span>
-                    <strong>$53.98</strong>
+                    <strong>₩{totalPrice(cartData) + 3000}</strong>
                   </span>
                 </MDBListGroupItem>
               </MDBListGroup>
-  
+
               <MDBBtn block size="lg">
                 Go to checkout
               </MDBBtn>
@@ -205,6 +326,34 @@ import {
         </MDBCol>
       </MDBRow>
     </MDBContainer>
-  </section>
   );
+
+  let content = (
+    <div style={{ position: 'absolute', marginLeft: '25vw', marginTop: 200 }}>
+      <RingLoader
+        color="hsla(168, 67%, 53%, 1)"
+        size={200}
+        speedMultiplier={1}
+      />
+    </div>
+  );
+
+  
+  if (cartData.length > 0) {
+    noCart = yesCart;
   }
+  if(loading){
+    if (cartData.length > 0) {
+      content = yesCart;
+    }else{
+      content=noCart;
+    }
+  }
+
+
+  return (
+    <section className="h-100 gradient-custom">
+      {content}
+    </section>
+  );
+}

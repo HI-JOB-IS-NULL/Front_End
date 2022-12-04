@@ -22,6 +22,8 @@
     "mdbootstrap": "^4.20.0",
     "moment": "^2.29.4",
     "mui": "^0.0.1",
+    "primeicons": "^6.0.1",
+    "primereact": "^8.7.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
