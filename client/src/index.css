@@ -105,3 +105,7 @@ body {
   align-items: center;
   gap: 10px;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
