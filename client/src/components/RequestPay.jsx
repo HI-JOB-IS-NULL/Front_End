@@ -15,6 +15,7 @@ const Payment = (effect, deps) => {
   }, []);
   
 const onClickPayment = (props) => {
+  console.log(props.info)
   const { IMP } = window;
   IMP.init([['imp60214404']]); // 결제 데이터 정의
   const data = {
