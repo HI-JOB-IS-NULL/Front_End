@@ -117,7 +117,8 @@ const Container = styled.div`
       display: flex;
       flex-wrap: wrap;
       padding: 0;
-      margin: 8px 0 0 0;
+      /* margin: 8px 0 0 0; */
+      margin: 0;
       gap: 5px;
       .tag {
         width: auto;
