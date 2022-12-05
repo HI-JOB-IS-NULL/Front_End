@@ -14,7 +14,7 @@ export default function AddToPlan() {
         {isAddedToPlan ? (
           <span>Added to Meal Planner</span>
         ) : (
-          <span>Add to Meal Planner</span>
+          <span>Add All to Meal Planner</span>
         )}
       </div>
     </Container>
