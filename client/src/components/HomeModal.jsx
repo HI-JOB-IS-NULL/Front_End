@@ -71,6 +71,7 @@ const Container = styled.div`
         position: absolute;
         top: 100px;
         left: 550px;
+        z-index: 5;
       }
       .recent-searches {
         position: absolute;
