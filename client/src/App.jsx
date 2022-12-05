@@ -48,6 +48,7 @@ function App() {
         <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
         <Route exact path="sociallogin" element={<SocialLogin />} />
+        <Route exact path="sociallogin" element={<SocialLogin />} />
       </Routes>
     </BrowserRouter>
   );
