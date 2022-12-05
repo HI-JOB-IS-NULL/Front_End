@@ -1,10 +1,27 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-
+import RecipeQueryData from "../RecipeQueryData";
+import { useNavigate } from "react-router-dom";
 export default function SearchBar({ placeholder }) {
-  const [searchKeyword, setSearchKeyword] = useState("");
-
+  // const [searchKeyword, setSearchKeyword] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [isHovered, setIsHovered] = useState(false);
+  const suggestions = RecipeQueryData.map((item) => item.query);
+  const navigate = useNavigate();
+  console.log(inputValue);
+  const handleClick = (suggestion) => {
+    setInputValue(suggestion);
+    if (inputValue != "") {
+      console.log(inputValue);
+      navigateToSearchRecipe();
+    }
+  };
+  function navigateToSearchRecipe() {
+    console.log(inputValue);
+    // navigate("/searchRecipes/");
+  }
   return (
     <Container>
       <div className="search">
@@ -12,15 +29,52 @@ export default function SearchBar({ placeholder }) {
           <input
             type="text"
             placeholder={placeholder}
-            onChange={(e) => setSearchKeyword(e.target.value)}
-            value={searchKeyword}
+            onChange={(e) => setInputValue(e.target.value)}
+            onKeyUp={(e) =>
+              e.key === "Enter" ? navigateToSearchRecipe() : null
+            }
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => {
+              if (!isHovered) {
+                setIsFocused(false);
+              }
+            }}
+            value={inputValue}
             className="search-inputs-input"
           />
           <div className="search--icon">
-            <SearchOutlinedIcon />
+            <SearchOutlinedIcon style={{ cursor: "pointer" }} />
           </div>
         </div>
-        <div className="data--result"></div>
+        {isFocused && (
+          <div
+            className="input-suggestion"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+            {suggestions.map((suggestion, index) => {
+              const isMatch =
+                suggestion
+                  .toLocaleLowerCase()
+                  .indexOf(inputValue.toLocaleLowerCase()) > -1;
+              return (
+                // <a href={`/recipe/${props.id}`}></a>
+                <div key={index}>
+                  {isMatch && (
+                    <div
+                      className="suggestion"
+                      onClick={() => handleClick(suggestion)}
+                    >
+                      {suggestion}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {/* <div className="data--result"></div> */}
       </div>
     </Container>
   );
@@ -28,6 +82,9 @@ export default function SearchBar({ placeholder }) {
 
 const Container = styled.div`
   .search {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     .search--inputs {
       position: relative;
       display: flex;
@@ -48,6 +105,23 @@ const Container = styled.div`
       .search--icon {
         position: absolute;
         padding-left: 15px;
+      }
+    }
+    .input-suggestion {
+      box-shadow: 0 0 14px rgb(0 0 0 / 8%);
+      position: absolute;
+      top: 175px;
+      max-height: 150px;
+      overflow-y: auto;
+      width: 500px;
+      background: white;
+      .suggestion {
+        align-items: center;
+        cursor: pointer;
+        padding: 2px 5px;
+        &:hover {
+          background-color: #f2f3f4;
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import SearchBar from "../components/SearchBar";
 import styled from "styled-components";
+import { Tabs } from "antd";
 export default function SearchRecipes() {
   return (
     <Container>
@@ -29,6 +30,25 @@ export default function SearchRecipes() {
           >
             Reset
           </span>
+        </div>
+        <div className="filter-tabs">
+          <Tabs>
+            <Tabs.TabPane tab="INGREDIENTS" key="ingredients">
+              <div>INGREDIENTS</div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="DIETS" key="diets">
+              <div>DIETS</div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="ALLERGIES" key="allergies">
+              <div>ALLERGIES</div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="CUISINES" key="cuisines">
+              <div>CUISINES</div>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="EQUIPMENTS" key="equipments">
+              <div>EQUIPMENTS</div>
+            </Tabs.TabPane>
+          </Tabs>
         </div>
         <div className="search-pantry">
           <p className="normal-text">
