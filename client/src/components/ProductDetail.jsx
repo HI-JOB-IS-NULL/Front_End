@@ -8,7 +8,7 @@ import { ServeIP } from "../IP";
 import "../css/ProductDetail.css";
 import { Button } from "antd";
 import { RingLoader } from "react-spinners";
-import { set } from "react-hook-form";
+
 import LoginModal from "../components/LoginModal";
 
 export default function ProductDetail() {
@@ -23,7 +23,7 @@ export default function ProductDetail() {
   const [loginModal, setLoginModal] = useState(false);
 
   const Buy = () => {
-    window.location.href = `../../checkout/${product_id}`
+    window.location.href = `../../checkout/${product_id}`;
   };
 
   const Basket = () => {

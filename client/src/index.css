@@ -105,6 +105,9 @@ body {
   align-items: center;
   gap: 10px;
 }
+.simple-button:hover {
+  font-weight: bold;
+}
 
 ::-webkit-scrollbar {
   display: none;

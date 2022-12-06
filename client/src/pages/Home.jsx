@@ -17,6 +17,7 @@ export default function Home() {
     Axios.get(
       `https://api.spoonacular.com/recipes/random?${apiKey3}&number=10`
     ).then((response) => {
+      console.log(response);
       setRandomRecipes(response.data.recipes);
     });
   }, []);

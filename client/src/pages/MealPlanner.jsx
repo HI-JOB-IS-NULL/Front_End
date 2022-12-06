@@ -4,8 +4,9 @@ import InputTags from "../components/InputTags";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 // import AddToPlan from "../components/AddToPlan";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { ServeIP, kServerIP } from "../IP";
 import Card from "../components/Card";
+
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [tags, setTags] = useState([]);
@@ -19,7 +20,7 @@ export default function mealPlanner() {
     console.log("in");
     axios({
       method: "get",
-      url: `${ServeIP}/MealPlan/checkMealPlanCount`,
+      url: `${kServerIP}/MealPlan/checkMealPlanCount`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -73,7 +74,7 @@ export default function mealPlanner() {
 
   const handleClick = () => {
     setIsAddedToPlan(true);
-    addToMealPlan;
+    addToMealPlan();
     window.location.reload();
   };
 
@@ -89,7 +90,7 @@ export default function mealPlanner() {
 
     axios({
       method: "post",
-      url: `${ServeIP}/MealPlan/generateMealPlan`,
+      url: `${kServerIP}/MealPlan/nser/generateMealPlan`,
       data: filterData,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -102,9 +103,10 @@ export default function mealPlanner() {
   };
 
   const addToMealPlan = () => {
+    console.log("addmeal");
     axios({
       method: "post",
-      url: `${ServeIP}/MealPlan/addMealPlan`,
+      url: `${kServerIP}/MealPlan/addMealPlan`,
       data: data.data,
       headers: {
         Authorization: `Bearer ${accessToken}`,
