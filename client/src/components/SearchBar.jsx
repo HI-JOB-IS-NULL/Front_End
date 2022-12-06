@@ -11,16 +11,9 @@ export default function SearchBar({ placeholder }) {
   const suggestions = RecipeQueryData.map((item) => item.query);
   const navigate = useNavigate();
   console.log(inputValue);
-  const handleClick = (suggestion) => {
-    setInputValue(suggestion);
-    if (inputValue != "") {
-      console.log(inputValue);
-      navigateToSearchRecipe();
-    }
-  };
-  function navigateToSearchRecipe() {
-    console.log(inputValue);
-    navigate("/searchRecipes/");
+
+  function navigateToSearchRecipe(suggestion) {
+    navigate(`/searchRecipes/${suggestion}`);
   }
   return (
     <Container>
@@ -62,7 +55,7 @@ export default function SearchBar({ placeholder }) {
                   {isMatch && (
                     <div
                       className="suggestion"
-                      onClick={() => handleClick(suggestion)}
+                      onClick={() => navigateToSearchRecipe(suggestion)}
                     >
                       {suggestion}
                     </div>
