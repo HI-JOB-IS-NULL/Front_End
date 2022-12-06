@@ -19,7 +19,7 @@ const DetailList = (props) => {
         <div key={i}>    
             <div>
               <TextArea
-                autoSize={{ minRows: 6, maxRows: 6 }}
+                autoSize={{ minRows: 4, maxRows: 6 }}
               />
             </div>
         </div>

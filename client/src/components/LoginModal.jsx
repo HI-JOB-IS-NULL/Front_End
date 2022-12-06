@@ -10,7 +10,8 @@ export default function LoginModal({ setLoginModal }) {
 
   function socialLogin(provider){
     const frontendUrl = window.location.protocol+"//"+window.location.host;
-    window.location.href= ServeIP + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
+    //window.location.href= ServeIP + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
+    window.location.href= "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com" + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
   }
 
   const handleSocialLogin=(provider)=>{
