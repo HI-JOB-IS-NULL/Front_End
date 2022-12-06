@@ -11,16 +11,9 @@ export default function SearchBar({ placeholder }) {
   const suggestions = RecipeQueryData.map((item) => item.query);
   const navigate = useNavigate();
   console.log(inputValue);
-  const handleClick = (suggestion) => {
-    setInputValue(suggestion);
-    if (inputValue != "") {
-      console.log(inputValue);
-      navigateToSearchRecipe();
-    }
-  };
-  function navigateToSearchRecipe() {
-    console.log(inputValue);
-    // navigate("/searchRecipes/");
+
+  function navigateToSearchRecipe(suggestion) {
+    navigate(`/searchRecipes/${suggestion}`);
   }
   return (
     <Container>
@@ -58,12 +51,11 @@ export default function SearchBar({ placeholder }) {
                   .toLocaleLowerCase()
                   .indexOf(inputValue.toLocaleLowerCase()) > -1;
               return (
-                // <a href={`/recipe/${props.id}`}></a>
                 <div key={index}>
                   {isMatch && (
                     <div
                       className="suggestion"
-                      onClick={() => handleClick(suggestion)}
+                      onClick={() => navigateToSearchRecipe(suggestion)}
                     >
                       {suggestion}
                     </div>
@@ -73,8 +65,6 @@ export default function SearchBar({ placeholder }) {
             })}
           </div>
         )}
-
-        {/* <div className="data--result"></div> */}
       </div>
     </Container>
   );
@@ -110,10 +100,11 @@ const Container = styled.div`
     .input-suggestion {
       box-shadow: 0 0 14px rgb(0 0 0 / 8%);
       position: absolute;
-      top: 175px;
+      top: 45px;
+      left: 10px;
       max-height: 150px;
       overflow-y: auto;
-      width: 500px;
+      width: 480px;
       background: white;
       .suggestion {
         align-items: center;
