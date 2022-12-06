@@ -11,6 +11,7 @@ import Comment from "./Comment";
 import { Carousel } from "react-responsive-carousel";
 import 'antd/dist/antd.css';
 import { Input } from "antd"
+import noimg from "../assets/noimage.png";
 
 const { TextArea } = Input
 const contentStyle = {
@@ -53,10 +54,14 @@ function communityDetailes(){
             setInfo(response.data)
             const temp = response.data.uploadImgResult;
             
-            
-            for(let i=0; i<temp.length; i++){
-              imageData.push(temp[i].realImageUrl); 
+            if(temp.length==0){
+              imageData.push(noimg);
             }
+            else{
+              for(let i=0; i<temp.length; i++){
+                imageData.push(temp[i].realImageUrl); 
+              }
+            }       
           
         });
     }, []);
