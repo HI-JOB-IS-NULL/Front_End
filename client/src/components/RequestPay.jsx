@@ -11,6 +11,7 @@ const Payment = (effect, deps) => {
   const [products, setProducts] = useState([]);
   const [userInfo ,setUserInfo] = useState([]);
   useEffect(()=> {
+    sessionStorage.setItem("payse", false)
     axios
     .get(
         `${ServeIP}/shop/productFindByPId?productId=${product_id}`
@@ -60,6 +61,8 @@ console.log(products)
   }, []);
   
   const onClickPayment = () => {
+    
+    sessionStorage.getItem("payse")
     const { IMP } = window;
     IMP.init([['imp60214404']]); // 결제 데이터 정의
     const data = {
@@ -83,6 +86,7 @@ console.log(products)
     const {success, error_msg, imp_uid, merchant_uid, pay_method, paid_amount, status, rec} = response;
     console.log(response)
     if (success) {
+      sessionStorage.setItem("payse", true);
       alert('결제 성공');
       axios.post(
         `http://10.20.32.1:5000/order`, 

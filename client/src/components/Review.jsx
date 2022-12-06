@@ -9,7 +9,7 @@ import axios from "axios";
 import { ServeIP } from "../IP";
 
   
-  const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
+  const addresses = sessionStorage.getItem("address");
 
   export default function Review() {
     const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -30,7 +30,6 @@ import { ServeIP } from "../IP";
     console.log("accessToken", accessToken);
     let config = null;
     if (accessToken && accessToken !== null) {
-      //headers.append("Authorization",`Bearer ${accessToken}`);//여기 뛰어쓰기 안하면 안됨 주의 요망
       axios.post(`${ServeIP}/profile`, {}, {
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -65,9 +64,9 @@ import { ServeIP } from "../IP";
               Shipping
             </Typography>
             <Typography gutterBottom>{userInfo.userEmail}</Typography>
-            <Typography gutterBottom>{addresses.join(', ')}</Typography>
+            <Typography gutterBottom>{addresses}</Typography>
           </Grid>
-          <Grid item container direction="column" md={6} sx={{paddingTop:'0px'}}>
+          <Grid item container direction="column" md={6} sx={{position:'absolute', width:'300px', marginLeft:'16%', marginTop:"-5%"}}>
             <img src={products.imageFirst}/>
           </Grid>
         </Grid>

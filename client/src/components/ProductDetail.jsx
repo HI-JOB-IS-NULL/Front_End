@@ -8,18 +8,19 @@ import { ServeIP } from "../IP";
 import "../css/ProductDetail.css";
 import { Button } from "antd";
 import { RingLoader } from "react-spinners";
+import { set } from "react-hook-form";
 import LoginModal from "../components/LoginModal";
 
 export default function ProductDetail() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const { product_id } = useParams();
+  const [currentIndex, setCurrentIndex] = useState();
   const [imageData, setImageData] = useState([]);
   const [iteminfo, setIteminfo] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cart, setCart] = useState(false);
   const [cartId, setCartId] = useState();
   const [loginModal, setLoginModal] = useState(false);
-
 
   const Buy = () => {
     window.location.href = `../../checkout/${product_id}`

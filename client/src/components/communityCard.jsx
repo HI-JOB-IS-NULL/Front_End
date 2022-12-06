@@ -7,7 +7,7 @@ import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import axios from "axios";
 import noimage from "../assets/noimage.png";
 
-
+ 
 function communityCard(props){
 
     // community데이터 받아오
@@ -20,7 +20,7 @@ function communityCard(props){
     // })
 
     const [image, setImage] = useState();
-    
+     
     useEffect(()=> {
         console.log(props.cardInfo);
         setImage(props.cardInfo.uploadImgResult);
@@ -39,7 +39,7 @@ function communityCard(props){
         <a href={`/CommunityDetailes/${props.cardInfo.csRecipeId}`} style={{textDecoration:'none', color:'black'}}>
             <Card  style={{width:"500px", display:"flex", flexDirection:"row", height:'230px'}}>
               <Card.Img className='img' variant="top" src={image != null && props.cardInfo.uploadImgResult.length != 0 ? image[0].realImageUrl : noimage} style={{width:'300px', height:'230px'}}/>
-              {console.log(props.cardInfo.uploadImgResult[0].realImageUrl)}
+              {/* {console.log(props.cardInfo.uploadImgResult[0].realImageUrl)} */}
               <Card.Body>
                 <Card.Title style={{}}>{props.cardInfo.recipeT_title}</Card.Title>
                 

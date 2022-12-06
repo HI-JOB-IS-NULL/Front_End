@@ -6,12 +6,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function AddressForm(){
-  const [address, setAddress] = useState('')
-  const InputAdrss = (e) =>{
-    setAddress(e.target.value)
-    
+  
+ 
+  sessionStorage.clear("address")
+  const InputAdress = (e) =>{
+    sessionStorage.setItem("address", e.target.value)
   }
-  console.log(address)
     return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -27,8 +27,7 @@ export default function AddressForm(){
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
-            onChange={InputAdrss}
-          />
+            onChange={InputAdress}/>
         </Grid>
         <Grid item xs={12}>
           <TextField

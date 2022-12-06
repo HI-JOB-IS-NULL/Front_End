@@ -5,11 +5,14 @@ import axios from "axios";
 import { ServeIP } from "../IP";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
-import { Button, Carousel } from 'antd';
+import { Button } from 'antd';
 import "../css/RecipeDetailes.css";
 import Comment from "./Comment";
+import { Carousel } from "react-responsive-carousel";
 import 'antd/dist/antd.css';
 import { Input } from "antd"
+import noimg from "../assets/noimage.png";
+
 const { TextArea } = Input
 const contentStyle = {
   height: '160px',
@@ -23,6 +26,8 @@ function communityDetailes(){
     const [isBooked, setIsBooked] = useState(false);
     const {csRecipeId} = useParams();
     const [info, setInfo] = useState([]); 
+    const [imageData, setImageData] = useState([]);
+    const noimage = "../assets/noimage.png";
 
     const InputText = (e) => {
       setComment(e.target.value)
@@ -32,25 +37,39 @@ function communityDetailes(){
     const commit = () =>{
       window.sessionStorage.setItem("com", comment)
     }
+    console.log(imageData)
+    let renderSlides = imageData.map((image) => (
+      <div style={{ width: '30%', objectFit: "cover", marginLeft:'12%' }}>
+        <img style={{ objectFit: "cover" }} src={image} />
+      </div>
+    ));
 
     useEffect(()=> {
         axios
         .get(
-            `${ServeIP}/CustomRecipe/list?csRecipeId=${csRecipeId}`
+            `${ServeIP}/CustomRecipe/get?csRecipeId=${csRecipeId}`
         )
         .then((response) => {
-            console.log(response.data);
-            setInfo(response.data.dtoList[0])
+            console.log(response.data.uploadImgResult);
+            setInfo(response.data)
+            const temp = response.data.uploadImgResult;
+            
+            if(temp.length==0){
+              imageData.push(noimg);
+            }
+            else{
+              for(let i=0; i<temp.length; i++){
+                imageData.push(temp[i].realImageUrl); 
+              }
+            }       
+          
         });
     }, []);
-    const enter = () =>{
-      alert('hi')
-    }
-    const imgurl = info.uploadImgResult && info.uploadImgResult[0].realImageUrl
-    console.log(info.uploadImgResult && info.uploadImgResult)
+    console.log(imageData)
+
     return(
         <Container>
-      <div className="recipe-summary-wrapper">
+      <div className="recipe-summary-wrapper" style={{gap:'5%', width:'auto', marginLeft:'14%', display:'flex'}}>
         <div className="recipe--detailes">
           <div className="recipe--title bold">
             <h1>{info.recipeT_title}</h1>
@@ -78,15 +97,20 @@ function communityDetailes(){
           >
             {isBooked ? (
               <BookmarkOutlinedIcon fontSize="large" />
-            ) : (
+            ) : ( 
               <TurnedInNotOutlinedIcon fontSize="large" />
             )}
           </div>
         </div>
 
         <div className="recipe-details-image">    
-        {/*이미지 슬라이드*/}
-          <img src={imgurl}/>
+          <Carousel
+            autoPlay={true}
+            infiniteLoop={true}
+            style={{ width: "50%" }}
+            className="carousel-container">
+            {imageData && renderSlides}
+          </Carousel>
         </div>
       </div>
     <hr />

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { ServeIP } from '../IP';
 
-
 // community데이터 받아오
 
 // const cardInfo = 

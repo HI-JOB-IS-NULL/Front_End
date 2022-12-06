@@ -37,7 +37,7 @@ export default function Community() {
   useEffect(()=> {
     axios({
       method: 'GET',
-      url: `${ServeIP}/CustomRecipe/list?page=`+page
+      url: `${ServeIP}/CustomRecipe/get?page=`+page
     }).then(res => setItems(res.data.dtoList))
   }, [])
 

@@ -1,63 +1,63 @@
-
-import React, { createElement, useState } from 'react';
-import { Comment, Avatar, Tooltip, Input } from 'antd';
-import "antd/dist/antd.css";
-import {
-  LikeOutlined, DislikeFilled,
-  DislikeOutlined, LikeFilled
-} from '@ant-design/icons';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import Box from "./Box";
+import axios from "axios";
+import { getComments } from "./api";
 
 export default function CommentForm () {
-    const [likesCount, setLikesCount] = useState(0);
-    // To maintain Dislike state
-    const [dislikesCount, setDislikesCount] = useState(0);
-  
-    // To maintain action state
-    const [action, setAction] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [page, setPage] = useState(1);
+    let timeInterver = '';
 
+
+
+  const loadComments = async (page) => {
+    try {
+      const temp = await getComments(page, 10);
+      const tempComments = comments.concat(temp);
+      setComments(tempComments);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    loadComments(page);
+  }, [page]);
+
+  const scrollEvent = ()=>{
+    const scrollHeight = document.documentElement.scrollHeight;
+    const scrollTop = document.documentElement.scrollTop;
+    const clientHeight = document.documentElement.clientHeight;
+    console.log(scrollTop)
+    if (scrollTop + clientHeight >= scrollHeight - 950) {
+      setPage(page + 1);
+    }
+  }
+
+  const handleScroll = () => {
+    clearTimeout(timeInterver);
+    timeInterver = setTimeout(scrollEvent, 300)
+  };
+
+  
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  });
+
+  useEffect(()=>{
+    axios.get(``)
+    .then()
+  })
     return(
-        <Container>
-        <div style={{display: 'block', width: 700}}>
-            <Comment
-              author={<a>Gourav Hammad</a>}
-              avatar={<Avatar style={{ backgroundColor: 'green' }}>G</Avatar>}
-              content={
-                <p> 
-                 Greetings from GeeksforGeeks, I am sample comment.
-                 I am good, what about you?
-                </p>}
-              actions={[
-                <Tooltip title="Like">
-                  <span onClick={() => {
-                    setLikesCount(1);
-                    setDislikesCount(0);
-                    setAction('liked');
-                  }}>
-                    {createElement(action === 'liked' ? 
-                    LikeFilled : LikeOutlined)}
-                    {likesCount}
-                  </span>
-                </Tooltip>,
-                <Tooltip title="Dislike">
-                  <span onClick={() => {
-                    setLikesCount(0);
-                    setDislikesCount(1);
-                    setAction('disliked');
-                  }}>
-                    {React.createElement(action === 'disliked' ? 
-                    DislikeFilled : DislikeOutlined)}
-                    {dislikesCount}
-                  </span>
-                </Tooltip>
-              ]}
-              // 댓글 시간
-              datetime={'30-05-2021 11:09AM'}
-            />
-          </div>
-        </Container>
+        <>
+          {comments.map((item, key) => (
+          <Box key={item.id} id={item.id} email={item.email} body={item.body} />
+          ))}
+        </>
     )
 }
 
-const Container = styled.div`
-`
