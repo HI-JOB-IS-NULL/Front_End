@@ -20,7 +20,7 @@ export default function SearchBar({ placeholder }) {
   };
   function navigateToSearchRecipe() {
     console.log(inputValue);
-    // navigate("/searchRecipes/");
+    navigate("/searchRecipes/");
   }
   return (
     <Container>
