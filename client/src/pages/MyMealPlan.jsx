@@ -24,19 +24,22 @@ export default function MyMealPlan() {
     }
   }, [sendRequest]);
 
-  const deletePlan = (planId) => {
+  async function deletePlan(planId) {
     console.log("delete plan");
-    axios({
-      method: "get",
-      url: `${kServerIP}/MealPlan/removeMealPlan?planId=${planId}`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    setSendRequest(true);
-    console.log("set request true");
-    // window.location.reload();
-  };
+    try {
+      await axios({
+        method: "get",
+        url: `${kServerIP}/MealPlan/removeMealPlan?planId=${planId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setSendRequest(true);
+      console.log("set request true");
+    } catch (err) {
+      console.log(`ERROR: ${err}`);
+    }
+  }
 
   const mealPlans = mealPlanData?.map((dayOfWeek, index) => {
     return (
