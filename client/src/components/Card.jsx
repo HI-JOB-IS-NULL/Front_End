@@ -7,7 +7,12 @@ import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined";
 import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
 export default function Card(props) {
   const [isBooked, setIsBooked] = useState(false);
-  const [isCleared, setIsCleared] = useState(false);
+  const [isCleared, setIsCleared] = useState(props.clear_state);
+  const handleClick = () => {
+    setIsCleared(!isCleared);
+    props.changeStatus(props.planListId);
+  };
+
   return (
     <div className="card">
       <a href={`/recipe/${props.id}`}>
@@ -20,7 +25,7 @@ export default function Card(props) {
       </div>
       {props.clear_state != undefined && (
         <div
-          onClick={() => setIsCleared(!isCleared)}
+          onClick={handleClick}
           style={{
             cursor: "pointer",
             position: "absolute",

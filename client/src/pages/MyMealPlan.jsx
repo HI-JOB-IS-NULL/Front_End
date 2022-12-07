@@ -41,6 +41,21 @@ export default function MyMealPlan() {
     }
   }
 
+  async function changeStatus(planListId) {
+    console.log("change statue of plan");
+    try {
+      await axios({
+        method: "get",
+        url: `${kServerIP}/MealPlan/nser/ChangeStatus?planListId=${planListId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const mealPlans = mealPlanData?.map((dayOfWeek, index) => {
     return (
       <div
@@ -66,13 +81,15 @@ export default function MyMealPlan() {
         <div style={{ display: "flex", gap: "40px" }}>
           {dayOfWeek.meals.map((mealOfDay, index) => {
             return (
-              <div style={{ position: "relative" }}>
-                <Card
-                  key={index}
-                  {...mealOfDay}
-                  image={`https://spoonacular.com/recipeImages/${mealOfDay.id}-480x360.${mealOfDay.imageType}`}
-                />
-              </div>
+              <Card
+                key={index}
+                clear_state={mealOfDay.clear_state}
+                id={mealOfDay.recipeId}
+                title={mealOfDay.title}
+                changeStatus={changeStatus}
+                planListId={mealOfDay.id}
+                image={`https://spoonacular.com/recipeImages/${mealOfDay.id}-480x360.${mealOfDay.imageType}`}
+              />
             );
           })}
         </div>
