@@ -42,6 +42,7 @@
     "react-router-dom": "^6.4.3",
     "react-spinners": "^0.13.6",
     "react-toastify": "^9.1.1",
+    "react-tooltip": "^4.5.1",
     "reactstrap": "^9.1.5",
     "redux": "^4.2.0",
     "semantic-ui-react": "^2.1.4",

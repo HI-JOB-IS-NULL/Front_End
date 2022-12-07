@@ -29,29 +29,29 @@ const TextBodyLayout = styled.div`
   font-size: 18px;
 `;
 function Box({ id, email, body }) {
-    return (
-      <div>
-        <BoxLayout>
-          <TextLayout ht={21} mb={12} ai={"center"}>
-            <div style={{ height: "21px", marginRight: "12px" }}>
-              <b>Comment Id</b>
-            </div>
-            <div style={{ height: "21px" }}>{id}</div>
-          </TextLayout>
-          <TextLayout ht={21} mb={12} ai={"center"}>
-            <div style={{ height: "21px", marginRight: "12px" }}>
-              <b>Email</b>
-            </div>
-            <div style={{ height: "21px" }}>{email}</div>
-          </TextLayout>
-          <TextLayout ht={21} mb={2} ai={"center"}>
-            <b>Comment</b>
-          </TextLayout>
-          <TextBodyLayout mb={0} ai={"flex-start"}>
-            {body}
-          </TextBodyLayout>
-        </BoxLayout>
-      </div>
-    );
-  }
-  export default Box;
+  return (
+    <div style={{ marginTop: 30 }}>
+      <BoxLayout>
+        <TextLayout ht={21} mb={12} ai={"center"}>
+          <div style={{ height: "21px", marginRight: "12px" }}>
+            <b>Comment Id</b>
+          </div>
+          <div style={{ height: "21px" }}>{id}</div>
+        </TextLayout>
+        <TextLayout ht={21} mb={12} ai={"center"}>
+          <div style={{ height: "21px", marginRight: "12px" }}>
+            <b>Email</b>
+          </div>
+          <div style={{ height: "21px" }}>{email}</div>
+        </TextLayout>
+        <TextLayout ht={21} mb={2} ai={"center"}>
+          <b>Comment</b>
+        </TextLayout>
+        <TextBodyLayout mb={0} ai={"flex-start"}>
+          {body}
+        </TextBodyLayout>
+      </BoxLayout>
+    </div>
+  );
+}
+export default Box;

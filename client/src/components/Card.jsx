@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../css/Card.css";
-
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined";
