@@ -4,6 +4,8 @@ import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined";
 import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
+import Tippy from "@tippy.js/react";
+import "tippy.js/dist/tippy.css";
 export default function Card(props) {
   const [isBooked, setIsBooked] = useState(false);
   const [isCleared, setIsCleared] = useState(props.clear_state);
@@ -35,7 +37,9 @@ export default function Card(props) {
           {isCleared ? (
             <BeenhereRoundedIcon fontSize="large" color="success" />
           ) : (
-            <BeenhereOutlinedIcon fontSize="large" color="success" />
+            <Tippy content="Click if you done the Plan" arrow={false}>
+              <BeenhereOutlinedIcon fontSize="large" color="success" />
+            </Tippy>
           )}
         </div>
       )}

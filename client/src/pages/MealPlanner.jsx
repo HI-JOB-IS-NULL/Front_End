@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import InputTags from "../components/InputTags";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
-// import AddToPlan from "../components/AddToPlan";
 import axios from "axios";
-import { ServeIP, kServerIP } from "../IP";
+import { kServerIP } from "../IP";
 import Card from "../components/Card";
+import Tippy from "@tippy.js/react";
+import "tippy.js/dist/tippy.css";
 
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -185,6 +186,7 @@ export default function mealPlanner() {
                     name="duration"
                   >
                     <option>Day</option>
+
                     {mealPlanCount === "onlyDay" ? (
                       <option disabled={true}>Week</option>
                     ) : (

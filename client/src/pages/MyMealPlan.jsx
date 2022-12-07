@@ -4,7 +4,8 @@ import Card from "../components/Card";
 import { kServerIP } from "../IP";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import styled from "styled-components";
-
+import Tippy from "@tippy.js/react";
+import "tippy.js/dist/tippy.css";
 export default function MyMealPlan() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [mealPlanData, setMealPlanData] = useState();
@@ -61,11 +62,8 @@ export default function MyMealPlan() {
 
   const mealPlans = mealPlanData?.map((dayOfWeek, index) => {
     return (
-      <Container>
-        <div
-          key={index}
-          style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-        >
+      <Container key={index}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <span className="light-gray-font" style={{ marginRight: "auto" }}>
               Calories: {dayOfWeek.nutrients.calories}&nbsp;&nbsp;
@@ -74,18 +72,14 @@ export default function MyMealPlan() {
               {dayOfWeek.nutrients.fat}
               &nbsp;&nbsp; Protein: {dayOfWeek.nutrients.protein}
             </span>
-            {/* <button
-            onClick={() => deletePlan(dayOfWeek.plan_id)}
-            className="simple-button"
-            style={{ width: "125px", height: "40px" }}
-          >
-            Delete today Plan
-          </button> */}
 
-            <DeleteRoundedIcon
-              className="delete-icon"
-              onClick={() => deletePlan(dayOfWeek.plan_id)}
-            />
+            <Tippy content="Delete today Plan">
+              <DeleteRoundedIcon
+                fontSize="large"
+                className="delete-icon"
+                onClick={() => deletePlan(dayOfWeek.plan_id)}
+              />
+            </Tippy>
           </div>
 
           <div style={{ display: "flex", gap: "40px" }}>
@@ -118,7 +112,6 @@ const Container = styled.div`
   .delete-icon {
     cursor: pointer;
     &:hover {
-      font-size: large;
       color: green;
     }
   }
