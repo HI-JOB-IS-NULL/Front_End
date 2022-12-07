@@ -3,9 +3,11 @@ import "../css/Card.css";
 
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
+import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined";
+import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
 export default function Card(props) {
   const [isBooked, setIsBooked] = useState(false);
-
+  const [isCleared, setIsCleared] = useState(false);
   return (
     <div className="card">
       <a href={`/recipe/${props.id}`}>
@@ -16,6 +18,23 @@ export default function Card(props) {
       <div className="card--bookmark" onClick={() => setIsBooked(!isBooked)}>
         {isBooked ? <BookmarkOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
       </div>
+      {props.clear_state != undefined && (
+        <div
+          onClick={() => setIsCleared(!isCleared)}
+          style={{
+            cursor: "pointer",
+            position: "absolute",
+            top: "5px",
+            right: "5px",
+          }}
+        >
+          {isCleared ? (
+            <BeenhereRoundedIcon fontSize="large" color="success" />
+          ) : (
+            <BeenhereOutlinedIcon fontSize="large" color="success" />
+          )}
+        </div>
+      )}
     </div>
   );
 }

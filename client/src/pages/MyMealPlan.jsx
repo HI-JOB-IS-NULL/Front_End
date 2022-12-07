@@ -66,11 +66,13 @@ export default function MyMealPlan() {
         <div style={{ display: "flex", gap: "40px" }}>
           {dayOfWeek.meals.map((mealOfDay, index) => {
             return (
-              <Card
-                key={index}
-                {...mealOfDay}
-                image={`https://spoonacular.com/recipeImages/${mealOfDay.id}-480x360.${mealOfDay.imageType}`}
-              />
+              <div style={{ position: "relative" }}>
+                <Card
+                  key={index}
+                  {...mealOfDay}
+                  image={`https://spoonacular.com/recipeImages/${mealOfDay.id}-480x360.${mealOfDay.imageType}`}
+                />
+              </div>
             );
           })}
         </div>
