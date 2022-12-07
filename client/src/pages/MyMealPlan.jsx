@@ -4,7 +4,7 @@ import Card from "../components/Card";
 import { kServerIP } from "../IP";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import styled from "styled-components";
-import ReactTooltip from "react-tooltip";
+
 export default function MyMealPlan() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [mealPlanData, setMealPlanData] = useState();

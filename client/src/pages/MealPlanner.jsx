@@ -185,7 +185,11 @@ export default function mealPlanner() {
                     name="duration"
                   >
                     <option>Day</option>
-                    <option>Week</option>
+                    {mealPlanCount === "onlyDay" ? (
+                      <option disabled={true}>Week</option>
+                    ) : (
+                      <option>Week</option>
+                    )}
                   </select>
                 </div>
               </div>
@@ -232,7 +236,18 @@ export default function mealPlanner() {
           )}
         </div>
       ) : (
-        <h1 style={{}}>You Already Planed your week good job!</h1>
+        <div
+          style={{
+            display: "flex",
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <h1>You Already Planed your week good job!</h1>
+        </div>
       )}
     </Container>
   );
