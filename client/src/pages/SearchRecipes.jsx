@@ -2,6 +2,8 @@ import React from "react";
 import SearchBar from "../components/SearchBar";
 import styled from "styled-components";
 import { Tabs } from "antd";
+import SearchWithIngredients from "../components/SearchWithIngredients";
+
 export default function SearchRecipes() {
   return (
     <Container>
@@ -34,7 +36,7 @@ export default function SearchRecipes() {
         <div className="filter-tabs">
           <Tabs>
             <Tabs.TabPane tab="INGREDIENTS" key="ingredients">
-              <div>INGREDIENTS</div>
+              <SearchWithIngredients />
             </Tabs.TabPane>
             <Tabs.TabPane tab="DIETS" key="diets">
               <div>DIETS</div>
@@ -84,6 +86,9 @@ const Container = styled.div`
       gap: 20px;
       border-bottom: 2px solid #e3e3e3;
       padding: 10px 0;
+      width: 100%;
+    }
+    .filter-tabs {
       width: 100%;
     }
     .search-pantry {
