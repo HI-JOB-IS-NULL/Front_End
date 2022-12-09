@@ -2,38 +2,78 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SuggestionsInput from "./SuggestionsInput";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 export default function SearchWithIngredients() {
+  const [includeIng, setIncludeIng] = useState([]);
+  console.log(includeIng);
+  const [excludeIng, setExcludeIng] = useState([]);
+  console.log(excludeIng);
+  const removeFromInChoices = (indexToRemove) => {
+    setIncludeIng(includeIng.filter((_, index) => index !== indexToRemove));
+  };
+
+  const removeFromExChoices = (indexToRemove) => {
+    setExcludeIng(excludeIng.filter((_, index) => index !== indexToRemove));
+  };
   return (
     <Container>
       <div className="filter-wrapper">
         <div className="with-ingredients-wrapper">
           <div className="suggestion-wrapper">
             <div className="input-wrapper">
-              {/* <input
-                type="text"
+              <SuggestionsInput
                 placeholder="With Ingredients"
-                className="suggestion-input"
+                width="500"
+                setIncludeIng={setIncludeIng}
+                includeIng={includeIng}
+                setInputValue={false}
               />
-              <SearchOutlinedIcon className="search-icon" fontSize="large" /> */}
-              <SuggestionsInput placeholder="With Ingredients" width="500" />
               <SearchOutlinedIcon className="search-icon" fontSize="large" />
             </div>
-
-            <div className="suggestion-container"></div>
+            <div className="ingredient-choice-column">
+              <ul className="ingredient-choice-list">
+                {includeIng.map((ing, index) => {
+                  return (
+                    <li key={index} className="ingredient-choice">
+                      <span style={{ marginRight: "auto" }}>{ing}</span>
+                      <CloseOutlinedIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => removeFromInChoices(index)}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
         </div>
         <div className="without-ingredients-wrapper">
           <div className="suggestion-wrapper">
             <div className="input-wrapper">
-              <input
-                type="text"
+              <SuggestionsInput
                 placeholder="Without Ingredients"
-                className="suggestion-input"
+                width="500"
+                setIncludeIng={setExcludeIng}
+                includeIng={excludeIng}
+                setInputValue={false}
               />
               <SearchOutlinedIcon className="search-icon" fontSize="large" />
             </div>
-
-            <div className="suggestion-container"></div>
+            <div className="ingredient-choice-column">
+              <ul className="ingredient-choice-list">
+                {excludeIng.map((ing, index) => {
+                  return (
+                    <li key={index} className="ingredient-choice">
+                      <span style={{ marginRight: "auto" }}>{ing}</span>
+                      <CloseOutlinedIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => removeFromExChoices(index)}
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -71,5 +111,16 @@ const Container = styled.div`
         margin-left: 30px;
       }
     }
+  }
+  .ingredient-choice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .ingredient-choice {
+    display: flex;
+    width: 100%;
   }
 `;
