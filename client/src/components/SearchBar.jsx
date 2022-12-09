@@ -3,10 +3,10 @@ import styled from "styled-components";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import RecipeQueryData from "../RecipeQueryData";
 import { useNavigate } from "react-router-dom";
-export default function SearchBar({ placeholder }) {
-  // const [searchKeyword, setSearchKeyword] = useState("");
+export default function SearchBar(props) {
+  const { placeholder, setNavigate, inputData } = props;
   const [isFocused, setIsFocused] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(inputData);
   const [isHovered, setIsHovered] = useState(false);
   const suggestions = RecipeQueryData.map((item) => item.query);
   const navigate = useNavigate();
@@ -55,7 +55,11 @@ export default function SearchBar({ placeholder }) {
                   {isMatch && (
                     <div
                       className="suggestion"
-                      onClick={() => navigateToSearchRecipe(suggestion)}
+                      onClick={() => {
+                        setNavigate
+                          ? navigateToSearchRecipe(suggestion)
+                          : setInputValue(suggestion);
+                      }}
                     >
                       {suggestion}
                     </div>
@@ -79,7 +83,6 @@ const Container = styled.div`
       position: relative;
       display: flex;
       align-items: center;
-
       .search-inputs-input {
         display: block;
         width: 500px;
@@ -91,7 +94,6 @@ const Container = styled.div`
         line-height: 20px;
         outline: none;
       }
-
       .search--icon {
         position: absolute;
         padding-left: 15px;

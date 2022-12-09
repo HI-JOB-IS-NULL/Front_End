@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import styled from "styled-components";
 import { Tabs } from "antd";
@@ -7,11 +8,17 @@ import SearchWithIngredients from "../components/SearchWithIngredients";
 import SearchWithAllergies from "../components/SearchWithAllergies";
 import SearchWithCuisines from "../components/searchWithCuisines";
 export default function SearchRecipes() {
+  const { recipeQuery } = useParams();
+  console.log(recipeQuery);
   return (
     <Container>
       <div className="search-tools">
         <div className="serch-box">
-          <SearchBar placeholder="Search Recipes" />
+          <SearchBar
+            placeholder="Search Recipes"
+            setNavigate={false}
+            inputData={recipeQuery}
+          />
         </div>
         <div className="filter">
           <span

@@ -45,7 +45,7 @@ function App() {
         <Route exact path="/checkout/:product_id" element={<Checkout />} />
         <Route
           exact
-          path="/searchRecipes/:recipe_query"
+          path="/searchRecipes/:recipeQuery"
           element={<SearchRecipes />}
         />
         <Route exact path="/mypage" element={<Mypage />} />

@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 export default function Recipe() {
   const { recipeId } = useParams();
+  console.log(recipeId);
   let stepsDetail;
   let steps;
 
