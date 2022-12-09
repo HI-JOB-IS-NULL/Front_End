@@ -5,6 +5,7 @@ import { Tabs } from "antd";
 import SearchWithDiets from "../components/SearchWithDiets";
 import SearchWithIngredients from "../components/SearchWithIngredients";
 import SearchWithAllergies from "../components/SearchWithAllergies";
+import SearchWithCuisines from "../components/searchWithCuisines";
 export default function SearchRecipes() {
   return (
     <Container>
@@ -45,11 +46,11 @@ export default function SearchRecipes() {
             <Tabs.TabPane tab="ALLERGIES" key="allergies">
               <SearchWithAllergies />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="CUISINES" key="cuisines">
-              <div>CUISINES</div>
+            <Tabs.TabPane tab="INCLUDE CUISINES" key="includeCuisines">
+              <SearchWithCuisines />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="EQUIPMENTS" key="equipments">
-              <div>EQUIPMENTS</div>
+            <Tabs.TabPane tab="EXCLUDE CUISINES" key="excludeCuisines">
+              <SearchWithCuisines />
             </Tabs.TabPane>
           </Tabs>
         </div>
