@@ -5,7 +5,7 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 
 export default function SuggestionsInput(props) {
   const suggestions = IngredientsData.map((item) => item.name);
-  const [isFocused, setIsFocused] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isHovered, setIsHovered] = useState(false);
 
