@@ -1,5 +1,4 @@
 import React from "react";
-
 import GridChoices from "./GridChoices";
 export default function SearchWithDiets() {
   const diets = [
@@ -17,5 +16,5 @@ export default function SearchWithDiets() {
     "Whole30",
   ];
 
-  return <GridChoices group={diets} />;
+  return <GridChoices group={diets} multiple={false} />;
 }

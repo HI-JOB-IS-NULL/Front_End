@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { Tabs } from "antd";
 import SearchWithDiets from "../components/SearchWithDiets";
 import SearchWithIngredients from "../components/SearchWithIngredients";
-
+import SearchWithAllergies from "../components/SearchWithAllergies";
 export default function SearchRecipes() {
   return (
     <Container>
@@ -43,7 +43,7 @@ export default function SearchRecipes() {
               <SearchWithDiets />
             </Tabs.TabPane>
             <Tabs.TabPane tab="ALLERGIES" key="allergies">
-              <div>ALLERGIES</div>
+              <SearchWithAllergies />
             </Tabs.TabPane>
             <Tabs.TabPane tab="CUISINES" key="cuisines">
               <div>CUISINES</div>
