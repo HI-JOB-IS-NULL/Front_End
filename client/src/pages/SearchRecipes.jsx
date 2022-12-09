@@ -2,6 +2,7 @@ import React from "react";
 import SearchBar from "../components/SearchBar";
 import styled from "styled-components";
 import { Tabs } from "antd";
+import SearchWithDiets from "../components/SearchWithDiets";
 import SearchWithIngredients from "../components/SearchWithIngredients";
 
 export default function SearchRecipes() {
@@ -39,7 +40,7 @@ export default function SearchRecipes() {
               <SearchWithIngredients />
             </Tabs.TabPane>
             <Tabs.TabPane tab="DIETS" key="diets">
-              <div>DIETS</div>
+              <SearchWithDiets />
             </Tabs.TabPane>
             <Tabs.TabPane tab="ALLERGIES" key="allergies">
               <div>ALLERGIES</div>
