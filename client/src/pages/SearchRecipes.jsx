@@ -11,6 +11,9 @@ import { kServerIP } from "../IP";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
+import { Upload } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 export default function SearchRecipes() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const { recipeQuery } = useParams();
@@ -19,6 +22,9 @@ export default function SearchRecipes() {
   const [showFilter, setShowFilter] = useState(false);
   const [tabKey, setTabKey] = useState(10);
   const [data, setData] = useState();
+  const [showUploadImg, setshowUploadImg] = useState(false);
+  const [image, setImage] = useState();
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     withIng: "",
@@ -32,6 +38,7 @@ export default function SearchRecipes() {
   console.log(query);
 
   useEffect(() => {
+    console.log("search recipe");
     const filterData = new FormData();
     filterData.append("query", query);
     const excludeIngredients = formData.withoutIng.toString();
@@ -68,6 +75,74 @@ export default function SearchRecipes() {
         });
   }, [formData, query]);
 
+  const InputImage = (e) => {
+    setImage(Array.from(e.fileList));
+  };
+
+  // const uploadImg = () => {
+  //   console.log("search recipe with image");
+  //   const imageData = new FormData();
+  //   image.forEach((item) => {
+  //     imageData.append("uploadFile", item.originFileObj);
+  //   });
+  //   accessToken
+  //     ? axios({
+  //         method: "post",
+  //         url: `${kServerIP}/RecipeDB/foodImageClassification`,
+  //         data: imageData,
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       }).then(function (res) {
+  //         console.log(res);
+  //         setData(res);
+  //         setQuery(res.data.query);
+  //         console.log(res.data.query);
+  //       })
+  //     : axios({
+  //         method: "post",
+  //         url: `${kServerIP}/RecipeDB/nser/foodImageClassification`,
+  //         data: imageData,
+  //       }).then(function (res) {
+  //         console.log(res);
+  //         setData(res);
+  //         setQuery(res.data.query);
+  //       });
+  // };
+
+  async function uploadImg() {
+    console.log("search recipe with image");
+    const imageData = new FormData();
+    image.forEach((item) => {
+      imageData.append("uploadFile", item.originFileObj);
+    });
+    accessToken
+      ? await axios({
+          method: "post",
+          url: `${kServerIP}/RecipeDB/foodImageClassification`,
+          data: imageData,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }).then(function (res) {
+          console.log(res);
+          setData(res);
+          // setQuery(res.data.query);
+          // console.log(res.data.query);
+        })
+      : await axios({
+          method: "post",
+          url: `${kServerIP}/RecipeDB/nser/foodImageClassification`,
+          data: imageData,
+        }).then(function (res) {
+          console.log(res);
+          setData(res);
+          // setQuery(res.data.query);
+        });
+    setQuery(data.data.query);
+    console.log(data.data.query);
+  }
+
   const cards = data?.data.results.map((item) => {
     return <Card key={item.id} {...item} />;
   });
@@ -78,7 +153,7 @@ export default function SearchRecipes() {
           <SearchBar
             placeholder="Search Recipes"
             setNavigate={false}
-            inputData={recipeQuery}
+            inputData={query}
             changeQuery={(query) => setQuery(query)}
           />
         </div>
@@ -100,6 +175,7 @@ export default function SearchRecipes() {
               color: "green",
               fontSize: "15px",
               cursor: "pointer",
+              marginRight: "auto",
             }}
             onClick={() => {
               setTabKey(tabKey + 1);
@@ -114,6 +190,15 @@ export default function SearchRecipes() {
             }}
           >
             Reset
+          </span>
+          <span
+            style={{
+              fontSize: "15px",
+              cursor: "pointer",
+            }}
+            onClick={() => setshowUploadImg(true)}
+          >
+            Find Recipe with Image
           </span>
         </div>
         {showFilter && (
@@ -146,6 +231,20 @@ export default function SearchRecipes() {
             </Tabs>
           </div>
         )}
+        {showUploadImg && (
+          <div style={{ width: "100%" }}>
+            <div className="upload-image">
+              <Upload listType="picture-card" onChange={InputImage}>
+                <div>
+                  <PlusOutlined />
+                </div>
+              </Upload>
+              <button className="simple-button" onClick={uploadImg}>
+                Upload Image
+              </button>
+            </div>
+          </div>
+        )}
         {showAd && (
           <div className="search-pantry">
             <p className="normal-text">
@@ -164,7 +263,9 @@ export default function SearchRecipes() {
             </div>
           </div>
         )}
-        <section className="cards--list">{cards}</section>
+        <section className="cards--list" style={{ width: "100%" }}>
+          {cards}
+        </section>
       </div>
     </Container>
   );
@@ -192,14 +293,14 @@ const Container = styled.div`
       width: 100%;
     }
     .search-pantry {
-      /* position: absolute; */
+      width: 100%;
       background-color: #f5f5f5;
       padding: 32px 0 32px 40px;
-      width: calc(100% - 40px);
+      /* width: calc(100% - 40px); */
       .search-pantry-buttons {
         display: flex;
         flex-direction: row;
-        gap: 20px;
+        gap: 30px;
       }
     }
   }

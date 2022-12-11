@@ -17,7 +17,6 @@ import { PlusOutlined } from "@ant-design/icons";
 import ImageAnalyzResult from "../components/ImageAnalyzResult";
 import Spinner from "react-bootstrap/Spinner";
 
-// import imageData from "../imageData";
 export default function PantryReadyRecipes() {
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -101,7 +100,6 @@ export default function PantryReadyRecipes() {
       console.log(res);
       setImageResult(res);
     });
-    // setImageResult(imageData);
   };
 
   return (
@@ -256,6 +254,7 @@ const Container = styled.div`
       .upload-image {
         display: flex;
         flex-direction: column;
+
         gap: 10px;
         margin-right: 20px;
       }
@@ -264,9 +263,6 @@ const Container = styled.div`
         overflow-y: auto;
         margin-top: 30px;
       }
-
-      /* max-height: 190px;
-      overflow-y: auto; */
     }
 
     .pantry-ingredient-search {

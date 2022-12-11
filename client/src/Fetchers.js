@@ -1,10 +1,10 @@
 import axios from "axios";
 
-import { ServeIP } from "./IP";
+import { kServerIP } from "./IP";
 
 export async function getRecipeInfoById(recipeId) {
   const { data } = await axios.get(
-    `${ServeIP}/RecipeDB/detail_recipe?recipeId=${recipeId} `
+    `${kServerIP}/RecipeDB/detail_recipe?recipeId=${recipeId} `
     // `http://automealbackend-env.eba-ikpeu3mz.ap-northeast-2.elasticbeanstalk.com/RecipeDB/detail_recipe?recipeId=${recipeId} `
   );
   return data;

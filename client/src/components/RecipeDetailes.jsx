@@ -5,7 +5,7 @@ import styled from "styled-components";
 import AddToPlan from "./AddToPlan";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
-import { apiKey3 } from "../IP";
+import { kServerIP } from "../IP";
 import axios from "axios";
 import { getRecipeInfoById } from "../Fetchers";
 
