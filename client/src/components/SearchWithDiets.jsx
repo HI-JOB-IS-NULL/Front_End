@@ -1,6 +1,6 @@
 import React from "react";
 import GridChoices from "./GridChoices";
-export default function SearchWithDiets() {
+export default function SearchWithDiets({ setFormData, filterValue }) {
   const diets = [
     "none",
     "Gluten Free",
@@ -16,5 +16,12 @@ export default function SearchWithDiets() {
     "Whole30",
   ];
 
-  return <GridChoices group={diets} multiple={false} />;
+  return (
+    <GridChoices
+      group={diets}
+      multiple={false}
+      setFormData={setFormData}
+      filterValue={filterValue}
+    />
+  );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import styled from "styled-components";
@@ -9,7 +9,18 @@ import SearchWithAllergies from "../components/SearchWithAllergies";
 import SearchWithCuisines from "../components/searchWithCuisines";
 export default function SearchRecipes() {
   const { recipeQuery } = useParams();
-  console.log(recipeQuery);
+  const [showFilter, setShowFilter] = useState(false);
+  const [tabKey, setTabKey] = useState(10);
+  const [formData, setFormData] = useState({
+    withIng: "",
+    withoutIng: "",
+    diet: "",
+    allergies: "",
+    inCuisines: "",
+    exCuisines: "",
+  });
+  console.log(formData);
+
   return (
     <Container>
       <div className="search-tools">
@@ -29,6 +40,7 @@ export default function SearchRecipes() {
               paddingRight: "20px",
               cursor: "pointer",
             }}
+            onClick={() => setShowFilter(true)}
           >
             Filter
           </span>
@@ -38,29 +50,51 @@ export default function SearchRecipes() {
               fontSize: "15px",
               cursor: "pointer",
             }}
+            onClick={() => {
+              setTabKey(tabKey + 1);
+              setFormData({
+                withIng: "",
+                withoutIng: "",
+                diet: "",
+                allergies: "",
+                inCuisines: "",
+                exCuisines: "",
+              });
+            }}
           >
             Reset
           </span>
         </div>
-        <div className="filter-tabs">
-          <Tabs>
-            <Tabs.TabPane tab="INGREDIENTS" key="ingredients">
-              <SearchWithIngredients />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="DIETS" key="diets">
-              <SearchWithDiets />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="ALLERGIES" key="allergies">
-              <SearchWithAllergies />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="INCLUDE CUISINES" key="includeCuisines">
-              <SearchWithCuisines />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="EXCLUDE CUISINES" key="excludeCuisines">
-              <SearchWithCuisines />
-            </Tabs.TabPane>
-          </Tabs>
-        </div>
+        {showFilter && (
+          <div className="filter-tabs">
+            <Tabs key={tabKey}>
+              <Tabs.TabPane tab="INGREDIENTS" key="ingredients">
+                <SearchWithIngredients setFormData={setFormData} />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="DIETS" key="diets">
+                <SearchWithDiets setFormData={setFormData} filterValue="diet" />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="ALLERGIES" key="allergies">
+                <SearchWithAllergies
+                  setFormData={setFormData}
+                  filterValue="allergies"
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="INCLUDE CUISINES" key="includeCuisines">
+                <SearchWithCuisines
+                  setFormData={setFormData}
+                  filterValue="inCuisines"
+                />
+              </Tabs.TabPane>
+              <Tabs.TabPane tab="EXCLUDE CUISINES" key="excludeCuisines">
+                <SearchWithCuisines
+                  setFormData={setFormData}
+                  filterValue="exCuisines"
+                />
+              </Tabs.TabPane>
+            </Tabs>
+          </div>
+        )}
         <div className="search-pantry">
           <p className="normal-text">
             Loking for recipes you can make today without a trip to the store?

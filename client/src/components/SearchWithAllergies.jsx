@@ -1,6 +1,6 @@
 import React from "react";
 import GridChoices from "./GridChoices";
-export default function SearchWithAllergies() {
+export default function SearchWithAllergies({ setFormData, filterValue }) {
   const allergies = [
     "Dairy Free",
     "Peanut Free",
@@ -15,5 +15,12 @@ export default function SearchWithAllergies() {
     "Shellfish Free",
     "Wheat Free",
   ];
-  return <GridChoices group={allergies} multiple={true} />;
+  return (
+    <GridChoices
+      group={allergies}
+      multiple={true}
+      setFormData={setFormData}
+      filterValue={filterValue}
+    />
+  );
 }

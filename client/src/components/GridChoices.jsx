@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 
@@ -9,6 +9,15 @@ export default function GridChoices(props) {
     console.log("remove item from isSelected");
     setIsSelected(isSelected.filter((element) => element !== itemToRemove));
   };
+
+  useEffect(() => {
+    props.setFormData((prevState) => {
+      return {
+        ...prevState,
+        [props.filterValue]: isSelected,
+      };
+    });
+  }, [isSelected]);
 
   return (
     <Container>

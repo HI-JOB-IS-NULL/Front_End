@@ -1,6 +1,6 @@
 import React from "react";
 import GridChoices from "./GridChoices";
-export default function SearchWithCuisines() {
+export default function SearchWithCuisines({ setFormData, filterValue }) {
   const cuisines = [
     "African",
     "German",
@@ -26,5 +26,12 @@ export default function SearchWithCuisines() {
     "French",
     "Latin American",
   ];
-  return <GridChoices group={cuisines} multiple={true} />;
+  return (
+    <GridChoices
+      group={cuisines}
+      multiple={true}
+      setFormData={setFormData}
+      filterValue={filterValue}
+    />
+  );
 }

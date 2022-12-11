@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SuggestionsInput from "./SuggestionsInput";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-export default function SearchWithIngredients() {
+export default function SearchWithIngredients({ setFormData }) {
   const [includeIng, setIncludeIng] = useState([]);
   console.log(includeIng);
   const [excludeIng, setExcludeIng] = useState([]);
@@ -15,6 +15,25 @@ export default function SearchWithIngredients() {
   const removeFromExChoices = (indexToRemove) => {
     setExcludeIng(excludeIng.filter((_, index) => index !== indexToRemove));
   };
+
+  useEffect(() => {
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        withIng: includeIng,
+      };
+    });
+  }, [includeIng]);
+
+  useEffect(() => {
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        withoutIng: excludeIng,
+      };
+    });
+  }, [excludeIng]);
+
   return (
     <Container>
       <div className="filter-wrapper">
