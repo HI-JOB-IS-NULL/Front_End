@@ -7,10 +7,16 @@ import SearchWithDiets from "../components/SearchWithDiets";
 import SearchWithIngredients from "../components/SearchWithIngredients";
 import SearchWithAllergies from "../components/SearchWithAllergies";
 import SearchWithCuisines from "../components/searchWithCuisines";
+import { kServerIP } from "../IP";
+import Card from "../components/Card";
+import axios from "axios";
 export default function SearchRecipes() {
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const { recipeQuery } = useParams();
+  const [query, setQuery] = useState(recipeQuery);
   const [showFilter, setShowFilter] = useState(false);
   const [tabKey, setTabKey] = useState(10);
+  const [data, setData] = useState();
   const [formData, setFormData] = useState({
     withIng: "",
     withoutIng: "",
@@ -20,7 +26,48 @@ export default function SearchRecipes() {
     exCuisines: "",
   });
   console.log(formData);
+  console.log(query);
 
+  useEffect(() => {
+    const filterData = new FormData();
+    filterData.append("query", query);
+    const excludeIngredients = formData.withoutIng.toString();
+    filterData.append("excludeIngredients", excludeIngredients);
+    const includeIngredients = formData.withIng.toString();
+    filterData.append("includeIngredients", includeIngredients);
+    const intolerances = formData.allergies.toString();
+    filterData.append("intolerances", intolerances);
+    filterData.append("diet", formData.diet);
+    const cuisine = formData.inCuisines.toString();
+    filterData.append("cuisine", cuisine);
+    const excludeCuisine = formData.exCuisines.toString();
+    filterData.append("excludeCuisine", excludeCuisine);
+
+    accessToken
+      ? axios({
+          method: "post",
+          url: `${kServerIP}/RecipeDB/searchRecipes`,
+          data: filterData,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }).then((res) => {
+          console.log(res);
+          setData(res);
+        })
+      : axios({
+          method: "post",
+          url: `${kServerIP}/RecipeDB/nser/searchRecipes`,
+          data: filterData,
+        }).then((res) => {
+          console.log(res);
+          setData(res);
+        });
+  }, [formData, query]);
+
+  const cards = data?.data.results.map((item) => {
+    return <Card key={item.id} {...item} />;
+  });
   return (
     <Container>
       <div className="search-tools">
@@ -29,6 +76,7 @@ export default function SearchRecipes() {
             placeholder="Search Recipes"
             setNavigate={false}
             inputData={recipeQuery}
+            changeQuery={(query) => setQuery(query)}
           />
         </div>
         <div className="filter">
@@ -108,6 +156,7 @@ export default function SearchRecipes() {
             </button>
           </div>
         </div>
+        <section className="cards--list">{cards}</section>
       </div>
     </Container>
   );

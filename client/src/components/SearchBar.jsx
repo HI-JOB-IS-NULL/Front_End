@@ -24,7 +24,11 @@ export default function SearchBar(props) {
             placeholder={placeholder}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyUp={(e) =>
-              e.key === "Enter" ? navigateToSearchRecipe() : null
+              e.key === "Enter"
+                ? setNavigate
+                  ? navigateToSearchRecipe(inputValue)
+                  : () => props.changeQuery(inputValue)
+                : null
             }
             onFocus={() => setIsFocused(true)}
             onBlur={() => {
@@ -36,7 +40,14 @@ export default function SearchBar(props) {
             className="search-inputs-input"
           />
           <div className="search--icon">
-            <SearchOutlinedIcon style={{ cursor: "pointer" }} />
+            <SearchOutlinedIcon
+              style={{ cursor: "pointer" }}
+              onClick={
+                setNavigate
+                  ? () => navigateToSearchRecipe(inputValue)
+                  : () => props.changeQuery(inputValue)
+              }
+            />
           </div>
         </div>
         {isFocused && (
@@ -59,6 +70,7 @@ export default function SearchBar(props) {
                         setNavigate
                           ? navigateToSearchRecipe(suggestion)
                           : setInputValue(suggestion);
+                        () => props.changeQuery(inputValue);
                       }}
                     >
                       {suggestion}
@@ -102,7 +114,7 @@ const Container = styled.div`
     .input-suggestion {
       box-shadow: 0 0 14px rgb(0 0 0 / 8%);
       position: absolute;
-      top: 45px;
+      top: 100px;
       left: 10px;
       max-height: 150px;
       overflow-y: auto;
