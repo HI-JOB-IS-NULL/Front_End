@@ -8,15 +8,18 @@ import SearchWithIngredients from "../components/SearchWithIngredients";
 import SearchWithAllergies from "../components/SearchWithAllergies";
 import SearchWithCuisines from "../components/searchWithCuisines";
 import { kServerIP } from "../IP";
+import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import axios from "axios";
 export default function SearchRecipes() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const { recipeQuery } = useParams();
+  const [showAd, setShowAd] = useState(true);
   const [query, setQuery] = useState(recipeQuery);
   const [showFilter, setShowFilter] = useState(false);
   const [tabKey, setTabKey] = useState(10);
   const [data, setData] = useState();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     withIng: "",
     withoutIng: "",
@@ -143,19 +146,24 @@ export default function SearchRecipes() {
             </Tabs>
           </div>
         )}
-        <div className="search-pantry">
-          <p className="normal-text">
-            Loking for recipes you can make today without a trip to the store?
-          </p>
-          <div className="search-pantry-buttons ">
-            <button className="green-button">
-              Yes, Find Pantry Ready Recipes
-            </button>
-            <button className="green-button">
-              No, I'm Looking for Inspiration
-            </button>
+        {showAd && (
+          <div className="search-pantry">
+            <p className="normal-text">
+              Loking for recipes you can make today without a trip to the store?
+            </p>
+            <div className="search-pantry-buttons ">
+              <button
+                className="green-button"
+                onClick={() => navigate("/readyToCook")}
+              >
+                Yes, Find Pantry Ready Recipes
+              </button>
+              <button className="green-button" onClick={() => setShowAd(false)}>
+                No, I'm Looking for Inspiration
+              </button>
+            </div>
           </div>
-        </div>
+        )}
         <section className="cards--list">{cards}</section>
       </div>
     </Container>
