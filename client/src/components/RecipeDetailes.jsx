@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import "../css/RecipeDetailes.css";
 import styled from "styled-components";
 import AddToPlan from "./AddToPlan";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
+import LoginModal from "../components/LoginModal";
 import { kServerIP } from "../IP";
 import axios from "axios";
 import { getRecipeInfoById } from "../Fetchers";
@@ -15,12 +16,31 @@ export default function RecipeDetails({ recipeId }) {
   );
 
   const [isBooked, setIsBooked] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
+
+  if (showLogin && accessToken) {
+    setShowLogin(false);
+  }
+  useEffect(() => {
+    const formData = new FormData();
+    formData.append("recipe_id", recipeId);
+    axios({
+      method: "post",
+      url: `${kServerIP}/RecipeDB/ChangeBookmark`,
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }, [isBooked]);
 
   if (data) {
     console.log(data);
   }
   return (
     <Container>
+      {showLogin && <LoginModal setShowLogin={setShowLogin} />}
       {data ? (
         <>
           <div className="recipe-summary-wrapper">
@@ -48,12 +68,12 @@ export default function RecipeDetails({ recipeId }) {
                   <span className=" font-normal p-text">Calories</span>
                 </div>
               </div>
-              <div className="recipe--detailes-mealPlan">
-                <AddToPlan />
-              </div>
+              <div className="recipe--detailes-mealPlan"></div>
               <div
                 className="recipe--detailes-bookmark"
-                onClick={() => setIsBooked(!isBooked)}
+                onClick={() => {
+                  accessToken ? setIsBooked(!isBooked) : setShowLogin(true);
+                }}
               >
                 {isBooked ? (
                   <BookmarkOutlinedIcon fontSize="large" />

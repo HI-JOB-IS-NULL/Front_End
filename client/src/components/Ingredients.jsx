@@ -93,7 +93,6 @@ export default function Ingredients({ recipeId }) {
                   )}
                 </div>
               </div>
-              <AddToPlan />
             </div>
           </div>
         </div>
