@@ -6,11 +6,14 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import styled from "styled-components";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
+import RestartAltOutlinedIcon from "@mui/icons-material/RestartAltOutlined";
 export default function MyMealPlan() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [mealPlanData, setMealPlanData] = useState();
   const [sendRequest, setSendRequest] = useState(false);
   const [bookmarkList, setBookmarkList] = useState([]);
+
+  console.log("rendered");
   useEffect(() => {
     if (mealPlanData === undefined || sendRequest) {
       console.log("get meal plan");
@@ -27,6 +30,17 @@ export default function MyMealPlan() {
       setSendRequest(false);
     }
   }, [sendRequest]);
+
+  const resetStatus = async () => {
+    await axios({
+      method: "get",
+      url: `${kServerIP}/MealPlan/StatusAllReset`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    setSendRequest(true);
+  };
 
   async function deletePlan(planId) {
     console.log("delete plan");
@@ -123,8 +137,11 @@ export default function MyMealPlan() {
   });
 
   return (
-    <div style={{ padding: "10px 10px" }}>
+    <div style={{ padding: "10px 10px", display: "flex" }}>
       {mealPlanData != undefined && !sendRequest && <div>{mealPlans}</div>}
+      <ResetButton className="reset-button" onClick={resetStatus}>
+        <RestartAltOutlinedIcon fontSize="large" />
+      </ResetButton>
     </div>
   );
 }
@@ -135,4 +152,19 @@ const Container = styled.div`
       color: green;
     }
   }
+`;
+
+const ResetButton = styled.button`
+  position: fixed;
+  right: 12vw;
+  top: 80vh;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: white;
+  border: none;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 12%), 0 0 1px rgb(0 0 0 / 5%) inset;
 `;
