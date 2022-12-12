@@ -80,7 +80,7 @@ const Container = styled.div`
     right: 0;
     position: fixed;
     background: rgba(49, 49, 49, 0.6);
-    z-index: 3;
+    z-index: 30;
 
     .modal-wrapper {
       width: 800px;
@@ -90,7 +90,7 @@ const Container = styled.div`
       top: 50%;
       margin-left: -350px;
       margin-top: -250px;
-
+      z-index: 31;
       align-items: center;
       background: #fff;
       box-shadow: 0 0 1em rgb(0 0 0 / 27%);

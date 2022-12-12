@@ -24,6 +24,7 @@ export default function SearchRecipes() {
   const [data, setData] = useState();
   const [showUploadImg, setshowUploadImg] = useState(false);
   const [image, setImage] = useState();
+  const [bookmarkList, setBookmarkList] = useState([]);
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -143,9 +144,31 @@ export default function SearchRecipes() {
     console.log(data.data.query);
   }
 
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
+  }, []);
+
   const cards = data?.data.results.map((item) => {
-    return <Card key={item.id} {...item} />;
+    return (
+      <Card
+        key={item.id}
+        {...item}
+        bookMark={bookmarkList.includes(item.id.toString()) ? true : false}
+      />
+    );
   });
+
   return (
     <Container>
       <div className="search-tools">

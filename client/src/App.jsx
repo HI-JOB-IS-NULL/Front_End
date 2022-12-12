@@ -41,7 +41,11 @@ function App() {
           path="/ProductDetailes/:product_id"
           element={<ProductDetail />}
         />
-        <Route exact path="/recipe/:recipeId" element={<Recipe />} />
+        <Route
+          exact
+          path="/recipe/:recipeId/:isBookMarked"
+          element={<Recipe />}
+        />
         <Route exact path="/checkout/:product_id" element={<Checkout />} />
         <Route
           exact

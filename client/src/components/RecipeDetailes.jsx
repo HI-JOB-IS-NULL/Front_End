@@ -10,19 +10,26 @@ import { kServerIP } from "../IP";
 import axios from "axios";
 import { getRecipeInfoById } from "../Fetchers";
 
-export default function RecipeDetails({ recipeId }) {
+export default function RecipeDetails({ recipeId, isBookMarked }) {
   const { data, isLoading } = useQuery("recipeInfo", () =>
     getRecipeInfoById(recipeId)
   );
 
-  const [isBooked, setIsBooked] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
+  console.log(isBookMarked);
+  console.log(isBookMarked === true);
+  const [isBooked, setIsBooked] = useState(
+    isBookMarked === "true" ? true : false
+  );
 
   if (showLogin && accessToken) {
     setShowLogin(false);
   }
-  useEffect(() => {
+  console.log(isBooked);
+
+  const bookmark = () => {
+    setIsBooked(!isBooked);
     const formData = new FormData();
     formData.append("recipe_id", recipeId);
     axios({
@@ -33,7 +40,7 @@ export default function RecipeDetails({ recipeId }) {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-  }, [isBooked]);
+  };
 
   if (data) {
     console.log(data);
@@ -72,7 +79,7 @@ export default function RecipeDetails({ recipeId }) {
               <div
                 className="recipe--detailes-bookmark"
                 onClick={() => {
-                  accessToken ? setIsBooked(!isBooked) : setShowLogin(true);
+                  accessToken ? bookmark() : setShowLogin(true);
                 }}
               >
                 {isBooked ? (

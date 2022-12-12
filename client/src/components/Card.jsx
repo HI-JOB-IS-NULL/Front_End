@@ -6,43 +6,72 @@ import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined";
 import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
+import { kServerIP } from "../IP";
+import axios from "axios";
+import LoginModal from "./LoginModal";
 export default function Card(props) {
-  const [isBooked, setIsBooked] = useState(false);
+  console.log(props.bookMark);
+  const [isBooked, setIsBooked] = useState(props.bookMark);
   const [isCleared, setIsCleared] = useState(props.clear_state);
+  const [showLogin, setShowLogin] = useState(false);
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const handleClick = () => {
     setIsCleared(!isCleared);
     props.changeStatus(props.planListId);
   };
+  const bookmark = () => {
+    setIsBooked(!isBooked);
+    const formData = new FormData();
+    formData.append("recipe_id", props.id);
+    axios({
+      method: "post",
+      url: `${kServerIP}/RecipeDB/ChangeBookmark`,
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  };
+
+  if (showLogin && accessToken) {
+    setShowLogin(false);
+  }
 
   return (
-    <div className="card">
-      <a href={`/recipe/${props.id}`}>
-        <img src={props.image} alt="Food Image" className="card--image" />
-        <p className="card--title">{props.title} </p>
-      </a>
+    <>
+      {showLogin && <LoginModal setShowLogin={setShowLogin} />}
+      <div className="card">
+        <a href={`/recipe/${props.id}/${props.bookMark}`}>
+          <img src={props.image} alt="Food Image" className="card--image" />
+          <p className="card--title">{props.title} </p>
+        </a>
 
-      <div className="card--bookmark" onClick={() => setIsBooked(!isBooked)}>
-        {isBooked ? <BookmarkOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
-      </div>
-      {props.clear_state != undefined && (
         <div
-          onClick={handleClick}
-          style={{
-            cursor: "pointer",
-            position: "absolute",
-            top: "5px",
-            right: "5px",
-          }}
+          className="card--bookmark"
+          onClick={() => (accessToken ? bookmark() : setShowLogin(true))}
         >
-          {isCleared ? (
-            <BeenhereRoundedIcon fontSize="large" color="success" />
-          ) : (
-            <Tippy content="Click if you done the Plan" arrow={false}>
-              <BeenhereOutlinedIcon fontSize="large" color="success" />
-            </Tippy>
-          )}
+          {isBooked ? <BookmarkOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
         </div>
-      )}
-    </div>
+        {props.clear_state != undefined && (
+          <div
+            onClick={handleClick}
+            style={{
+              cursor: "pointer",
+              position: "absolute",
+              top: "5px",
+              right: "5px",
+            }}
+          >
+            {isCleared ? (
+              <BeenhereRoundedIcon fontSize="large" color="success" />
+            ) : (
+              <Tippy content="Click if you done the Plan" arrow={false}>
+                <BeenhereOutlinedIcon fontSize="large" color="success" />
+              </Tippy>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

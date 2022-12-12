@@ -10,7 +10,7 @@ export default function MyMealPlan() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [mealPlanData, setMealPlanData] = useState();
   const [sendRequest, setSendRequest] = useState(false);
-
+  const [bookmarkList, setBookmarkList] = useState([]);
   useEffect(() => {
     if (mealPlanData === undefined || sendRequest) {
       console.log("get meal plan");
@@ -60,6 +60,21 @@ export default function MyMealPlan() {
     }
   }
 
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
+  }, []);
+
   const mealPlans = mealPlanData?.map((dayOfWeek, index) => {
     return (
       <Container key={index}>
@@ -92,7 +107,12 @@ export default function MyMealPlan() {
                   title={mealOfDay.title}
                   changeStatus={changeStatus}
                   planListId={mealOfDay.id}
-                  image={`https://spoonacular.com/recipeImages/${mealOfDay.id}-480x360.${mealOfDay.imageType}`}
+                  image={`https://spoonacular.com/recipeImages/${mealOfDay.recipeId}-480x360.${mealOfDay.imageType}`}
+                  bookMark={
+                    bookmarkList.includes(mealOfDay.recipeId.toString())
+                      ? true
+                      : false
+                  }
                 />
               );
             })}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import InputTags from "../components/InputTags";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
@@ -15,7 +15,7 @@ export default function mealPlanner() {
   const [isAddedToPlan, setIsAddedToPlan] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [mealPlanCount, setMealPlanCount] = useState();
-
+  const [bookmarkList, setBookmarkList] = useState([]);
   console.log(mealPlanCount);
   if (mealPlanCount === undefined) {
     console.log("in");
@@ -30,6 +30,20 @@ export default function mealPlanner() {
       setMealPlanCount(res.data);
     });
   }
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
+  }, []);
   const plans = data?.data.map((days, index) => {
     return (
       <div
@@ -48,6 +62,9 @@ export default function mealPlanner() {
                 key={index}
                 {...day}
                 image={`https://spoonacular.com/recipeImages/${day.id}-480x360.${day.imageType}`}
+                bookMark={
+                  bookmarkList.includes(day.id.toString()) ? true : false
+                }
               />
             );
           })}

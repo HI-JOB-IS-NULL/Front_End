@@ -2,28 +2,52 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "../css/Home.css";
 import Card from "../components/Card";
-import Axios from "axios";
+
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import banner from "../assets/default_bkg.png";
 
 import bannerImg from "../assets/banner_img.png";
-import { ServeIP, apiKey3 } from "../IP";
+import { kServerIP, apiKey3 } from "../IP";
 import HomeModal from "../components/HomeModal";
+import axios from "axios";
 export default function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);
   const [modal, setModal] = useState(false);
+  const [bookmarkList, setBookmarkList] = useState([]);
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
 
   useEffect(() => {
-    Axios.get(
-      `https://api.spoonacular.com/recipes/random?${apiKey3}&number=10`
-    ).then((response) => {
-      console.log(response);
-      setRandomRecipes(response.data.recipes);
-    });
+    axios
+      .get(`https://api.spoonacular.com/recipes/random?${apiKey3}&number=10`)
+      .then((response) => {
+        console.log(response);
+        setRandomRecipes(response.data.recipes);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
   }, []);
 
   const cards = randomRecipes.map((item, index) => {
-    return <Card key={index} {...item} />;
+    return (
+      <Card
+        key={index}
+        {...item}
+        bookMark={bookmarkList.includes(item.id.toString()) ? true : false}
+      />
+    );
   });
 
   return (

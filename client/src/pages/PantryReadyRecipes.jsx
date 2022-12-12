@@ -16,8 +16,9 @@ import { Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ImageAnalyzResult from "../components/ImageAnalyzResult";
 import Spinner from "react-bootstrap/Spinner";
-
+import { kServerIP } from "../IP";
 export default function PantryReadyRecipes() {
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [tags, setTags] = useState([]);
@@ -27,7 +28,7 @@ export default function PantryReadyRecipes() {
   const [image, setImage] = useState();
   const [imageResult, setImageResult] = useState();
   const [uploadIsClicked, setUploadIsClicked] = useState(false);
-
+  const [bookmarkList, setBookmarkList] = useState([]);
   useEffect(() => {
     if (ingredientsData.length === 0) {
       setIngredientsData(IngredientsData);
@@ -51,8 +52,29 @@ export default function PantryReadyRecipes() {
     });
   }, [tags]);
 
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
+  }, []);
+
   const cards = data?.data.results.map((item) => {
-    return <Card key={item.id} {...item} />;
+    return (
+      <Card
+        key={item.id}
+        {...item}
+        bookMark={bookmarkList.includes(item.id.toString()) ? true : false}
+      />
+    );
   });
 
   function addTags(item) {
