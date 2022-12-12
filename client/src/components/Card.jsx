@@ -9,6 +9,7 @@ import "tippy.js/dist/tippy.css";
 import { kServerIP } from "../IP";
 import axios from "axios";
 import LoginModal from "./LoginModal";
+import styled from "styled-components";
 export default function Card(props) {
   console.log(props.bookMark);
   const [isBooked, setIsBooked] = useState(props.bookMark);
@@ -36,22 +37,26 @@ export default function Card(props) {
   if (showLogin && accessToken) {
     setShowLogin(false);
   }
+  //
 
   return (
-    <>
+    <Container>
       {showLogin && <LoginModal setShowLogin={setShowLogin} />}
       <div className="card">
-        <a href={`/recipe/${props.id}/${props.bookMark}`}>
-          <img src={props.image} alt="Food Image" className="card--image" />
-          <p className="card--title">{props.title} </p>
-        </a>
+        <div className={`${isCleared ? "disable" : ""}`}>
+          <a href={`/recipe/${props.id}/${props.bookMark}`}>
+            <img src={props.image} alt="Food Image" className="card--image" />
+            <p className="card--title">{props.title} </p>
+          </a>
 
-        <div
-          className="card--bookmark"
-          onClick={() => (accessToken ? bookmark() : setShowLogin(true))}
-        >
-          {isBooked ? <BookmarkOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
+          <div
+            className="card--bookmark"
+            onClick={() => (accessToken ? bookmark() : setShowLogin(true))}
+          >
+            {isBooked ? <BookmarkOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
+          </div>
         </div>
+
         {props.clear_state != undefined && (
           <div
             onClick={handleClick}
@@ -72,6 +77,13 @@ export default function Card(props) {
           </div>
         )}
       </div>
-    </>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  .disable {
+    pointer-events: none;
+    opacity: 0.3;
+  }
+`;
