@@ -80,7 +80,7 @@ export default function MyMealPlan() {
       <Container key={index}>
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <span className="light-gray-font" style={{ marginRight: "auto" }}>
+            <span style={{ marginRight: "auto", fontSize: "1.5rem" }}>
               Calories: {dayOfWeek.nutrients.calories}&nbsp;&nbsp;
               Carbohydrates:
               {dayOfWeek.nutrients.carbohydrates}&nbsp;&nbsp; Fat:
