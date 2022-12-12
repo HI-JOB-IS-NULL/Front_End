@@ -11,7 +11,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import "../css/Navbar.css";
 import LoginModal from "./LoginModal";
-import LoginIcon from '@mui/icons-material/Login';
+import loginIcon from "../assets/login_icon.png";
 export default function Navbar({ isScrolled }) {
   const links = [
     { name: "Home", link: "/" },
@@ -23,12 +23,12 @@ export default function Navbar({ isScrolled }) {
 
   const [loginModal, setLoginModal] = useState(false);
 
-  const logout = () =>{
+  const logout = () => {
     sessionStorage.clear("ACCESS_TOKEN");
-    window.location.href="/";
-  }
+    window.location.href = "/";
+  };
 
-  const accessToken=sessionStorage.getItem("ACCESS_TOKEN");
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
 
   return (
     <Container>
@@ -49,48 +49,66 @@ export default function Navbar({ isScrolled }) {
           </ul>
         </div>
         {/* navbar right side */}
-        <div className="right flex a-center">
-          <div onClick={() => setLoginModal(true)}>
-            <ShoppingBasketOutlinedIcon className="material-icon margin-right" />
-          </div>
 
-          <ul>
-            <li>
-              <img
-                src="/src/assets/profile.png"
-                alt="Profile"
-                className="nav--profile"
-              />
+        <div className="right flex a-center">
+          {!accessToken && (
+            <div
+              style={{ cursor: "pointer" }}
+              onClick={() => setLoginModal(true)}
+            >
+              <img src={loginIcon} alt="Login Icon" className="nav--profile" />
+            </div>
+          )}
+          {accessToken && (
+            <div className="right flex a-center">
+              <ShoppingBasketOutlinedIcon className="material-icon margin-right" />
+
               <ul>
-                <li className="sub-item" >
-                  <a href='../mypage'style={{whiteSpace:'nowrap', display:'flex', gap:10}}>
-                  <AccountCircleOutlinedIcon className="material-icon" />
-                  <p>My Profile</p>
-                  </a>
-                </li>
-                <li className="sub-item">
-                  <ManageAccountsOutlinedIcon className="material-icon" />
-                  <p>Edit Profile</p>
-                </li>
-                <li className="sub-item">
-                  <SaveAltOutlinedIcon className="material-icon" />
-                  <p>Saved Recipes</p>
-                </li>
-                <li className="sub-item">
-                  <FastfoodOutlinedIcon className="material-icon" />
-                  <p>My Meal Plan</p>
-                </li>
-                <li className="sub-item">
-                  <FormatListBulletedOutlinedIcon className="material-icon" />
-                  <p>My Orders</p>
-                </li>
-                <li className="sub-item">
-                  <LogoutOutlinedIcon className="material-icon" />
-                  <p onClick={logout}>Log Out</p>
+                <li>
+                  <img
+                    src="/src/assets/profile.png"
+                    alt="Profile"
+                    className="nav--profile"
+                  />
+                  <ul>
+                    <li className="sub-item">
+                      <a
+                        href="../mypage"
+                        style={{
+                          whiteSpace: "nowrap",
+                          display: "flex",
+                          gap: 10,
+                        }}
+                      >
+                        <AccountCircleOutlinedIcon className="material-icon" />
+                        <p>My Profile</p>
+                      </a>
+                    </li>
+                    <li className="sub-item">
+                      <ManageAccountsOutlinedIcon className="material-icon" />
+                      <p>Edit Profile</p>
+                    </li>
+                    <li className="sub-item">
+                      <SaveAltOutlinedIcon className="material-icon" />
+                      <p>Saved Recipes</p>
+                    </li>
+                    <li className="sub-item">
+                      <FastfoodOutlinedIcon className="material-icon" />
+                      <p>My Meal Plan</p>
+                    </li>
+                    <li className="sub-item">
+                      <FormatListBulletedOutlinedIcon className="material-icon" />
+                      <p>My Orders</p>
+                    </li>
+                    <li className="sub-item">
+                      <LogoutOutlinedIcon className="material-icon" />
+                      <p onClick={logout}>Log Out</p>
+                    </li>
+                  </ul>
                 </li>
               </ul>
-            </li>
-          </ul>
+            </div>
+          )}
         </div>
       </nav>
       {loginModal && <LoginModal setLoginModal={setLoginModal} />}
@@ -139,7 +157,7 @@ const Container = styled.div`
       .nav--profile {
         border-radius: 50%;
         width: auto;
-        height: 3rem;
+        height: 3.5rem;
         cursor: pointer;
       }
     }
