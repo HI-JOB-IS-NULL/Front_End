@@ -24,6 +24,8 @@ export default function Card(props) {
     setIsBooked(!isBooked);
     const formData = new FormData();
     formData.append("recipe_id", props.id);
+    formData.append("recipe_title", props.title);
+    formData.append("recipe_thumbnail", props.image);
     axios({
       method: "post",
       url: `${kServerIP}/RecipeDB/ChangeBookmark`,

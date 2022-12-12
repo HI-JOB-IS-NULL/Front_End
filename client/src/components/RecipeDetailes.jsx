@@ -32,6 +32,8 @@ export default function RecipeDetails({ recipeId, isBookMarked }) {
     setIsBooked(!isBooked);
     const formData = new FormData();
     formData.append("recipe_id", recipeId);
+    formData.append("recipe_title", data.Recipe_Information.title);
+    formData.append("recipe_thumbnail", data.Recipe_Information.image);
     axios({
       method: "post",
       url: `${kServerIP}/RecipeDB/ChangeBookmark`,
