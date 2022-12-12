@@ -41,7 +41,7 @@ const DataTableRowExpansionDemo = () => {
         if (accessToken && accessToken !== null) {
             axios({
                 method: 'POST',
-                url: `http://10.20.32.1:5000/order/cancel`,
+                url: `${ServeIP}/order/cancel`,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -77,7 +77,7 @@ const DataTableRowExpansionDemo = () => {
         if (accessToken && accessToken !== null) {
             axios({
                 method: 'GET',
-                url: `http://10.20.32.1:5000/order`,
+                url: `${ServeIP}/order`,
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
@@ -189,6 +189,12 @@ const DataTableRowExpansionDemo = () => {
         );
     };
 
+    const billBodyTemplate = (rowData) => {
+        return(
+            <Button onClick={()=>window.open(rowData.preceipt_url,'window_name', 'width=430, height=500, location=no, status=no, scrollbars=yes')}>Bill</Button>
+        );
+    };
+
     const allowExpansion = (rowData) => {
         return rowData.orderProductDtoList.length > 0;
     };
@@ -279,6 +285,7 @@ const DataTableRowExpansionDemo = () => {
                         body={statusBodyTemplate}
                         sortable
                     />
+                    <Column field="preceipt_url" header="Bill" body={billBodyTemplate}/>
                 </DataTable>
             </div>
         </div>

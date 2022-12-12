@@ -10,6 +10,8 @@ const Payment = (effect, deps) => {
   const {product_id} = useParams();
   const [products, setProducts] = useState([]);
   const [userInfo ,setUserInfo] = useState([]);
+  const [abled, setAbled] = useState(false);
+
   useEffect(()=> {
     sessionStorage.setItem("payse", false)
     axios
@@ -41,7 +43,6 @@ useEffect(() => {
       } else {
         new Error(res);
       }
-
     });
   }
 }, []);
@@ -80,6 +81,7 @@ console.log(products)
       buyer_postalcode: [[]]
       };
     IMP.request_pay(data, callback);
+    setAbled(true);
     }
   
   const callback = (response) => {
@@ -89,7 +91,7 @@ console.log(products)
       sessionStorage.setItem("payse", true);
       alert('결제 성공');
       axios.post(
-        `http://10.20.32.1:5000/order`, 
+        `${ServeIP}/order`, 
         {
           productId: products.productId,
           count: 1,
@@ -112,7 +114,7 @@ console.log(products)
   return (
     <Container>
       <center>
-      <Button onClick={onClickPayment}>Payment</Button>
+      <Button type='primary' disabled={abled} onClick={onClickPayment}>Payment</Button>
       </center>
     </Container>
    );

@@ -15,6 +15,8 @@ import SearchRecipes from "./pages/SearchRecipes";
 import SocialLogin from "./pages/SocialLogin";
 import ProductDetail from "./components/ProductDetail";
 import Checkout from "./components/Checkout";
+import CartCheckout from "./components/CartCheckout";
+import ModifyWrite from "./pages/ModifyWrite";
 
 function App() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,6 +33,7 @@ function App() {
         <Route exact path="/mealPlanner" element={<MealPlanner />} />
         <Route exact path="/shop" element={<ShopIngredients />} />
         <Route exact path="/community" element={<Community />} />
+        <Route exact path="/modifyWrite/:csRecipeId" element={<ModifyWrite/>}/>
         <Route
           exact
           path="CommunityDetailes/:csRecipeId"
@@ -57,6 +60,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path="sociallogin" element={<SocialLogin />} />
         <Route exact path="sociallogin" element={<SocialLogin />} />
+        <Route exact path="/cartCheckout" element={<CartCheckout/>}/>
       </Routes>
     </BrowserRouter>
   );

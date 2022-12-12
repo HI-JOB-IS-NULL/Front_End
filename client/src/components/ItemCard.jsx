@@ -10,20 +10,21 @@ function ItemCard(props){
     const [like, setLike] = useState(false);
     const [basket, setBasket] = useState(0);
     const [cart, setCart] = useState();
- 
+    const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
+
     const onBasket = () =>{
         if(accessToken != null){
             setCart(true)
             axios({
                 method: 'POST',
                 url:`${ServeIP}/cart`,
-                data: { "productId" : product_id , "count" : 1 } ,
+                data: { "productId" : props.items.product_id , "count" : 1 } ,
                 headers: {
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
             },
-            }).then(res => setCartId(res.data)) 
-            alert(iteminfo.productName,'Get Item')
+            }).then(res => setCart(res.data)) 
+            alert(props.items.product_name,'Get Item')
         }
         else{
             setLoginModal(true)

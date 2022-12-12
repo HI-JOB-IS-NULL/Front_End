@@ -1,14 +1,16 @@
 import axios from "axios";
+import { kServerIP, ServeIP } from "../IP";
 
-const apiUrl = "https://jsonplaceholder.typicode.com/";
+const apiUrl = ServeIP;
 
 const instance = axios.create({
   baseURL: apiUrl,
 });
 
-export const getComments = async (page, limit) => {
+export const getComments = async (page, limit,csRecipeId) => {
   const response = await instance.get(
-    `/comments?_page=${page}&_limit=${limit}`
+    `/CustomRecipeReply/nser/list?page=${page}&size=${limit}&csRecipeId=${csRecipeId}`
   );
+  {console.log(response)}
   return response.data;
 };

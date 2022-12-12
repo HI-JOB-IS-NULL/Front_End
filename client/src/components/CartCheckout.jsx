@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,30 +11,72 @@ import StepLabel from '@mui/material/StepLabel';
 import {Button}from 'antd';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Review from "./Review";
-import AddressForm from "./AddressForm";
-import Payment from "./RequestPay";
-
+import CartReview from './CartReview';
+import AddressForm from "./AddressForm"
+import CartPayment from './CartPayment';
+import axios from "axios";
+import { ServeIP } from "../IP";
 
 const steps = ['Shipping address', 'Review your order', 'Payment'];
-  
-
 function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <Review />;
-    case 2:
-      return <Payment style={{ marginLeft: 100 }} />;
-    default:
-      throw new Error("Unknown step");
+    switch (step) {
+        case 0:
+            return <AddressForm />;
+        case 1:
+            return <CartReview/>;
+        case 2:
+            return <CartPayment style={{marginLeft:100}}/>;
+        default:
+            throw new Error('Unknown step');
+        }
   }
   
   const theme = createTheme();
   
-  export default function Checkout() {
+  export default function CartCheckout() {
+    const [cart, setCart] = useState([]);
+    const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
+    const [cartId, setCartId] = useState([]);
+
+    //const [itemId, setItemId]
+
+    useEffect(()=>{
+      axios({
+        method: 'GET',
+        url: `${ServeIP}/cart`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log("sd");
+        if (res.status === 200) {
+          console.log(res.data);
+          setCart(res.data);
+          for(let i=0; i<res.data.length; i++){
+            //  cartId.push(res.data[i].cartItemId)
+             cartId.push({cartItemId:res.data[i].cartItemId})
+          }
+          console.log(cartId)
+        } else if (res.status === 403) {
+          alert("잘못된 접근입니다");
+        } else {
+          new Error(res);
+        }
+      });
+    },[])
+
+
     const goMypage = () =>{
+      axios({
+        method: 'POST',
+        url: `${ServeIP}/cart/orderCartItem`,
+        data:{
+          cartOrderDtoList:cartId
+      },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
       window.location.href = '../../';
     }
 
@@ -66,7 +108,7 @@ function getStepContent(step) {
         color="default"
         elevation={0}
         sx={{
-          position: "relative",
+          position: 'relative',
           borderBottom: (t) => `1px solid ${t.palette.divider}`,
         }}
       >
@@ -77,10 +119,7 @@ function getStepContent(step) {
         </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-        <Paper
-          variant="outlined"
-          sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
-        >
+        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
@@ -101,14 +140,8 @@ function getStepContent(step) {
                 confirmation, and will send you an update when your order has
                 shipped.
               </Typography>
-              <div
-                style={{
-                  width: "auto",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <Button onClick={goMypage}>BACK MYPAGE</Button>
+              <div style={{width:'auto',display:'flex' ,justifyContent:'center'}}>
+              <Button onClick={goMypage}>BACK MYPAGE</Button>
               </div>
             </React.Fragment>
             ) 
@@ -131,20 +164,6 @@ function getStepContent(step) {
                   :
                   <Button onClick={handleNext} type="primary">Next</Button>
                 }
-                
-                {/* <Button
-                  type="primary"
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1
-                    ? sessionStorage.getItem("payse")
-                      ? "Place order"
-                      : ""
-                    : "Next"}
-                  {console.log()}
-                </Button> */}
 
                 </Box>
               </React.Fragment>

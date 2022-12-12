@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 export default function AddressForm(){
   
  
-  sessionStorage.clear("address")
+  // sessionStorage.clear("address")
   const InputAdress = (e) =>{
     sessionStorage.setItem("address", e.target.value)
   }
