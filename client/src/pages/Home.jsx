@@ -69,8 +69,19 @@ export default function Home() {
         </div>
       </section>
       {modal && <HomeModal setModal={setModal} />}
-
-      <section className="cards--list">{cards}</section>
+      <h1
+        style={{
+          padding: "4vh 0 0 5vw",
+          margin: "0",
+          fontWeight: "200",
+          fontSize: "2rem",
+        }}
+      >
+        Just For You
+      </h1>
+      <section className="cards--list" style={{ paddingTop: "25px" }}>
+        {cards}
+      </section>
     </Container>
   );
 }
