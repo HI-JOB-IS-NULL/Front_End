@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import SaveAltOutlinedIcon from "@mui/icons-material/SaveAltOutlined";
 import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
@@ -12,6 +12,7 @@ import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlin
 import "../css/Navbar.css";
 import LoginModal from "./LoginModal";
 import loginIcon from "../assets/login_icon.png";
+import { useNavigate } from "react-router-dom";
 export default function Navbar({ isScrolled }) {
   const links = [
     { name: "Home", link: "/" },
@@ -29,6 +30,10 @@ export default function Navbar({ isScrolled }) {
   };
 
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
+  const navigate = useNavigate();
+  const navigateToMyPage = (value) => {
+    navigate(`/mypage/${value}`);
+  };
 
   return (
     <Container>
@@ -71,35 +76,43 @@ export default function Navbar({ isScrolled }) {
                     className="nav--profile"
                   />
                   <ul>
-                    <li className="sub-item">
-                      <a
-                        href="../mypage"
-                        style={{
-                          whiteSpace: "nowrap",
-                          display: "flex",
-                          gap: 10,
-                        }}
-                      >
-                        <AccountCircleOutlinedIcon className="material-icon" />
-                        <p>My Profile</p>
-                      </a>
+                    <li
+                      className="sub-item"
+                      onClick={() => navigateToMyPage(0)}
+                    >
+                      <AccountCircleOutlinedIcon className="material-icon" />
+                      <p>My Profile</p>
                     </li>
-                    <li className="sub-item">
-                      <ManageAccountsOutlinedIcon className="material-icon" />
-                      <p>Edit Profile</p>
-                    </li>
-                    <li className="sub-item">
-                      <SaveAltOutlinedIcon className="material-icon" />
-                      <p>Saved Recipes</p>
-                    </li>
-                    <li className="sub-item">
+
+                    <li
+                      className="sub-item"
+                      onClick={() => navigateToMyPage(1)}
+                    >
                       <FastfoodOutlinedIcon className="material-icon" />
                       <p>My Meal Plan</p>
                     </li>
-                    <li className="sub-item">
+                    <li
+                      className="sub-item"
+                      onClick={() => navigateToMyPage(2)}
+                    >
                       <FormatListBulletedOutlinedIcon className="material-icon" />
                       <p>My Orders</p>
                     </li>
+                    <li
+                      className="sub-item"
+                      onClick={() => navigateToMyPage(3)}
+                    >
+                      <SaveAltOutlinedIcon className="material-icon" />
+                      <p>Saved Recipes</p>
+                    </li>
+                    <li
+                      className="sub-item"
+                      onClick={() => navigateToMyPage(4)}
+                    >
+                      <TaskAltOutlinedIcon className="material-icon" />
+                      <p>Done Recipes</p>
+                    </li>
+
                     <li className="sub-item">
                       <LogoutOutlinedIcon className="material-icon" />
                       <p onClick={logout}>Log Out</p>

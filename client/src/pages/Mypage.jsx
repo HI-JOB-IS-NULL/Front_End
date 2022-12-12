@@ -37,7 +37,7 @@ import DataTableRowExpansionDemo from "../components/DataTableRowExpansionDemo";
 import Checkout from "../components/Checkout";
 import Payment from "../components/RequestPay";
 import MyMealPlan from "./MyMealPlan";
-
+import { useParams } from "react-router-dom";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -84,8 +84,8 @@ export default function Mypage() {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-  const [value, setValue] = React.useState(0);
+  const { tabValue } = useParams();
+  const [value, setValue] = React.useState(parseInt(tabValue));
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -200,10 +200,11 @@ export default function Mypage() {
           value={value}
           onChange={handleChange}
         >
-          <Tab label="User Info" {...a11yProps(0)} />
-          <Tab label="Basket" {...a11yProps(1)} />
-          <Tab label="Meal Plan" {...a11yProps(2)} />
-          <Tab label="Order List" {...a11yProps(3)} />
+          <Tab label="profile" {...a11yProps(0)} />
+          <Tab label="Meal Plan" {...a11yProps(1)} />
+          <Tab label="Order List" {...a11yProps(2)} />
+          <Tab label="Saved Recipes" {...a11yProps(3)} />
+          <Tab label="done recipes" {...a11yProps(4)} />
         </Tabs>
         <TabPanel value={value} index={0}>
           <Checkbox
@@ -363,15 +364,14 @@ export default function Mypage() {
           </Form>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <PaymentMethods />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
+          {/* <PaymentMethods /> */}
           <MyMealPlan />
         </TabPanel>
-
-        <TabPanel value={value} index={3}>
+        <TabPanel value={value} index={2}>
           <DataTableRowExpansionDemo />
         </TabPanel>
+        <TabPanel value={value} index={3}></TabPanel>
+        <TabPanel value={value} index={4}></TabPanel>
       </Box>
     </Container>
   );

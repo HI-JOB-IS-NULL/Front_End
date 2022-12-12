@@ -52,7 +52,7 @@ function App() {
           path="/searchRecipes/:recipeQuery"
           element={<SearchRecipes />}
         />
-        <Route exact path="/mypage" element={<Mypage />} />
+        <Route exact path="/mypage/:tabValue" element={<Mypage />} />
         <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
         <Route exact path="sociallogin" element={<SocialLogin />} />
