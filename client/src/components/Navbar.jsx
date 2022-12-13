@@ -138,7 +138,8 @@ export default function Navbar({ isScrolled }) {
 
 const Container = styled.div`
   .scrolled {
-    background-color: gray;
+    background-color: #e9f7ef;
+    /* #f2f3f4; */
   }
   nav {
     top: 0;
