@@ -34,6 +34,10 @@ export default function ModifyWrite(){
   const [arr, setArr] = useState([]);
   const [sibal, setSibal] = useState();
   const [getImage, setGetImage] = useState();
+  const [a, setA] = useState([]);
+  const [b, setB] = useState([]);
+
+  const [final, setFinal] = useState([]);
 
 console.log(defaultImg)
 
@@ -71,27 +75,35 @@ console.log(defaultImg)
   // }
 
   const InputImage = (e) => {
-    console.log(e.file.uid)
-    let temp = e.file.originFileObj;
-    if(Image.length == 0){
-      Image.push(temp);
-    }
-    for(let i = 0; i < Image.length; i++){
-      if(Image[i].uid !== e.file.uid){
-        Image.push(temp);
-      }
-    }
+    console.log(e.fileList)
+    let temp = e.fileList;
+    setImage(temp)
     console.log(Image)
   }
   
   const DELETE = () => {
     window.location.reload();
   }
-console.log(getImage)
+console.log(Image)
 
 
 //전송
   const onsubmit = (e) => {
+    for(let i=0; i<Image.length; i++){
+      console.log( Image[i]);
+      if(Image[i].size != 3){
+        b.push(Image[i])
+      }
+      else{
+        for(let j=0; j<final.length; j++){
+          if(Image[i].fileName === final[j].name){
+            Image[i].fileName == final[j].name
+          }
+        }
+        a.push(Image[i])
+      }
+    }
+
     const temp = [...recipeExplan].join('')
     text.push(temp);
     console.log(text)
@@ -104,18 +116,14 @@ console.log(getImage)
       formData.append("recipe_content", text[i])
     }
     //수정 후 사진
-    Image.forEach((item) => {
+    b.forEach((item) => {
       formData.append("uploadFiles", item)
     })
 
-    //수정 전 사진
-    // getImage.forEach((item) => {
-    //   console.log(item)
-    //   formData.append("defaultUploadImgResult", item)
-    // })
+    
 
     // 탈출구
-    let plz = JSON.stringify(getImage);
+    let plz = JSON.stringify(a);
     formData.append("defaultUploadImgResult", plz);
     
     console.log(formData.get('recipe_content'))
@@ -139,9 +147,9 @@ console.log(getImage)
         // window.location.href="/community"
       }
   };
-console.log(getImage)
+console.log(final)
 console.log(defaultImg)
-
+// 시작
   useEffect(()=>{
     axios
     .get(
@@ -152,6 +160,8 @@ console.log(defaultImg)
       setInfo(res.data)
       setName(res.data.nick_name)
       setrecipeName(res.data.recipeT_title)
+      setImage(res.data.uploadImgResult)
+      setFinal(res.data.uploadImgResult)
       for(let i =0; i<res.data.uploadImgResult.length; i++){
         defaultImg.push
         (
@@ -161,8 +171,8 @@ console.log(defaultImg)
           status:'done'
         }
         )
-        setGetImage(res.data.uploadImgResult)
       }
+      setGetImage(res.data.uploadImgResult)
       let temp = res.data.recipe_content;
       let tem = (temp.split(","))
       setSibal(temp);
@@ -170,7 +180,7 @@ console.log(defaultImg)
       console.log(tem)    
     })
   }, [])
-
+console.log(getImage);
 console.log('get',getImage)
 
 console.log('defalut',defaultImg)
