@@ -63,7 +63,11 @@ export default function mealPlanner() {
                 {...day}
                 image={`https://spoonacular.com/recipeImages/${day.id}-480x360.${day.imageType}`}
                 bookMark={
-                  bookmarkList.includes(day.id.toString()) ? true : false
+                  bookmarkList.some((bookmark) => {
+                    return bookmark.recipe_id === item.id.toString();
+                  })
+                    ? true
+                    : false
                 }
               />
             );

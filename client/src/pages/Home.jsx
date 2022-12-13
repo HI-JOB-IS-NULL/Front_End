@@ -41,11 +41,22 @@ export default function Home() {
   }, []);
 
   const cards = randomRecipes.map((item, index) => {
+    console.log(
+      bookmarkList.some((bookmark) => {
+        return bookmark.recipe_id === item.id;
+      })
+    );
     return (
       <Card
         key={index}
         {...item}
-        bookMark={bookmarkList.includes(item.id.toString()) ? true : false}
+        bookMark={
+          bookmarkList.some((bookmark) => {
+            return bookmark.recipe_id === item.id.toString();
+          })
+            ? true
+            : false
+        }
       />
     );
   });

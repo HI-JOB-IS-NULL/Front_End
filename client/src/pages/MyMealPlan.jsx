@@ -123,7 +123,11 @@ export default function MyMealPlan() {
                   planListId={mealOfDay.id}
                   image={`https://spoonacular.com/recipeImages/${mealOfDay.recipeId}-480x360.${mealOfDay.imageType}`}
                   bookMark={
-                    bookmarkList.includes(mealOfDay.recipeId.toString())
+                    bookmarkList.some((bookmark) => {
+                      return (
+                        bookmark.recipe_id === mealOfDay.recipeId.toString()
+                      );
+                    })
                       ? true
                       : false
                   }
