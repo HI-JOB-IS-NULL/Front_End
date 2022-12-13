@@ -1,26 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import "../css/RecipeDetailes.css";
 import styled from "styled-components";
 import AddToPlan from "./AddToPlan";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
-import { apiKey3 } from "../IP";
+import LoginModal from "../components/LoginModal";
+import { kServerIP } from "../IP";
 import axios from "axios";
 import { getRecipeInfoById } from "../Fetchers";
 
-export default function RecipeDetails({ recipeId }) {
+export default function RecipeDetails({ recipeId, isBookMarked }) {
   const { data, isLoading } = useQuery("recipeInfo", () =>
     getRecipeInfoById(recipeId)
   );
 
-  const [isBooked, setIsBooked] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
 
-  if (data) {
-    console.log(data);
+  const [isBooked, setIsBooked] = useState(
+    isBookMarked === "true" ? true : false
+  );
+
+  if (showLogin && accessToken) {
+    setShowLogin(false);
   }
+
+  const bookmark = () => {
+    setIsBooked(!isBooked);
+    const formData = new FormData();
+    formData.append("recipe_id", recipeId);
+    formData.append("recipe_title", data.Recipe_Information.title);
+    formData.append("recipe_thumbnail", data.Recipe_Information.image);
+    axios({
+      method: "post",
+      url: `${kServerIP}/RecipeDB/ChangeBookmark`,
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  };
+
   return (
     <Container>
+      {showLogin && <LoginModal setShowLogin={setShowLogin} />}
       {data ? (
         <>
           <div className="recipe-summary-wrapper">
@@ -48,12 +72,12 @@ export default function RecipeDetails({ recipeId }) {
                   <span className=" font-normal p-text">Calories</span>
                 </div>
               </div>
-              <div className="recipe--detailes-mealPlan">
-                <AddToPlan />
-              </div>
+              <div className="recipe--detailes-mealPlan"></div>
               <div
                 className="recipe--detailes-bookmark"
-                onClick={() => setIsBooked(!isBooked)}
+                onClick={() => {
+                  accessToken ? bookmark() : setShowLogin(true);
+                }}
               >
                 {isBooked ? (
                   <BookmarkOutlinedIcon fontSize="large" />

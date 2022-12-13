@@ -6,18 +6,22 @@ import kakaoLogo from "../assets/kakaotalk_logo.png";
 import naverLogo from "../assets/naver_logo.png";
 import { ServeIP } from "../IP";
 
-export default function LoginModal({ setLoginModal }) {
-
-  function socialLogin(provider){
-    const frontendUrl = window.location.protocol+"//"+window.location.host;
+export default function LoginModal({ setLoginModal, setShowLogin }) {
+  function socialLogin(provider) {
+    const frontendUrl = window.location.protocol + "//" + window.location.host;
     //window.location.href= ServeIP + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
-    window.location.href= "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com" + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
+    window.location.href =
+      "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com" +
+      "/auth/authorize/" +
+      provider +
+      "?redirect_url=" +
+      frontendUrl; //redirect url 추가
   }
 
-  const handleSocialLogin=(provider)=>{
+  const handleSocialLogin = (provider) => {
     console.log(provider);
     socialLogin(provider);
-  }
+  };
 
   return (
     <Container>
@@ -25,7 +29,9 @@ export default function LoginModal({ setLoginModal }) {
         <div className="modal-wrapper">
           <CloseOutlinedIcon
             className="close-icon"
-            onClick={() => setLoginModal(false)}
+            onClick={() => {
+              setLoginModal ? setLoginModal(false) : setShowLogin(false);
+            }}
           />
           <img src={logo} className="modal-logo" />
           <div className="modal-text">
@@ -34,13 +40,26 @@ export default function LoginModal({ setLoginModal }) {
           </div>
           <ul className="login-buttons">
             <li>
-              <button className="button naver " onClick={()=> handleSocialLogin("naver")}>Connect With Naver</button>
+              <button
+                className="button naver "
+                onClick={() => handleSocialLogin("naver")}
+              >
+                Connect With Naver
+              </button>
             </li>
             <li>
-              <button className="button google " onClick={()=> handleSocialLogin("google")}>Connect With Google</button>
+              <button
+                className="button google "
+                onClick={() => handleSocialLogin("google")}
+              >
+                Connect With Google
+              </button>
             </li>
             <li>
-              <button className="button kakaotalk " onClick={()=> handleSocialLogin("kakao")}>
+              <button
+                className="button kakaotalk "
+                onClick={() => handleSocialLogin("kakao")}
+              >
                 Connect With Kakaotalk
               </button>
             </li>
@@ -61,7 +80,7 @@ const Container = styled.div`
     right: 0;
     position: fixed;
     background: rgba(49, 49, 49, 0.6);
-    z-index: 3;
+    z-index: 30;
 
     .modal-wrapper {
       width: 800px;
@@ -71,7 +90,7 @@ const Container = styled.div`
       top: 50%;
       margin-left: -350px;
       margin-top: -250px;
-
+      z-index: 31;
       align-items: center;
       background: #fff;
       box-shadow: 0 0 1em rgb(0 0 0 / 27%);

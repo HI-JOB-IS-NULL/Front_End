@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 import IngredientInfo from "./IngredientInfo";
@@ -8,18 +8,63 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
-
+import { kServerIP } from "../IP";
+import axios from "axios";
 export default function Ingredients({ recipeId }) {
   const { data, isLoading } = useQuery("recipeInfo", () =>
     getRecipeInfoById(recipeId)
   );
-
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [isImperial, setIsImperial] = useState(true);
-  const [isMade, setIsMade] = useState(false);
-  const [isAllAdded, setIsAllAdded] = useState(false);
 
+  const [isAllAdded, setIsAllAdded] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [doneRecipeList, setDoneRecipeList] = useState([]);
+  console.log(
+    doneRecipeList.some((item) => {
+      return item.recipe_id === recipeId;
+    })
+  );
+  const [isMade, setIsMade] = useState(false);
+  console.log(isMade);
+
+  const doneRecipe = () => {
+    setIsMade(!isMade);
+    const formData = new FormData();
+    formData.append("recipe_id", recipeId);
+    formData.append("recipe_title", data.Recipe_Information.title);
+    formData.append("recipe_thumbnail", data.Recipe_Information.image);
+    axios({
+      method: "post",
+      url: `${kServerIP}/RecipeDB/ChangeRecipeDone`,
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/ChangeRecipeDone`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setIsMade(
+          res.data.BookMarkList.some((item) => {
+            return item.recipe_id === recipeId;
+          })
+        );
+      });
+    }
+  }, []);
   return (
     <Container>
+      {showLogin && <LoginModal setShowLogin={setShowLogin} />}
       {data ? (
         <div className="ingredients-wrapper">
           <div className="ingredients--header">
@@ -61,7 +106,7 @@ export default function Ingredients({ recipeId }) {
             </button>
             <div
               className="madeIt--section"
-              onClick={() => setIsMade((prevState) => !prevState)}
+              onClick={() => (accessToken ? doneRecipe() : setShowLogin(true))}
             >
               {isMade ? (
                 <span className="hover--text">Made it</span>
@@ -93,7 +138,6 @@ export default function Ingredients({ recipeId }) {
                   )}
                 </div>
               </div>
-              <AddToPlan />
             </div>
           </div>
         </div>

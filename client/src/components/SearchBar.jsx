@@ -3,10 +3,10 @@ import styled from "styled-components";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import RecipeQueryData from "../RecipeQueryData";
 import { useNavigate } from "react-router-dom";
-export default function SearchBar({ placeholder }) {
-  // const [searchKeyword, setSearchKeyword] = useState("");
+export default function SearchBar(props) {
+  const { placeholder, setNavigate, inputData } = props;
   const [isFocused, setIsFocused] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(inputData);
   const [isHovered, setIsHovered] = useState(false);
   const suggestions = RecipeQueryData.map((item) => item.query);
   const navigate = useNavigate();
@@ -24,7 +24,11 @@ export default function SearchBar({ placeholder }) {
             placeholder={placeholder}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyUp={(e) =>
-              e.key === "Enter" ? navigateToSearchRecipe() : null
+              e.key === "Enter"
+                ? setNavigate
+                  ? navigateToSearchRecipe(inputValue)
+                  : () => props.changeQuery(inputValue)
+                : null
             }
             onFocus={() => setIsFocused(true)}
             onBlur={() => {
@@ -36,7 +40,14 @@ export default function SearchBar({ placeholder }) {
             className="search-inputs-input"
           />
           <div className="search--icon">
-            <SearchOutlinedIcon style={{ cursor: "pointer" }} />
+            <SearchOutlinedIcon
+              style={{ cursor: "pointer" }}
+              onClick={
+                setNavigate
+                  ? () => navigateToSearchRecipe(inputValue)
+                  : () => props.changeQuery(inputValue)
+              }
+            />
           </div>
         </div>
         {isFocused && (
@@ -55,7 +66,12 @@ export default function SearchBar({ placeholder }) {
                   {isMatch && (
                     <div
                       className="suggestion"
-                      onClick={() => navigateToSearchRecipe(suggestion)}
+                      onClick={() => {
+                        setNavigate
+                          ? navigateToSearchRecipe(suggestion)
+                          : setInputValue(suggestion);
+                        () => props.changeQuery(inputValue);
+                      }}
                     >
                       {suggestion}
                     </div>
@@ -79,7 +95,6 @@ const Container = styled.div`
       position: relative;
       display: flex;
       align-items: center;
-
       .search-inputs-input {
         display: block;
         width: 500px;
@@ -91,7 +106,6 @@ const Container = styled.div`
         line-height: 20px;
         outline: none;
       }
-
       .search--icon {
         position: absolute;
         padding-left: 15px;
@@ -100,7 +114,7 @@ const Container = styled.div`
     .input-suggestion {
       box-shadow: 0 0 14px rgb(0 0 0 / 8%);
       position: absolute;
-      top: 45px;
+      top: 100px;
       left: 10px;
       max-height: 150px;
       overflow-y: auto;

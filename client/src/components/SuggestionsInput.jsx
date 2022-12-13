@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import IngredientsData from "../IngredientsData";
 import styled from "styled-components";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+
 export default function SuggestionsInput(props) {
   const suggestions = IngredientsData.map((item) => item.name);
-  const [isFocused, setIsFocused] = useState(true);
+  const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isHovered, setIsHovered] = useState(false);
 
@@ -44,7 +45,14 @@ export default function SuggestionsInput(props) {
                   {isMatch && (
                     <div
                       className="suggestion"
-                      onClick={() => setInputValue(suggestion)}
+                      onClick={() => {
+                        setInputValue(suggestion);
+                        props.setIncludeIng([...props.includeIng, suggestion]);
+                        if (!props.setInputValue) {
+                          setInputValue("");
+                          setIsFocused(false);
+                        }
+                      }}
                     >
                       <AddCircleOutlineOutlinedIcon
                         fontSize="small"
@@ -82,7 +90,8 @@ const Container = styled.div`
       box-shadow: 0 0 14px rgb(0 0 0 / 8%);
       max-height: 150px;
       overflow-y: auto;
-
+      z-index: 10;
+      background: white;
       position: absolute;
       top: 50px;
 

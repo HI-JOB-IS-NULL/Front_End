@@ -63,7 +63,6 @@ body {
 }
 
 .title-text-small {
-  /* font-size: 18px; */
   font-size: 2rem;
   line-height: 1.666666666666667;
 }
@@ -104,6 +103,9 @@ body {
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+.simple-button:hover {
+  font-weight: bold;
 }
 
 ::-webkit-scrollbar {

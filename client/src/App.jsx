@@ -41,14 +41,18 @@ function App() {
           path="/ProductDetailes/:product_id"
           element={<ProductDetail />}
         />
-        <Route exact path="/recipe/:recipeId" element={<Recipe />} />
+        <Route
+          exact
+          path="/recipe/:recipeId/:isBookMarked"
+          element={<Recipe />}
+        />
         <Route exact path="/checkout/:product_id" element={<Checkout />} />
         <Route
           exact
-          path="/searchRecipes/:recipe_query"
+          path="/searchRecipes/:recipeQuery"
           element={<SearchRecipes />}
         />
-        <Route exact path="/mypage" element={<Mypage />} />
+        <Route exact path="/mypage/:tabValue" element={<Mypage />} />
         <Route exact path="/survey" element={<SurveyComponent />} />
         <Route exact path="/" element={<Home />} />
         <Route exact path="sociallogin" element={<SocialLogin />} />

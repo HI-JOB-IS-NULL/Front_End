@@ -16,9 +16,9 @@ import { Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ImageAnalyzResult from "../components/ImageAnalyzResult";
 import Spinner from "react-bootstrap/Spinner";
-
-// import imageData from "../imageData";
+import { kServerIP } from "../IP";
 export default function PantryReadyRecipes() {
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [tags, setTags] = useState([]);
@@ -28,7 +28,7 @@ export default function PantryReadyRecipes() {
   const [image, setImage] = useState();
   const [imageResult, setImageResult] = useState();
   const [uploadIsClicked, setUploadIsClicked] = useState(false);
-
+  const [bookmarkList, setBookmarkList] = useState([]);
   useEffect(() => {
     if (ingredientsData.length === 0) {
       setIngredientsData(IngredientsData);
@@ -52,8 +52,35 @@ export default function PantryReadyRecipes() {
     });
   }, [tags]);
 
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
+  }, []);
+
   const cards = data?.data.results.map((item) => {
-    return <Card key={item.id} {...item} />;
+    return (
+      <Card
+        key={item.id}
+        {...item}
+        bookMark={
+          bookmarkList.some((bookmark) => {
+            return bookmark.recipe_id === item.id.toString();
+          })
+            ? true
+            : false
+        }
+      />
+    );
   });
 
   function addTags(item) {
@@ -101,7 +128,6 @@ export default function PantryReadyRecipes() {
       console.log(res);
       setImageResult(res);
     });
-    // setImageResult(imageData);
   };
 
   return (
@@ -256,6 +282,7 @@ const Container = styled.div`
       .upload-image {
         display: flex;
         flex-direction: column;
+
         gap: 10px;
         margin-right: 20px;
       }
@@ -264,9 +291,6 @@ const Container = styled.div`
         overflow-y: auto;
         margin-top: 30px;
       }
-
-      /* max-height: 190px;
-      overflow-y: auto; */
     }
 
     .pantry-ingredient-search {

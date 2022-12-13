@@ -2,27 +2,63 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import "../css/Home.css";
 import Card from "../components/Card";
-import Axios from "axios";
+
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import banner from "../assets/default_bkg.png";
 
 import bannerImg from "../assets/banner_img.png";
-import { ServeIP, apiKey3 } from "../IP";
+import { kServerIP, apiKey3 } from "../IP";
 import HomeModal from "../components/HomeModal";
+import axios from "axios";
 export default function Home() {
   const [randomRecipes, setRandomRecipes] = useState([]);
   const [modal, setModal] = useState(false);
+  const [bookmarkList, setBookmarkList] = useState([]);
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
 
   useEffect(() => {
-    Axios.get(
-      `https://api.spoonacular.com/recipes/random?${apiKey3}&number=10`
-    ).then((response) => {
-      setRandomRecipes(response.data.recipes);
-    });
+    axios
+      .get(`https://api.spoonacular.com/recipes/random?${apiKey3}&number=10`)
+      .then((response) => {
+        console.log(response);
+        setRandomRecipes(response.data.recipes);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
   }, []);
 
   const cards = randomRecipes.map((item, index) => {
-    return <Card key={index} {...item} />;
+    console.log(
+      bookmarkList.some((bookmark) => {
+        return bookmark.recipe_id === item.id;
+      })
+    );
+    return (
+      <Card
+        key={index}
+        {...item}
+        bookMark={
+          bookmarkList.some((bookmark) => {
+            return bookmark.recipe_id === item.id.toString();
+          })
+            ? true
+            : false
+        }
+      />
+    );
   });
 
   return (
@@ -44,8 +80,19 @@ export default function Home() {
         </div>
       </section>
       {modal && <HomeModal setModal={setModal} />}
-
-      <section className="cards--list">{cards}</section>
+      <h1
+        style={{
+          padding: "4vh 0 0 5vw",
+          margin: "0",
+          fontWeight: "200",
+          fontSize: "2rem",
+        }}
+      >
+        Just For You
+      </h1>
+      <section className="cards--list" style={{ paddingTop: "25px" }}>
+        {cards}
+      </section>
     </Container>
   );
 }

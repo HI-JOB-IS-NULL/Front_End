@@ -3,12 +3,10 @@ import Box from "./Box";
 import axios from "axios";
 import { getComments } from "./api";
 
-export default function CommentForm () {
+export default function CommentForm() {
   const [comments, setComments] = useState([]);
   const [page, setPage] = useState(1);
-    let timeInterver = '';
-
-
+  let timeInterver = "";
 
   const loadComments = async (page) => {
     try {
@@ -24,22 +22,21 @@ export default function CommentForm () {
     loadComments(page);
   }, [page]);
 
-  const scrollEvent = ()=>{
+  const scrollEvent = () => {
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
-    console.log(scrollTop)
+    console.log(scrollTop);
     if (scrollTop + clientHeight >= scrollHeight - 950) {
       setPage(page + 1);
     }
-  }
+  };
 
   const handleScroll = () => {
     clearTimeout(timeInterver);
-    timeInterver = setTimeout(scrollEvent, 300)
+    timeInterver = setTimeout(scrollEvent, 300);
   };
 
-  
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -48,16 +45,14 @@ export default function CommentForm () {
     };
   });
 
-  useEffect(()=>{
-    axios.get(``)
-    .then()
-  })
-    return(
-        <>
-          {comments.map((item, key) => (
-          <Box key={item.id} id={item.id} email={item.email} body={item.body} />
-          ))}
-        </>
-    )
+  useEffect(() => {
+    axios.get(``).then();
+  });
+  return (
+    <>
+      {comments.map((item, key) => (
+        <Box key={item.id} id={item.id} email={item.email} body={item.body} />
+      ))}
+    </>
+  );
 }
-

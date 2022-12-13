@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import InputTags from "../components/InputTags";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
-// import AddToPlan from "../components/AddToPlan";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { kServerIP } from "../IP";
 import Card from "../components/Card";
+import Tippy from "@tippy.js/react";
+import "tippy.js/dist/tippy.css";
+
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [tags, setTags] = useState([]);
@@ -13,13 +15,13 @@ export default function mealPlanner() {
   const [isAddedToPlan, setIsAddedToPlan] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [mealPlanCount, setMealPlanCount] = useState();
-
+  const [bookmarkList, setBookmarkList] = useState([]);
   console.log(mealPlanCount);
   if (mealPlanCount === undefined) {
     console.log("in");
     axios({
       method: "get",
-      url: `${ServeIP}/MealPlan/checkMealPlanCount`,
+      url: `${kServerIP}/MealPlan/checkMealPlanCount`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -28,6 +30,20 @@ export default function mealPlanner() {
       setMealPlanCount(res.data);
     });
   }
+  useEffect(() => {
+    if (accessToken) {
+      axios({
+        method: "post",
+        url: `${kServerIP}/auth/recipeBookMarkList`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }).then(function (res) {
+        console.log(res.data.BookMarkList);
+        setBookmarkList(res.data.BookMarkList);
+      });
+    }
+  }, []);
   const plans = data?.data.map((days, index) => {
     return (
       <div
@@ -46,6 +62,13 @@ export default function mealPlanner() {
                 key={index}
                 {...day}
                 image={`https://spoonacular.com/recipeImages/${day.id}-480x360.${day.imageType}`}
+                bookMark={
+                  bookmarkList.some((bookmark) => {
+                    return bookmark.recipe_id === item.id.toString();
+                  })
+                    ? true
+                    : false
+                }
               />
             );
           })}
@@ -73,7 +96,7 @@ export default function mealPlanner() {
 
   const handleClick = () => {
     setIsAddedToPlan(true);
-    addToMealPlan;
+    addToMealPlan();
     window.location.reload();
   };
 
@@ -89,7 +112,7 @@ export default function mealPlanner() {
 
     axios({
       method: "post",
-      url: `${ServeIP}/MealPlan/generateMealPlan`,
+      url: `${kServerIP}/MealPlan/nser/generateMealPlan`,
       data: filterData,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -102,9 +125,10 @@ export default function mealPlanner() {
   };
 
   const addToMealPlan = () => {
+    console.log("addmeal");
     axios({
       method: "post",
-      url: `${ServeIP}/MealPlan/addMealPlan`,
+      url: `${kServerIP}/MealPlan/addMealPlan`,
       data: data.data,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -183,7 +207,12 @@ export default function mealPlanner() {
                     name="duration"
                   >
                     <option>Day</option>
-                    <option>Week</option>
+
+                    {mealPlanCount === "onlyDay" ? (
+                      <option disabled={true}>Week</option>
+                    ) : (
+                      <option>Week</option>
+                    )}
                   </select>
                 </div>
               </div>
@@ -230,7 +259,18 @@ export default function mealPlanner() {
           )}
         </div>
       ) : (
-        <h1 style={{}}>You Already Planed your week good job!</h1>
+        <div
+          style={{
+            display: "flex",
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <h1>You Already Planed your week good job!</h1>
+        </div>
       )}
     </Container>
   );

@@ -9,7 +9,11 @@ export default function HomeModal({ setModal }) {
       <div className="overlay">
         <div className="search--modal">
           <div className="search--box">
-            <SearchBar placeholder="Search Recipes" />
+            <SearchBar
+              placeholder="Search Recipes"
+              setNavigate={true}
+              inputData={""}
+            />
           </div>
           <div className="recent-searches">
             <span className="light-gray-font">Recent Searches:</span>
