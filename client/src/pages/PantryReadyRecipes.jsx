@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-
+import AdCard from "../components/AdCard";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -44,7 +44,7 @@ export default function PantryReadyRecipes() {
     ingredientsData.append("includeIngredients", ingredients);
     axios({
       method: "post",
-      url: `${ServeIP}/RecipeDB/searchRecipes`,
+      url: `${ServeIP}/RecipeDB/nser/searchRecipes`,
       data: ingredientsData,
     }).then(function (res) {
       console.log(res);
@@ -122,7 +122,7 @@ export default function PantryReadyRecipes() {
     });
     axios({
       method: "post",
-      url: `${ServeIP}/RecipeDB/ingredientDetection`,
+      url: `http://10.20.33.142:5000/RecipeDB/nser/ingredientDetection`,
       data: imageData,
     }).then(function (res) {
       console.log(res);
@@ -132,6 +132,9 @@ export default function PantryReadyRecipes() {
 
   return (
     <Container>
+      <div  style={{marginLeft:'80%', position:'fixed', zIndex:'10'}}>
+        <AdCard/>
+      </div>
       <div className="pantry-ready-page">
         <div className="pantry-ready-content">
           <h1 className="pantry-ready-title bold">Cook with what you have</h1>
@@ -252,7 +255,9 @@ export default function PantryReadyRecipes() {
         </div>
 
         <div className="cards--list">{cards}</div>
+        
       </div>
+      
     </Container>
   );
 }

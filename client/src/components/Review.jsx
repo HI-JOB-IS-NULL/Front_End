@@ -53,11 +53,18 @@ import { ServeIP } from "../IP";
   console.log(products)
     return (
       <React.Fragment>
-        <Typography variant="h5" gutterBottom>
-          Order summary
-        </Typography>
-          <h8>Product:</h8> <h8> {products.productName}</h8><br/>
-          <h8>Price: {products.price}₩</h8>
+        <div style={{display:'flex'}}>
+          <div>
+          <Typography variant="h5" gutterBottom>
+            Order summary
+          </Typography>
+            <h8>Product:</h8> <h8> {products.productName}</h8><br/>
+            <h8>Price: {products.price}₩</h8>
+          </div>
+            <Grid item container direction="column" md={3} sx={{ marginLeft:15}}>
+              <img src={products.imageFirst}/>
+            </Grid>
+        </div>
         <Grid container spacing={15}>
           <Grid item xs={12} sm={6}>
             <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
@@ -66,9 +73,7 @@ import { ServeIP } from "../IP";
             <Typography gutterBottom>{userInfo.userEmail}</Typography>
             <Typography gutterBottom>{addresses}</Typography>
           </Grid>
-          <Grid item container direction="column" md={6} sx={{position:'absolute', width:'300px', marginLeft:'16%', marginTop:"-5%"}}>
-            <img src={products.imageFirst}/>
-          </Grid>
+          
         </Grid>
       </React.Fragment>
     );

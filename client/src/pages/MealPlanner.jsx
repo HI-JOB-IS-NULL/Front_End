@@ -7,6 +7,7 @@ import { kServerIP } from "../IP";
 import Card from "../components/Card";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
+import AdCard from "../components/AdCard";
 
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -64,7 +65,7 @@ export default function mealPlanner() {
                 image={`https://spoonacular.com/recipeImages/${day.id}-480x360.${day.imageType}`}
                 bookMark={
                   bookmarkList.some((bookmark) => {
-                    return bookmark.recipe_id === item.id.toString();
+                    return bookmark.recipe_id === day.id.toString();
                   })
                     ? true
                     : false
@@ -139,6 +140,9 @@ export default function mealPlanner() {
 
   return (
     <Container>
+      <div  style={{marginLeft:'80%', position:'fixed', zIndex:'10'}}>
+        <AdCard/>
+      </div>
       {mealPlanCount === true || mealPlanCount === "onlyDay" ? (
         <div className="meal-planner-page">
           <div className="meal-planner-header">

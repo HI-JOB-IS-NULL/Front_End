@@ -17,12 +17,12 @@ function communityCard(props) {
   //     }).then(response => setComu(response.data))
   // })
 
-  const [image, setImage] = useState();
-
-  useEffect(() => {
-    console.log(props.cardInfo);
-    setImage(props.cardInfo.uploadImgResult);
-  }, []);
+    const [image, setImage] = useState();
+     
+    useEffect(()=> {
+        console.log(props.cardInfo);
+        setImage(props.cardInfo.uploadImgResult);
+    },[])
 
   const [isBooked, setIsBooked] = useState(false);
   const [like, setLike] = useState(props.cardInfo.like_rate),
@@ -31,42 +31,23 @@ function communityCard(props) {
       setLike(like + (isLike ? -1 : 1));
       setIsLike(!isLike);
     };
-  return (
-    <Container>
-      <a
-        href={`/CommunityDetailes/${props.cardInfo.csRecipeId}`}
-        style={{ textDecoration: "none", color: "black" }}
-      >
-        <Card
-          style={{
-            width: "500px",
-            display: "flex",
-            flexDirection: "row",
-            height: "230px",
-          }}
-        >
-          <Card.Img
-            className="img"
-            variant="top"
-            src={
-              image != null && props.cardInfo.uploadImgResult.length != 0
-                ? image[0].realImageUrl
-                : noimage
-            }
-            style={{ width: "300px", height: "230px" }}
-          />
-          {/* {console.log(props.cardInfo.uploadImgResult[0].realImageUrl)} */}
-          <Card.Body>
-            <Card.Title style={{}}>{props.cardInfo.recipeT_title}</Card.Title>
-
-            <div style={{ display: "flex", margin: "0.5vw" }}>
-              <Button
-                className={"like-button " + (isLike ? "liked" : "")}
-                onClick={onLikeButtonClick}
-              >
-                {"Like"} | {like}
-              </Button>
-              <style>{`
+    return(
+        <Container>
+        <a href={`/CommunityDetailes/${props.cardInfo.csRecipeId}`} style={{textDecoration:'none', color:'black'}}>
+            <Card  style={{width:"500px", display:"flex", flexDirection:"row", height:'230px'}}>
+              <Card.Img className='img' variant="top" src={image != null && props.cardInfo.uploadImgResult.length != 0 ? image[0].realImageUrl : noimage} style={{width:'50%'}}/>
+              {/* {console.log(props.cardInfo.uploadImgResult[0].realImageUrl)} */}
+              <Card.Body style={{margin:'5%'}}>
+                <Card.Title>{props.cardInfo.recipeT_title}</Card.Title>
+                
+                <div style={{display:"flex",margin:"0.5vw"}}>
+                <Button 
+                    className={"like-button " + (isLike ? "liked" : "")}
+                    onClick={onLikeButtonClick}
+                    >
+                        {"Like"} | {like}
+                </Button>
+                    <style>{`
                         .like-button {
                             font-size: 1rem;
                             padding: 5px 10px;

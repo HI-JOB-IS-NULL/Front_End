@@ -7,8 +7,7 @@ import Button from '@mui/material/Button';
 import Pagination from 'react-js-pagination';
 import axios from 'axios';
 import { ServeIP } from '../IP';
-import { useDispatch } from 'react-redux';
-import Paging from '../css/Paging.css';
+import AdCard from '../components/AdCard';
 
 // const [loading, setLoading] = useState(false)
 const { CheckableTag } = Tag;
@@ -30,14 +29,14 @@ export default function Community() {
   const [items, setItems] = useState([]);
   //검색어 
   const onSearch = async (keyword) => {
-    setUrl(`${ServeIP}/CustomRecipe/list?type=${type}&keyword=${keyword}`);
+    setUrl(`${ServeIP}/CustomRecipe/nser/list?type=${type}&keyword=${keyword}`);
     console.log(url)
   }
 
   useEffect(()=> {
     axios({
       method: 'GET',
-      url: `${ServeIP}/CustomRecipe/get?page=`+page
+      url: `${ServeIP}/CustomRecipe/nser/get?page=`+page
     }).then(res => setItems(res.data.dtoList))
   }, [])
 
@@ -53,14 +52,17 @@ export default function Community() {
     const nextSelectedTags = checked
       ? [...selectedTags, tag]
       : selectedTags.filter((t) => t !== tag);
-    
     setSelectedTags(nextSelectedTags);
   };
 
 
   return (
     <Container>
+      
       <div>
+      <div  style={{marginLeft:'65%',marginTop:'12%', position:'fixed', zIndex:'10'}}>
+        <AdCard/>
+      </div>
         <div>
           {/* {loading &&
           <Spin tip="Loading...">

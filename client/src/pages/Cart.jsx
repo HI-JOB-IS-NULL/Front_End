@@ -25,6 +25,10 @@ import logo from "../assets/logo.png";
 import RemoveShoppingCartTwoToneIcon from '@mui/icons-material/RemoveShoppingCartTwoTone';
 import LocalShippingTwoToneIcon from '@mui/icons-material/LocalShippingTwoTone';
 import { RingLoader } from "react-spinners";
+import { Button } from "antd";
+import Checkout from "../components/Checkout";
+import { Link } from "react-router-dom";
+import CartCheckout from "../components/CartCheckout";
 
 export default function PaymentMethods() {
   const [loading, setLoading] = useState(false);
@@ -40,6 +44,11 @@ export default function PaymentMethods() {
     let year = newDate.getFullYear();
 
     return `${date}${separator}${month < 10 ? `0${month}` : `${month}`}${separator}${year}`
+  }
+
+  const shoot = () =>{
+    window.sessionStorage.setItem("cart", JSON.stringify(cartData));
+    window.location.href = "../cartCheckout"
   }
 
   function addDays(separator = '.') {
@@ -212,7 +221,7 @@ export default function PaymentMethods() {
             </MDBCardHeader>
 
             <MDBCardBody>
-
+            {console.log(cartData)}
               {cartData.map((items) => (
                 <div>
                   <MDBRow>
@@ -252,11 +261,9 @@ export default function PaymentMethods() {
                   <hr className="my-4" />
                 </div>
               ))
-
               }
             </MDBCardBody>
           </MDBCard>
-
           <MDBCard className="mb-4" style={{ width: "auto" }}>
             <MDBCardBody>
               <p>
@@ -266,8 +273,8 @@ export default function PaymentMethods() {
             </MDBCardBody>
           </MDBCard>
 
-          <MDBCard className="mb-4 mb-lg-0">
-            <MDBCardBody>
+          <MDBCard className="mb-5 mb-lg-1"style={{width:"250px"}}>
+            <MDBCardBody style={{width:"250px"}}>
               <p>
                 <strong>We accept</strong>
               </p>
@@ -317,10 +324,18 @@ export default function PaymentMethods() {
                   </span>
                 </MDBListGroupItem>
               </MDBListGroup>
-
-              <MDBBtn block size="lg">
+              
+                {console.log(cartData)}
+              <Button onClick={shoot} type="primary" style={{borderRadius:15, marginLeft:'5vw'}}>
                 Go to checkout
-              </MDBBtn>
+                {/* <Link 
+                to={{
+                pathname: '../CartCheckout',
+                state: cartData
+              }}>
+                </Link> */}
+              </Button>
+              
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -352,8 +367,16 @@ export default function PaymentMethods() {
 
 
   return (
+    <div style={{
+      margin: "150px auto 32px",
+      maxWidth: "1340px",
+      width: "100%",
+      boxSizing: "border-box",
+      padding: "0 80px",
+    }}>
     <section className="h-100 gradient-custom">
       {content}
     </section>
+    </div>
   );
 }

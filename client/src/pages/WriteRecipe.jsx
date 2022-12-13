@@ -17,7 +17,10 @@ import { ServeIP } from '../IP';
 
 const { TextArea } = Input;
 
+
+
 const WriteRecipe = () => {
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [name, setName] = useState('');
   const [recipeName, setrecipeName] = useState('');
   const [recipeTime, setRecipeTime] = useState();
@@ -64,7 +67,7 @@ const WriteRecipe = () => {
     console.log(Image)
     console.log(e.file.status);
   }
-  
+  console.log(Image)
   const DELETE = () => {
     window.location.reload();
   }
@@ -92,14 +95,15 @@ const WriteRecipe = () => {
       axios({
         method: 'POST',
         // url: `${ServeIP}/CustomRecipe/register`,
-        url: 'http://172.16.33.14:5000/CustomRecipe/register',
+        url: `${ServeIP}/CustomRecipe/register`,
         data: formData,
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${accessToken}`,
         }
       })
       if(formData != null){
-        // window.location.href="/community"
+        window.location.href="/community"
       }
   };
 
