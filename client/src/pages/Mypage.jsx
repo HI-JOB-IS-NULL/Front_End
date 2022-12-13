@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Input, Tag, Tooltip, Modal, Select, Form,Checkbox, Switch } from 'antd';
 import styled from 'styled-components';
@@ -9,10 +9,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import '../css/mypage.css';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardText, MDBCardBody, MDBCardImage, MDBTypography, MDBIcon } from 'mdb-react-ui-kit';
-import SurveyComponent from '../components/Survey';
 import axios from "axios";
 import { ServeIP } from "../IP";
-import PaymentMethods from "../components/PaymentMethods";
+import PaymentMethods from "./Cart";
 import DataTableRowExpansionDemo from "../components/DataTableRowExpansionDemo";
 import Checkout from "../components/Checkout";
 import Payment from "../components/RequestPay";
@@ -152,7 +151,7 @@ export default function Mypage() {
     const jquery = document.createElement("script");
     jquery.src = "https://code.jquery.com/jquery-1.12.4.min.js";
     const iamport = document.createElement("script");
-    iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.7.js";
+    iamport.src = "https://cdn.iamport.kr/js/iamport.payment-1.1.8.js";
     document.head.appendChild(jquery);
     document.head.appendChild(iamport);
     return () => {
@@ -160,38 +159,49 @@ export default function Mypage() {
     }
   }, []);
 
-  const checkPhoneNum = () => {
-    console.log("checkPhoneNum");
-    var IMP = window.IMP; // 생략 가능
-    IMP.init("imp60214404"); 
-    const param={}
-
-    IMP.certification(param,callback);
-    }
-    const callback = (response) => {
-      const {success, error_code, error_msg, imp_uid, merchant_uid} = response;
-      console.log(response)
-      if (success) {
-        alert('본인인증 성공');
-        axios.post(
-          `#`, 
-          {
-            imp_uid: response.imp_uid,
-          },{
-            headers: {
-              Authorization: `Bearer ${accessToken}`
+const check = () =>{
+  console.log(1)
+    const { IMP } = window;
+    IMP.init([['imp60214404']]);
+    // var IMP = window.IMP; // 생략 가능
+    //IMP.init("imp60214404"); // 예: imp00000000
+    IMP.certification(
+        //파라미터 생략시 빈 object는 입력해줘야한것 같음. 제거 시 모듈 동작 안함.
+        {},
+        function (rsp) {
+          console.log(2)
+            //본인인증 성공 프로세스
+            if (rsp.success) {
+              console.log(3)
+                console.log(rsp);
+                axios({
+                  method:'POST',
+                  url:`${ServeIP}/profile/successCheckPhonNumber`,
+                  data: {imp_uid: rsp.imp_uid},
+                  headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                  },
+                }).then(function (res) {
+                  console.log("sd");
+                  if (res.status === 200) {
+                    console.log(res.data);
+                    setUserInfo(res.data)
+                    // return response.json();
+                  } else if (res.status === 403) {
+                    //window.location.href = "/login"; // redirect
+                  } else {
+                    new Error(res);
+                  }
+                });  
             }
-          }
-        ).then((res) => {
-          console.log(res)
-        })
-  
-      } else {
-        alert(`본인인증 실패 : ${error_msg}`);
-      }
-    }
-
-
+            //본인인증 실패 프로세스
+            else {
+                alert("인증에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+            }
+        }
+    );
+}
 
 
   const [componentDisabled, setComponentDisabled] = useState(true);
@@ -212,7 +222,11 @@ export default function Mypage() {
     console.log("asd",v.phone);
   }
 
-
+  const onChange = useCallback(e=>{
+    console.log("aaaaa")
+    console.log(e.target.value);
+    setPhone(e.target.value);
+  },[])
 
   return (
     <Container>
@@ -245,6 +259,7 @@ export default function Mypage() {
                     <MDBRow className="g-0">
                       <MDBCol md="4" className="gradient-custom text-center text-white"
                         style={{ borderTopLeftRadius: '.5rem', borderBottomLeftRadius: '.5rem' }}>
+          
                         {/*이미지 삽입 */}
                         <MDBCardImage src={userInfo.img}
                           alt="Avatar" className="my-3" fluid />
@@ -252,6 +267,7 @@ export default function Mypage() {
                         {/* <MDBTypography tag="h3">User1</MDBTypography> */}
                         <MDBTypography tag="h5">Nick name</MDBTypography>
                         {/* <Input id="nickName"  /> */}
+                        
                         <Form.Item
                           name="nickName"
                           rules={[
@@ -281,8 +297,9 @@ export default function Mypage() {
                               <Form.Item
                                 name='phoneNum'
                               >
-                              <Input onClick={checkPhoneNum}/>
+                              <Input id='phoneNum'/>                              
                               </Form.Item>
+                              <Button onClick={check}>수정</Button>
                             </MDBCol>
                           </MDBRow>
 

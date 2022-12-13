@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Pagination from 'react-js-pagination';
 import axios from 'axios';
 import { ServeIP } from '../IP';
-
+import AdCard from '../components/AdCard';
 
 // const [loading, setLoading] = useState(false)
 const { CheckableTag } = Tag;
@@ -58,7 +58,11 @@ export default function Community() {
 
   return (
     <Container>
+      
       <div>
+      <div  style={{marginLeft:'65%',marginTop:'12%', position:'fixed', zIndex:'10'}}>
+        <AdCard/>
+      </div>
         <div>
           {/* {loading &&
           <Spin tip="Loading...">

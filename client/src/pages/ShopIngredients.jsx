@@ -186,20 +186,20 @@ export default function ShopIngredients() {
     const temp = [...snack];
     console.log(temp);
     if (e === "ao") {
-      setPantry(
+      setSnack(
         temp.sort(function (a, b) {
           return a.price - b.price;
         })
       );
       console.log(sortve);
     } else if (e === "do") {
-      setPantry(
+      setSnack(
         temp.sort(function (b, a) {
           return a.price - b.price;
         })
       );
     } else if (e === "al") {
-      setPantry(
+      setSnack(
         temp.sort((a, b) => {
           if (a.product_name > b.product_name) return 1;
           if (a.product_name < b.product_name) return -1;
@@ -213,20 +213,20 @@ export default function ShopIngredients() {
     const temp = [...frozen];
     console.log(temp);
     if (e === "ao") {
-      setPantry(
+      setFrozen(
         temp.sort(function (a, b) {
           return a.price - b.price;
         })
       );
       console.log(sortve);
     } else if (e === "do") {
-      setPantry(
+      setFrozen(
         temp.sort(function (b, a) {
           return a.price - b.price;
         })
       );
     } else if (e === "al") {
-      setPantry(
+      setFrozen(
         temp.sort((a, b) => {
           if (a.product_name > b.product_name) return 1;
           if (a.product_name < b.product_name) return -1;

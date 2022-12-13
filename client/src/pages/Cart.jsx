@@ -26,9 +26,9 @@ import RemoveShoppingCartTwoToneIcon from '@mui/icons-material/RemoveShoppingCar
 import LocalShippingTwoToneIcon from '@mui/icons-material/LocalShippingTwoTone';
 import { RingLoader } from "react-spinners";
 import { Button } from "antd";
-import Checkout from "./Checkout";
+import Checkout from "../components/Checkout";
 import { Link } from "react-router-dom";
-import CartCheckout from "./CartCheckout";
+import CartCheckout from "../components/CartCheckout";
 
 export default function PaymentMethods() {
   const [loading, setLoading] = useState(false);
@@ -367,8 +367,16 @@ export default function PaymentMethods() {
 
 
   return (
+    <div style={{
+      margin: "150px auto 32px",
+      maxWidth: "1340px",
+      width: "100%",
+      boxSizing: "border-box",
+      padding: "0 80px",
+    }}>
     <section className="h-100 gradient-custom">
       {content}
     </section>
+    </div>
   );
 }

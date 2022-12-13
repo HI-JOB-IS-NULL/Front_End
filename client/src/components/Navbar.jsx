@@ -20,6 +20,7 @@ export default function Navbar({ isScrolled }) {
     { name: "Meal Planner", link: "/mealPlanner" },
     { name: "Shop Ingredients", link: "/shop" },
     { name: "Community", link: "community" },
+    { name: "RecipeNutrition", link: "/RecipeNutrition"}
   ];
   const [profile, setProfile] = useState();
   const [loginModal, setLoginModal] = useState(false);
@@ -68,7 +69,7 @@ export default function Navbar({ isScrolled }) {
           )}
           {accessToken && (
             <div className="right flex a-center">
-              <ShoppingBasketOutlinedIcon className="material-icon margin-right" />
+              <ShoppingBasketOutlinedIcon className="material-icon margin-right" onClick={()=> navigate("/cart")}/>
 
               <ul>
                 <li>

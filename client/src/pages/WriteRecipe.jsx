@@ -103,7 +103,7 @@ const WriteRecipe = () => {
         }
       })
       if(formData != null){
-        // window.location.href="/community"
+        window.location.href="/community"
       }
   };
 
