@@ -30,10 +30,11 @@ function getStepContent(step) {
     default:
       throw new Error("Unknown step");
   }
-  
+}
   const theme = createTheme();
   
   export default function Checkout() {
+
     const goMypage = () =>{
       window.location.href = '../../';
     }

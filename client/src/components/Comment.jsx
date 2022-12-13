@@ -133,13 +133,8 @@ export default function CommentForm (props) {
   useEffect(() => {
     loadComments(page);
   }, [page]);
-<<<<<<< HEAD
-
-  const scrollEvent = () => {
-=======
   console.log(comments);
   const scrollEvent = ()=>{
->>>>>>> 942eaa9 (reply)
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop;
     const clientHeight = document.documentElement.clientHeight;

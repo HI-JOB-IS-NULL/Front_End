@@ -18,6 +18,8 @@ export default function ShopIngredients() {
   const [dairy, setDairy] = useState([]);
   const [meat, setMeat] = useState([]);
   const [items, setItems] = useState([]);
+  const [snack, setSnack] = useState([]);
+  const [frozen, setFrozen] = useState([]);
 
   useEffect(() => {
 
@@ -51,6 +53,16 @@ export default function ShopIngredients() {
       res.data.data.filter((i) => i.product_classification.includes("meat"))
     );
     console.log(meat);
+
+    //SNACK 분류
+    setSnack(
+      res.data.data.filter((i) => i.product_classification.includes("snack"))
+    );
+
+    //Frozen 분류
+    setFrozen(
+      res.data.data.filter((i) => i.product_classification.includes("frozen"))
+    )
   })
   }, []);
 
@@ -145,6 +157,60 @@ export default function ShopIngredients() {
   //pantry 정렬
   const PaSort = (e) => {
     const temp = [...pantry];
+    console.log(temp);
+    if (e === "ao") {
+      setPantry(
+        temp.sort(function (a, b) {
+          return a.price - b.price;
+        })
+      );
+      console.log(sortve);
+    } else if (e === "do") {
+      setPantry(
+        temp.sort(function (b, a) {
+          return a.price - b.price;
+        })
+      );
+    } else if (e === "al") {
+      setPantry(
+        temp.sort((a, b) => {
+          if (a.product_name > b.product_name) return 1;
+          if (a.product_name < b.product_name) return -1;
+          return 0;
+        })
+      );
+    }
+  };
+  // snack 정렬
+  const SnSort = (e) => {
+    const temp = [...snack];
+    console.log(temp);
+    if (e === "ao") {
+      setPantry(
+        temp.sort(function (a, b) {
+          return a.price - b.price;
+        })
+      );
+      console.log(sortve);
+    } else if (e === "do") {
+      setPantry(
+        temp.sort(function (b, a) {
+          return a.price - b.price;
+        })
+      );
+    } else if (e === "al") {
+      setPantry(
+        temp.sort((a, b) => {
+          if (a.product_name > b.product_name) return 1;
+          if (a.product_name < b.product_name) return -1;
+          return 0;
+        })
+      );
+    }
+  };
+  // frozen 정렬
+  const FzSort = (e) => {
+    const temp = [...frozen];
     console.log(temp);
     if (e === "ao") {
       setPantry(
@@ -266,8 +332,54 @@ export default function ShopIngredients() {
             })}
           </div>
         </TabPanel>
-        <TabPanel value="4"></TabPanel>
-        <TabPanel value="5"></TabPanel>
+        <TabPanel value="4">
+        <div
+            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}
+          >
+            <h4>FROZEN FOODS</h4>
+            <Select
+              onChange={FzSort}
+              style={{ width: "10vw" }}
+              placeholder="Sort">
+              <option value="ao">ascending order</option>
+              <option value="do">descending order</option>
+              <option value="al">alphabetically</option>
+            </Select>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
+            {frozen.map((item, i) => {
+              return (
+                <Product>
+                  <CardItem items={frozen[i]} />
+                </Product>
+              );
+            })}
+          </div>
+        </TabPanel>
+        <TabPanel value="5">
+        <div
+            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}
+          >
+            <h4>SNACKS</h4>
+            <Select
+              onChange={SnSort}
+              style={{ width: "10vw" }}
+              placeholder="Sort">
+              <option value="ao">ascending order</option>
+              <option value="do">descending order</option>
+              <option value="al">alphabetically</option>
+            </Select>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
+            {snack.map((item, i) => {
+              return (
+                <Product>
+                  <CardItem items={snack[i]} />
+                </Product>
+              );
+            })}
+          </div>
+        </TabPanel>
         <TabPanel value="6">
           <div
             style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}
