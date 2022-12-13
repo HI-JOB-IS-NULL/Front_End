@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import RecipeDetails from "../components/RecipeDetailes";
 import Ingredients from "../components/Ingredients";
 import { useParams } from "react-router-dom";
@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 export default function Recipe() {
   const { recipeId, isBookMarked } = useParams();
-  console.log(recipeId);
+
   let stepsDetail;
   let steps;
 
@@ -23,11 +23,11 @@ export default function Recipe() {
       steps = stepsDetail.map((items) => {
         return items.steps.map((item, index) => {
           return (
-            <>
-              <Direction key={index} stepNum={index + 1} {...item} />
+            <div key={index}>
+              <Direction stepNum={index + 1} {...item} />
 
               <br />
-            </>
+            </div>
           );
         });
       });

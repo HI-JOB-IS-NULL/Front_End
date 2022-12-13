@@ -17,8 +17,7 @@ export default function RecipeDetails({ recipeId, isBookMarked }) {
 
   const [showLogin, setShowLogin] = useState(false);
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
-  console.log(isBookMarked);
-  console.log(isBookMarked === true);
+
   const [isBooked, setIsBooked] = useState(
     isBookMarked === "true" ? true : false
   );
@@ -26,7 +25,6 @@ export default function RecipeDetails({ recipeId, isBookMarked }) {
   if (showLogin && accessToken) {
     setShowLogin(false);
   }
-  console.log(isBooked);
 
   const bookmark = () => {
     setIsBooked(!isBooked);
@@ -44,9 +42,6 @@ export default function RecipeDetails({ recipeId, isBookMarked }) {
     });
   };
 
-  if (data) {
-    console.log(data);
-  }
   return (
     <Container>
       {showLogin && <LoginModal setShowLogin={setShowLogin} />}

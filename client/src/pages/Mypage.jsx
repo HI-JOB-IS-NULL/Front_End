@@ -39,6 +39,7 @@ import Payment from "../components/RequestPay";
 import MyMealPlan from "./MyMealPlan";
 import { useParams } from "react-router-dom";
 import SavedRecipes from "../components/SavedRecipes";
+import DoneRecipes from "../components/DoneRecipes";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -374,7 +375,9 @@ export default function Mypage() {
         <TabPanel value={value} index={3}>
           <SavedRecipes />
         </TabPanel>
-        <TabPanel value={value} index={4}></TabPanel>
+        <TabPanel value={value} index={4}>
+          <DoneRecipes />
+        </TabPanel>
       </Box>
     </Container>
   );
