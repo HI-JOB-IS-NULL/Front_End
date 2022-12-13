@@ -13,6 +13,7 @@ import "../css/Navbar.css";
 import LoginModal from "./LoginModal";
 import loginIcon from "../assets/login_icon.png";
 import { useNavigate } from "react-router-dom";
+
 export default function Navbar({ isScrolled }) {
   const links = [
     { name: "Home", link: "/" },
@@ -20,11 +21,11 @@ export default function Navbar({ isScrolled }) {
     { name: "Meal Planner", link: "/mealPlanner" },
     { name: "Shop Ingredients", link: "/shop" },
     { name: "Community", link: "community" },
-    { name: "RecipeNutrition", link: "/RecipeNutrition"}
+    { name: "RecipeNutrition", link: "/RecipeNutrition" },
   ];
   const [profile, setProfile] = useState();
   const [loginModal, setLoginModal] = useState(false);
-  const [userInfo ,setUserInfo] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
   const accesstoken = sessionStorage.getItem("ACCESS_TOKEN");
 
   const logout = () => {
@@ -69,7 +70,10 @@ export default function Navbar({ isScrolled }) {
           )}
           {accessToken && (
             <div className="right flex a-center">
-              <ShoppingBasketOutlinedIcon className="material-icon margin-right" onClick={()=> navigate("/cart")}/>
+              <ShoppingBasketOutlinedIcon
+                className="material-icon margin-right"
+                onClick={() => navigate("/cart")}
+              />
 
               <ul>
                 <li>
