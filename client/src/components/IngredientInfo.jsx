@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import styled from "styled-components";
+import axios from "axios";
+import { kServerIP } from "../IP";
 export default function IngredientInfo(props) {
   const [isAdded, setIsAdded] = useState(false);
   const us = props.measures.us.amount + " " + props.measures.us.unitShort;
