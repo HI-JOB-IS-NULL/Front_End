@@ -36,7 +36,7 @@ export default function PantryReadyRecipes() {
       setIngredientsData(IngredientsData);
     }
   }, []);
-
+  console.log(tags);
   useEffect(() => {
     const ingredientsData = new FormData();
     const ingredientsArr = tags.map((tag) => {
@@ -128,9 +128,22 @@ export default function PantryReadyRecipes() {
       data: imageData,
     }).then(function (res) {
       console.log(res);
+      res.data.map((item, index) => {
+        console.log(item.detectionList[0].name);
+        setTags((prevState) => [
+          ...prevState,
+          {
+            id: item.detectionList[0].ingredientNum,
+            name: item.detectionList[0].name,
+            image: null,
+          },
+        ]);
+      });
+
       setImageResult(res);
     });
   };
+  console.log(imageResult);
 
   return (
     <Container>
@@ -189,7 +202,6 @@ export default function PantryReadyRecipes() {
               )}
               {imageResult != undefined
                 ? imageResult.data.map((item, index) => {
-                    console.log(tags);
                     return (
                       <ImageAnalyzResult
                         key={index}
