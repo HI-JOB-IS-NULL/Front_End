@@ -10,7 +10,6 @@ import {
   FloatingButton,
 } from "../components/FloatingButtons";
 import axios from "axios";
-import { ServerIP } from "../IP";
 import Card from "../components/Card";
 import { Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";

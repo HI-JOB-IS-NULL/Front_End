@@ -1,7 +1,7 @@
 import axios from "axios";
-import { kServerIP, ServerIP } from "../IP";
+import { ServerIP } from "../IP";
 
-const apiUrl = kServerIP;
+const apiUrl = ServerIP;
 
 const instance = axios.create({
   baseURL: apiUrl,

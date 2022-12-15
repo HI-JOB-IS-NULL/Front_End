@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { Form, Input, Button, Select, Upload, Spin } from "antd";
 import axios from "axios";
 import Item from "antd/lib/list/Item";
-import { ServerIP, kServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import { useEffect } from "react";
 
 const { TextArea } = Input;

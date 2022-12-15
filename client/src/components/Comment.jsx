@@ -5,7 +5,7 @@ import { getComments } from "./api";
 import { useParams } from "react-router-dom";
 import { Input, Button } from "antd";
 import { RingLoader } from "react-spinners";
-import { kServerIP, ServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import styled from "styled-components";
 import { useRef } from "react";
 
