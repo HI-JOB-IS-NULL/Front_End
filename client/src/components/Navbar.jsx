@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
+import logo from "../../public/assets/logo.png";
 import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
@@ -11,7 +11,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
 import "../css/Navbar.css";
 import LoginModal from "./LoginModal";
-import loginIcon from "../assets/login_icon.png";
+import loginIcon from "../../public/assets/login_icon.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ServerIP } from "../IP";

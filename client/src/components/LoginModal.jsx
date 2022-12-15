@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "../assets/logo.png";
+import logo from "../../public/assets/logo.png";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import kakaoLogo from "../assets/kakaotalk_logo.png";
-import naverLogo from "../assets/naver_logo.png";
+import kakaoLogo from "../../public/assets/kakaotalk_logo.png";
+import naverLogo from "../../public/assets/naver_logo.png";
 import { ServerIP } from "../IP";
 
 export default function LoginModal({ setLoginModal, setShowLogin }) {

@@ -9,7 +9,7 @@ import "tippy.js/dist/tippy.css";
 import axios from "axios";
 import LoginModal from "./LoginModal";
 import styled from "styled-components";
-import noImage from "../assets/no_image.png";
+import noImage from "../../public/assets/no_image.png";
 export default function Card(props) {
   console.log(props.bookMark);
   const [isBooked, setIsBooked] = useState(props.bookMark);

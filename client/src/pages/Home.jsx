@@ -4,9 +4,9 @@ import "../css/Home.css";
 import Card from "../components/Card";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import banner from "../assets/default_bkg.png";
+import banner from "../../public/assets/default_bkg.png";
 
-import bannerImg from "../assets/banner_img.png";
+import bannerImg from "../../public/assets/banner_img.png";
 import { ServerIP, apiKey3 } from "../IP";
 import HomeModal from "../components/HomeModal";
 import axios from "axios";

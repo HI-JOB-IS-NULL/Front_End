@@ -8,7 +8,7 @@ import Card from "../components/Card";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
 import AdCard from "../components/AdCard";
-import bg_1 from "../assets/bg_1.jpg";
+import bg_1 from "../../public/assets/bg_1.jpg";
 
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");

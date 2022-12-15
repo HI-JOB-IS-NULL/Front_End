@@ -6,9 +6,9 @@ import Communitycss from "../css/Community.css";
 import Button from "@mui/material/Button";
 import Pagination from "react-js-pagination";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 import AdCard from "../components/AdCard";
-import bg_1 from "../assets/bg_1.jpg";
+import bg_1 from "../../public/assets/bg_1.jpg";
 
 // const [loading, setLoading] = useState(false)
 const { CheckableTag } = Tag;
@@ -35,14 +35,16 @@ export default function Community() {
   const [items, setItems] = useState([]);
   //검색어
   const onSearch = async (keyword) => {
-    setUrl(`${ServeIP}/CustomRecipe/nser/list?type=${type}&keyword=${keyword}`);
+    setUrl(
+      `${ServerIP}/CustomRecipe/nser/list?type=${type}&keyword=${keyword}`
+    );
     console.log(url);
   };
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${ServeIP}/CustomRecipe/nser/get?page=` + page,
+      url: `${ServerIP}/CustomRecipe/nser/get?page=` + page,
     }).then((res) => setItems(res.data.dtoList));
   }, []);
 
