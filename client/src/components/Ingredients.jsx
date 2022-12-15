@@ -8,7 +8,7 @@ import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 import axios from "axios";
 export default function Ingredients({ recipeId }) {
   const { data, isLoading } = useQuery("recipeInfo", () =>
@@ -36,7 +36,7 @@ export default function Ingredients({ recipeId }) {
     formData.append("recipe_thumbnail", data.Recipe_Information.image);
     axios({
       method: "post",
-      url: `${ServeIP}/RecipeDB/ChangeRecipeDone`,
+      url: `${ServerIP}/RecipeDB/ChangeRecipeDone`,
       data: formData,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -48,7 +48,7 @@ export default function Ingredients({ recipeId }) {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${ServeIP}/auth/ChangeRecipeDone`,
+        url: `${ServerIP}/auth/ChangeRecipeDone`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

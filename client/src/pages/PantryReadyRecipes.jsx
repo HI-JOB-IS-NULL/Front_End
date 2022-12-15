@@ -10,7 +10,7 @@ import {
   FloatingButton,
 } from "../components/FloatingButtons";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 import Card from "../components/Card";
 import { Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
@@ -46,7 +46,7 @@ export default function PantryReadyRecipes() {
     ingredientsData.append("includeIngredients", ingredients);
     axios({
       method: "post",
-      url: `${ServeIP}/RecipeDB/nser/searchRecipes`,
+      url: `${ServerIP}/RecipeDB/nser/searchRecipes`,
       data: ingredientsData,
     }).then(function (res) {
       console.log(res);

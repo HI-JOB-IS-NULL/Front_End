@@ -9,7 +9,7 @@ import {
   HeartFilled,
 } from "@ant-design/icons";
 import axios, { Axios } from "axios";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 
 function ItemCard(props) {
   const [like, setLike] = useState(false);
@@ -22,7 +22,7 @@ function ItemCard(props) {
       setCart(true);
       axios({
         method: "POST",
-        url: `${ServeIP}/cart`,
+        url: `${ServerIP}/cart`,
         data: { productId: props.items.product_id, count: 1 },
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -40,7 +40,7 @@ function ItemCard(props) {
       setCart(true);
       axios({
         method: "POST",
-        url: `${ServeIP}/cart`,
+        url: `${ServerIP}/cart`,
         data: { productId: product_id, count: 1 },
         headers: {
           Authorization: `Bearer ${accessToken}`,

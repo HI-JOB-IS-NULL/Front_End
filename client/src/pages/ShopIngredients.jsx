@@ -9,8 +9,8 @@ import axios from "axios";
 import { Alert, Button, Select } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import styled from "styled-components";
-import Shopcss from '../css/Shop.css';
-import { ServeIP } from "../IP";
+import Shopcss from "../css/Shop.css";
+import { ServerIP } from "../IP";
 import bg_1 from "../assets/bg_1.jpg";
 
 export default function ShopIngredients() {
@@ -23,48 +23,48 @@ export default function ShopIngredients() {
   const [frozen, setFrozen] = useState([]);
 
   useEffect(() => {
-
     axios({
-      method:'GET',
-      url:`${ServeIP}/shop/itemList`
-    })
-    .then((res) =>{
-      setItems(res.data)
-      console.log(res.data)
-    // vegetables 분류
-    setVegetables(
-      res.data.data.filter((i) => i.product_classification.includes("vegetables"))
-    );
-    console.log(vegetables);
+      method: "GET",
+      url: `${ServerIP}/shop/itemList`,
+    }).then((res) => {
+      setItems(res.data);
+      console.log(res.data);
+      // vegetables 분류
+      setVegetables(
+        res.data.data.filter((i) =>
+          i.product_classification.includes("vegetables")
+        )
+      );
+      console.log(vegetables);
 
-    // pantry 분류
-    setPantry(
-      res.data.data.filter((i) => i.product_classification.includes("pantry"))
-    );
-    console.log(pantry);
+      // pantry 분류
+      setPantry(
+        res.data.data.filter((i) => i.product_classification.includes("pantry"))
+      );
+      console.log(pantry);
 
-    // dairy 분류
-    setDairy(
-      res.data.data.filter((i) => i.product_classification.includes("dairy"))
-    );
-    console.log(dairy);
+      // dairy 분류
+      setDairy(
+        res.data.data.filter((i) => i.product_classification.includes("dairy"))
+      );
+      console.log(dairy);
 
-    //meat 분류
-    setMeat(
-      res.data.data.filter((i) => i.product_classification.includes("meat"))
-    );
-    console.log(meat);
+      //meat 분류
+      setMeat(
+        res.data.data.filter((i) => i.product_classification.includes("meat"))
+      );
+      console.log(meat);
 
-    //SNACK 분류
-    setSnack(
-      res.data.data.filter((i) => i.product_classification.includes("snack"))
-    );
+      //SNACK 분류
+      setSnack(
+        res.data.data.filter((i) => i.product_classification.includes("snack"))
+      );
 
-    //Frozen 분류
-    setFrozen(
-      res.data.data.filter((i) => i.product_classification.includes("frozen"))
-    )
-  })
+      //Frozen 분류
+      setFrozen(
+        res.data.data.filter((i) => i.product_classification.includes("frozen"))
+      );
+    });
   }, []);
 
   const [value, setValue] = useState("1");
@@ -239,175 +239,267 @@ export default function ShopIngredients() {
 
   console.log(items.data);
   return (
-    <Container style={{width: "100%", marginTop: "120px"}}>
-    <img style={{objectFit:'cover', height:'400px', width:'1920px'}} src={bg_1}/>
-    <Box sx={{ width: "100%", typography: "body1", marginTop: "120px" }}>
-      <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider", justifyContent: 'center'}}>
-          <TabList
-            style={{ display: "flex", justifyContent: "center" }}
-            onChange={handleChange}
-            aria-label="lab API tabs example"
+    <Container style={{ width: "100%", marginTop: "120px" }}>
+      <img
+        style={{ objectFit: "cover", height: "400px", width: "1920px" }}
+        src={bg_1}
+      />
+      <Box sx={{ width: "100%", typography: "body1", marginTop: "120px" }}>
+        <TabContext value={value}>
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              justifyContent: "center",
+            }}
           >
-            <Tab label="Dairy & Eggs" value="1" />
-            <Tab label="Fresh Produce" value="2" />
-            <Tab label="Fresh Meat & Seafood" value="3" />
-            <Tab label="Frozen Foods" value="4" />
-            <Tab label="Snacks" value="5" />
-            <Tab label="Pantry Essentials" value="6" />
-          </TabList>
-        </Box>
+            <TabList
+              style={{ display: "flex", justifyContent: "center" }}
+              onChange={handleChange}
+              aria-label="lab API tabs example"
+            >
+              <Tab label="Dairy & Eggs" value="1" />
+              <Tab label="Fresh Produce" value="2" />
+              <Tab label="Fresh Meat & Seafood" value="3" />
+              <Tab label="Frozen Foods" value="4" />
+              <Tab label="Snacks" value="5" />
+              <Tab label="Pantry Essentials" value="6" />
+            </TabList>
+          </Box>
 
-        <TabPanel value="1"
-          style={{ textAlign: "center", justifyContent: "center" }}
-        >
-          <div
-            style={{ display: "flex", justifyContent: "center", gap: "40px" }}
+          <TabPanel
+            value="1"
+            style={{ textAlign: "center", justifyContent: "center" }}
           >
-            <h4>Dairy & Eggs</h4>
-            <Select
-              onChange={VeSort}
-              style={{ width: "10vw" }}
-              placeholder="Sort"
+            <div
+              style={{ display: "flex", justifyContent: "center", gap: "40px" }}
             >
-              <option value="ao">ascending order</option>
-              <option value="do">descending order</option>
-              <option value="al">alphabetically</option>
-            </Select>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            {dairy.map((item, i) => {
-              return (
-                <Product>
-                  <CardItem items={dairy[i]} />
-                </Product>
-              );
-            })}
-          </div>
-        </TabPanel>
-        <TabPanel value="2">
-          <div
-            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            <h4>FRESH PRODUCE</h4>
-            <Select
-              onChange={FrSort}
-              style={{ width: "10vw" }}
-              placeholder="Sort"
+              <h4>Dairy & Eggs</h4>
+              <Select
+                onChange={VeSort}
+                style={{ width: "10vw" }}
+                placeholder="Sort"
+              >
+                <option value="ao">ascending order</option>
+                <option value="do">descending order</option>
+                <option value="al">alphabetically</option>
+              </Select>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
             >
-              <option value="ao">ascending order</option>
-              <option value="do">descending order</option>
-              <option value="al">alphabetically</option>
-            </Select>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            {vegetables.map((item, i) => {
-              return (
-                <Product>
-                  <CardItem items={vegetables[i]} />
-                </Product>
-              );
-            })}
-          </div>
-        </TabPanel>
-        <TabPanel value="3">
-          <div
-            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}
-          >
-            <h4>Fresh Meat & Seafood</h4>
-            <Select
-              onChange={MeSort}
-              style={{ width: "10vw" }}
-              placeholder="Sort"
+              {dairy.map((item, i) => {
+                return (
+                  <Product>
+                    <CardItem items={dairy[i]} />
+                  </Product>
+                );
+              })}
+            </div>
+          </TabPanel>
+          <TabPanel value="2">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
             >
-              <option value="ao">ascending order</option>
-              <option value="do">descending order</option>
-              <option value="al">alphabetically</option>
-            </Select>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            {meat.map((item, i) => {
-              return (
-                <Product>
-                  <CardItem items={meat[i]} />
-                </Product>
-              );
-            })}
-          </div>
-        </TabPanel>
-        <TabPanel value="4">
-        <div
-            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}
-          >
-            <h4>FROZEN FOODS</h4>
-            <Select
-              onChange={FzSort}
-              style={{ width: "10vw" }}
-              placeholder="Sort">
-              <option value="ao">ascending order</option>
-              <option value="do">descending order</option>
-              <option value="al">alphabetically</option>
-            </Select>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            {frozen.map((item, i) => {
-              return (
-                <Product>
-                  <CardItem items={frozen[i]} />
-                </Product>
-              );
-            })}
-          </div>
-        </TabPanel>
-        <TabPanel value="5">
-        <div
-            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}
-          >
-            <h4>SNACKS</h4>
-            <Select
-              onChange={SnSort}
-              style={{ width: "10vw" }}
-              placeholder="Sort">
-              <option value="ao">ascending order</option>
-              <option value="do">descending order</option>
-              <option value="al">alphabetically</option>
-            </Select>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            {snack.map((item, i) => {
-              return (
-                <Product>
-                  <CardItem items={snack[i]} />
-                </Product>
-              );
-            })}
-          </div>
-        </TabPanel>
-        <TabPanel value="6">
-          <div
-            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}
-          >
-            <h4>PANTRY ESSENTIALS</h4>
-            <Select
-              onChange={PaSort}
-              style={{ width: "10vw" }}
-              placeholder="Sort">
-              <option value="ao">ascending order</option>
-              <option value="do">descending order</option>
-              <option value="al">alphabetically</option>
-            </Select>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            {pantry.map((item, i) => {
-              return (
-                <Product>
-                  <CardItem items={pantry[i]} />
-                </Product>
-              );
-            })}
-          </div>
-        </TabPanel>
-      </TabContext>
-    </Box>
+              <h4>FRESH PRODUCE</h4>
+              <Select
+                onChange={FrSort}
+                style={{ width: "10vw" }}
+                placeholder="Sort"
+              >
+                <option value="ao">ascending order</option>
+                <option value="do">descending order</option>
+                <option value="al">alphabetically</option>
+              </Select>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              {vegetables.map((item, i) => {
+                return (
+                  <Product>
+                    <CardItem items={vegetables[i]} />
+                  </Product>
+                );
+              })}
+            </div>
+          </TabPanel>
+          <TabPanel value="3">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              <h4>Fresh Meat & Seafood</h4>
+              <Select
+                onChange={MeSort}
+                style={{ width: "10vw" }}
+                placeholder="Sort"
+              >
+                <option value="ao">ascending order</option>
+                <option value="do">descending order</option>
+                <option value="al">alphabetically</option>
+              </Select>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              {meat.map((item, i) => {
+                return (
+                  <Product>
+                    <CardItem items={meat[i]} />
+                  </Product>
+                );
+              })}
+            </div>
+          </TabPanel>
+          <TabPanel value="4">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              <h4>FROZEN FOODS</h4>
+              <Select
+                onChange={FzSort}
+                style={{ width: "10vw" }}
+                placeholder="Sort"
+              >
+                <option value="ao">ascending order</option>
+                <option value="do">descending order</option>
+                <option value="al">alphabetically</option>
+              </Select>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              {frozen.map((item, i) => {
+                return (
+                  <Product>
+                    <CardItem items={frozen[i]} />
+                  </Product>
+                );
+              })}
+            </div>
+          </TabPanel>
+          <TabPanel value="5">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              <h4>SNACKS</h4>
+              <Select
+                onChange={SnSort}
+                style={{ width: "10vw" }}
+                placeholder="Sort"
+              >
+                <option value="ao">ascending order</option>
+                <option value="do">descending order</option>
+                <option value="al">alphabetically</option>
+              </Select>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              {snack.map((item, i) => {
+                return (
+                  <Product>
+                    <CardItem items={snack[i]} />
+                  </Product>
+                );
+              })}
+            </div>
+          </TabPanel>
+          <TabPanel value="6">
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              <h4>PANTRY ESSENTIALS</h4>
+              <Select
+                onChange={PaSort}
+                style={{ width: "10vw" }}
+                placeholder="Sort"
+              >
+                <option value="ao">ascending order</option>
+                <option value="do">descending order</option>
+                <option value="al">alphabetically</option>
+              </Select>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              {pantry.map((item, i) => {
+                return (
+                  <Product>
+                    <CardItem items={pantry[i]} />
+                  </Product>
+                );
+              })}
+            </div>
+          </TabPanel>
+        </TabContext>
+      </Box>
     </Container>
   );
 }

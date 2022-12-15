@@ -3,7 +3,7 @@ import styled from "styled-components";
 import InputTags from "../components/InputTags";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 import Card from "../components/Card";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
@@ -23,7 +23,7 @@ export default function mealPlanner() {
     console.log("in");
     axios({
       method: "get",
-      url: `${ServeIP}/MealPlan/checkMealPlanCount`,
+      url: `${ServerIP}/MealPlan/checkMealPlanCount`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -36,7 +36,7 @@ export default function mealPlanner() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${ServeIP}/auth/recipeBookMarkList`,
+        url: `${ServerIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -114,7 +114,7 @@ export default function mealPlanner() {
 
     axios({
       method: "post",
-      url: `${ServeIP}/MealPlan/nser/generateMealPlan`,
+      url: `${ServerIP}/MealPlan/nser/generateMealPlan`,
       data: filterData,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -130,7 +130,7 @@ export default function mealPlanner() {
     console.log("addmeal");
     axios({
       method: "post",
-      url: `${ServeIP}/MealPlan/addMealPlan`,
+      url: `${ServerIP}/MealPlan/addMealPlan`,
       data: data.data,
       headers: {
         Authorization: `Bearer ${accessToken}`,

@@ -20,7 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 import logo from "../assets/logo.png";
 import RemoveShoppingCartTwoToneIcon from "@mui/icons-material/RemoveShoppingCartTwoTone";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
@@ -71,7 +71,7 @@ export default function Cart() {
     if (accessToken && accessToken !== null) {
       axios({
         method: "PUT",
-        url: `${ServeIP}/cart/updateCartItem`,
+        url: `${ServerIP}/cart/updateCartItem`,
         data: items,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -98,7 +98,7 @@ export default function Cart() {
     if (accessToken && accessToken !== null) {
       axios({
         method: "DELETE",
-        url: `${ServeIP}/cart/deleteCartItem`,
+        url: `${ServerIP}/cart/deleteCartItem`,
         data: items,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -133,7 +133,7 @@ export default function Cart() {
     if (accessToken && accessToken !== null) {
       axios({
         method: "GET",
-        url: `${ServeIP}/cart`,
+        url: `${ServerIP}/cart`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

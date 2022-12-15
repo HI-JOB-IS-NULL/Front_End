@@ -4,12 +4,12 @@ import logo from "../assets/logo.png";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import kakaoLogo from "../assets/kakaotalk_logo.png";
 import naverLogo from "../assets/naver_logo.png";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 
 export default function LoginModal({ setLoginModal, setShowLogin }) {
   function socialLogin(provider) {
     const frontendUrl = window.location.protocol + "//" + window.location.host;
-    //window.location.href= ServeIP + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
+    //window.location.href= ServerIP + "/auth/authorize/" +provider +"?redirect_url="+frontendUrl;//redirect url 추가
     window.location.href =
       "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com" +
       "/auth/authorize/" +

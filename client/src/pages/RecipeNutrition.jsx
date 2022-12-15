@@ -8,7 +8,7 @@ import { Tag } from "primereact/tag";
 import { Chart } from "primereact/chart";
 import Box from "@mui/material/Box";
 import axios from "axios";
-import { ServerIP, ServeIP } from "../IP";
+import { ServerIP, ServerIP } from "../IP";
 import oil from "../assets/oil.jpg";
 import styled from "styled-components";
 import bg_1 from "../assets/bg_1.jpg";

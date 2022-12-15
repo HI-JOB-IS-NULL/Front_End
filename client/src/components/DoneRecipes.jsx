@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 import Card from "./Card";
 export default function DoneRecipes() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -9,7 +9,7 @@ export default function DoneRecipes() {
     if (accessToken && doneRecipe.length === 0) {
       axios({
         method: "post",
-        url: `${ServeIP}/auth/ChangeRecipeDone`,
+        url: `${ServerIP}/auth/ChangeRecipeDone`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
