@@ -11,10 +11,6 @@ export default function ImageAnalyzResult(props) {
     ]);
   }
 
-  // useEffect(() => {
-  //   handleClick(detectionList[0]);
-  // }, []);
-
   return (
     <Container>
       <div className="result-wrapper">

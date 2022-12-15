@@ -7,7 +7,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import banner from "../assets/default_bkg.png";
 
 import bannerImg from "../assets/banner_img.png";
-import { kServerIP, apiKey3 } from "../IP";
+import { ServeIP, apiKey3 } from "../IP";
 import HomeModal from "../components/HomeModal";
 import axios from "axios";
 export default function Home() {
@@ -29,7 +29,7 @@ export default function Home() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServeIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

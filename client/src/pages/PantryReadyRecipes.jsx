@@ -16,7 +16,7 @@ import { Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ImageAnalyzResult from "../components/ImageAnalyzResult";
 import Spinner from "react-bootstrap/Spinner";
-import { kServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import bg_1 from "../assets/bg_1.jpg";
 
 export default function PantryReadyRecipes() {
@@ -58,7 +58,7 @@ export default function PantryReadyRecipes() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServerIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

@@ -3,7 +3,7 @@ import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineOutlinedIcon from "@mui/icons-material/RemoveCircleOutlineOutlined";
 import styled from "styled-components";
 import axios from "axios";
-import { kServerIP } from "../IP";
+import { ServeIP } from "../IP";
 export default function IngredientInfo(props) {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [isAdded, setIsAdded] = useState(false);
@@ -24,7 +24,7 @@ export default function IngredientInfo(props) {
     if (isAdded) {
       axios({
         method: "get",
-        url: `http://172.16.36.178:5000/cart/orderByCate?productCategory=${props.name}`,
+        url: `${ServeIP}/cart/orderByCate?productCategory=${props.name}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

@@ -3,12 +3,12 @@ import styled from "styled-components";
 import InputTags from "../components/InputTags";
 import EventNoteOutlinedIcon from "@mui/icons-material/EventNoteOutlined";
 import axios from "axios";
-import { kServerIP } from "../IP";
+import { ServeIP } from "../IP";
 import Card from "../components/Card";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
 import AdCard from "../components/AdCard";
-import bg_1 from '../assets/bg_1.jpg';
+import bg_1 from "../assets/bg_1.jpg";
 
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -23,7 +23,7 @@ export default function mealPlanner() {
     console.log("in");
     axios({
       method: "get",
-      url: `${kServerIP}/MealPlan/checkMealPlanCount`,
+      url: `${ServeIP}/MealPlan/checkMealPlanCount`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -36,7 +36,7 @@ export default function mealPlanner() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServeIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -114,7 +114,7 @@ export default function mealPlanner() {
 
     axios({
       method: "post",
-      url: `${kServerIP}/MealPlan/nser/generateMealPlan`,
+      url: `${ServeIP}/MealPlan/nser/generateMealPlan`,
       data: filterData,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -130,7 +130,7 @@ export default function mealPlanner() {
     console.log("addmeal");
     axios({
       method: "post",
-      url: `${kServerIP}/MealPlan/addMealPlan`,
+      url: `${ServeIP}/MealPlan/addMealPlan`,
       data: data.data,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -141,9 +141,24 @@ export default function mealPlanner() {
 
   return (
     <Container>
-      <img style={{objectFit:'cover', height:'400px', width:'1920px', marginTop:'5%'}} src={bg_1}/>
-      <div  style={{marginLeft:'80%', position:'absolute', zIndex:'10', marginTop:'5%'}}>
-        <AdCard/>
+      <img
+        style={{
+          objectFit: "cover",
+          height: "400px",
+          width: "1920px",
+          marginTop: "5%",
+        }}
+        src={bg_1}
+      />
+      <div
+        style={{
+          marginLeft: "80%",
+          position: "absolute",
+          zIndex: "10",
+          marginTop: "5%",
+        }}
+      >
+        <AdCard />
       </div>
       {mealPlanCount === true || mealPlanCount === "onlyDay" ? (
         <div className="meal-planner-page">

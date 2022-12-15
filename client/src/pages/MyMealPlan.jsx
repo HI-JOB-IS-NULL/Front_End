@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
-import { kServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import styled from "styled-components";
 import Tippy from "@tippy.js/react";
@@ -19,7 +19,7 @@ export default function MyMealPlan() {
       console.log("get meal plan");
       axios({
         method: "get",
-        url: `${kServerIP}/MealPlan/getMealPlan`,
+        url: `${ServerIP}/MealPlan/getMealPlan`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -34,7 +34,7 @@ export default function MyMealPlan() {
   const resetStatus = async () => {
     await axios({
       method: "get",
-      url: `${kServerIP}/MealPlan/StatusAllReset`,
+      url: `${ServerIP}/MealPlan/StatusAllReset`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -47,7 +47,7 @@ export default function MyMealPlan() {
     try {
       await axios({
         method: "get",
-        url: `${kServerIP}/MealPlan/removeMealPlan?planId=${planId}`,
+        url: `${ServerIP}/MealPlan/removeMealPlan?planId=${planId}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -64,7 +64,7 @@ export default function MyMealPlan() {
     try {
       await axios({
         method: "get",
-        url: `${kServerIP}/MealPlan/nser/ChangeStatus?planListId=${planListId}`,
+        url: `${ServerIP}/MealPlan/nser/ChangeStatus?planListId=${planListId}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -78,7 +78,7 @@ export default function MyMealPlan() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServerIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

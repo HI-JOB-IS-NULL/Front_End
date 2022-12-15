@@ -7,7 +7,7 @@ import SearchWithDiets from "../components/SearchWithDiets";
 import SearchWithIngredients from "../components/SearchWithIngredients";
 import SearchWithAllergies from "../components/SearchWithAllergies";
 import SearchWithCuisines from "../components/searchWithCuisines";
-import { kServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import { useNavigate } from "react-router-dom";
 import Card from "../components/Card";
 import axios from "axios";
@@ -57,7 +57,7 @@ export default function SearchRecipes() {
     accessToken
       ? axios({
           method: "post",
-          url: `${kServerIP}/RecipeDB/searchRecipes`,
+          url: `${ServerIP}/RecipeDB/searchRecipes`,
           data: filterData,
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -68,7 +68,7 @@ export default function SearchRecipes() {
         })
       : axios({
           method: "post",
-          url: `${kServerIP}/RecipeDB/nser/searchRecipes`,
+          url: `${ServerIP}/RecipeDB/nser/searchRecipes`,
           data: filterData,
         }).then((res) => {
           console.log(res);
@@ -89,7 +89,7 @@ export default function SearchRecipes() {
     accessToken
       ? axios({
           method: "post",
-          url: `${kServerIP}/RecipeDB/foodImageClassification`,
+          url: `${ServerIP}/RecipeDB/foodImageClassification`,
           data: imageData,
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -102,7 +102,7 @@ export default function SearchRecipes() {
         })
       : axios({
           method: "post",
-          url: `${kServerIP}/RecipeDB/nser/foodImageClassification`,
+          url: `${ServerIP}/RecipeDB/nser/foodImageClassification`,
           data: imageData,
         }).then(function (res) {
           console.log(res);
@@ -120,7 +120,7 @@ export default function SearchRecipes() {
   //   accessToken
   //     ? await axios({
   //         method: "post",
-  //         url: `${kServerIP}/RecipeDB/foodImageClassification`,
+  //         url: `${ServerIP}/RecipeDB/foodImageClassification`,
   //         data: imageData,
   //         headers: {
   //           Authorization: `Bearer ${accessToken}`,
@@ -133,7 +133,7 @@ export default function SearchRecipes() {
   //       })
   //     : await axios({
   //         method: "post",
-  //         url: `${kServerIP}/RecipeDB/nser/foodImageClassification`,
+  //         url: `${ServerIP}/RecipeDB/nser/foodImageClassification`,
   //         data: imageData,
   //       }).then(function (res) {
   //         console.log(res);
@@ -148,7 +148,7 @@ export default function SearchRecipes() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServerIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
