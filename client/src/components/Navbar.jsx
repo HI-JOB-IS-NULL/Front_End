@@ -74,8 +74,7 @@ export default function Navbar({ isScrolled }) {
           {accessToken && (
             <div className="right flex a-center">
               <ShoppingBasketOutlinedIcon
-                className="material-icon margin-right"
-                // style={{ color: "black" }}
+                className="cart-icon margin-right"
                 onClick={() => navigate("/cart")}
               />
 
