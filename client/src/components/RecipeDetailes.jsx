@@ -6,7 +6,7 @@ import AddToPlan from "./AddToPlan";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 import LoginModal from "../components/LoginModal";
-import { kServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import axios from "axios";
 import { getRecipeInfoById } from "../Fetchers";
 
@@ -34,7 +34,7 @@ export default function RecipeDetails({ recipeId, isBookMarked }) {
     formData.append("recipe_thumbnail", data.Recipe_Information.image);
     axios({
       method: "post",
-      url: `${kServerIP}/RecipeDB/ChangeBookmark`,
+      url: `${ServerIP}/RecipeDB/ChangeBookmark`,
       data: formData,
       headers: {
         Authorization: `Bearer ${accessToken}`,

@@ -10,13 +10,12 @@ import {
   FloatingButton,
 } from "../components/FloatingButtons";
 import axios from "axios";
-import { ServeIP } from "../IP";
 import Card from "../components/Card";
 import { Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import ImageAnalyzResult from "../components/ImageAnalyzResult";
 import Spinner from "react-bootstrap/Spinner";
-import { kServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import bg_1 from "../assets/bg_1.jpg";
 
 export default function PantryReadyRecipes() {
@@ -46,7 +45,7 @@ export default function PantryReadyRecipes() {
     ingredientsData.append("includeIngredients", ingredients);
     axios({
       method: "post",
-      url: `${ServeIP}/RecipeDB/nser/searchRecipes`,
+      url: `${ServerIP}/RecipeDB/nser/searchRecipes`,
       data: ingredientsData,
     }).then(function (res) {
       console.log(res);
@@ -58,7 +57,7 @@ export default function PantryReadyRecipes() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServerIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -124,7 +123,7 @@ export default function PantryReadyRecipes() {
     });
     axios({
       method: "post",
-      url: `http://10.20.33.142:5000/RecipeDB/nser/ingredientDetection`,
+      url: `${ServerIP}/RecipeDB/nser/ingredientDetection`,
       data: imageData,
     }).then(function (res) {
       console.log(res);
@@ -344,7 +343,7 @@ const Container = styled.div`
             overflow: hidden;
             box-shadow: 0 0 14px rgb(0 0 0 / 8%);
             position: relative;
-            z-index: 100;
+            z-index: 3;
             align-items: center;
           }
 

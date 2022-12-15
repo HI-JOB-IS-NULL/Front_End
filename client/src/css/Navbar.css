@@ -39,6 +39,16 @@ ul li ul:hover {
   opacity: 1;
   display: flex;
 }
+.cart-icon {
+  color: black;
+  transition: all 0.3s ease-out;
+}
+
+.cart-icon:hover {
+  color: #a8bca1;
+  transform: scale(1.25) translateY(-4px);
+  cursor: pointer;
+}
 
 .material-icon {
   color: white;

@@ -13,8 +13,11 @@ import "../css/Navbar.css";
 import LoginModal from "./LoginModal";
 import loginIcon from "../assets/login_icon.png";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ServerIP } from "../IP";
 
 export default function Navbar({ isScrolled }) {
+  const accesstoken = sessionStorage.getItem("ACCESS_TOKEN");
   const links = [
     { name: "Home", link: "/" },
     { name: "Pantry Ready Recipes", link: "/readyToCook" },
@@ -23,10 +26,32 @@ export default function Navbar({ isScrolled }) {
     { name: "Community", link: "community" },
     { name: "RecipeNutrition", link: "/RecipeNutrition" },
   ];
+
   const [profile, setProfile] = useState();
   const [loginModal, setLoginModal] = useState(false);
-  const [userInfo, setUserInfo] = useState([]);
-  const accesstoken = sessionStorage.getItem("ACCESS_TOKEN");
+  const [userInfo, setUserInfo] = useState({});
+
+  console.log("rendered");
+  useEffect(() => {
+    if (accessToken) {
+      console.log("profile");
+      axios
+
+        .post(
+          `${ServerIP}/profile`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          setUserInfo(res.data);
+        });
+    }
+  }, [accesstoken]);
 
   const logout = () => {
     sessionStorage.clear("ACCESS_TOKEN");
@@ -42,7 +67,10 @@ export default function Navbar({ isScrolled }) {
   return (
     <Container>
       {/* navbar left side */}
-      <nav className={`${isScrolled ? "scrolled" : ""} flex`}>
+      <nav
+        className={`${isScrolled ? "scrolled" : ""} flex`}
+        style={{ zIndex: "10" }}
+      >
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
             <img src={logo} alt="Logo" className="nav--logo" />
@@ -71,14 +99,14 @@ export default function Navbar({ isScrolled }) {
           {accessToken && (
             <div className="right flex a-center">
               <ShoppingBasketOutlinedIcon
-                className="material-icon margin-right"
+                className="cart-icon margin-right"
                 onClick={() => navigate("/cart")}
               />
 
               <ul>
                 <li>
                   <img
-                    src="/src/assets/profile.png"
+                    src={userInfo.img}
                     alt="Profile"
                     className="nav--profile"
                   />

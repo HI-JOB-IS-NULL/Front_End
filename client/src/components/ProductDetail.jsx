@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import axios from "axios";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 import "../css/ProductDetail.css";
 import { Button } from "antd";
 import { RingLoader } from "react-spinners";
@@ -31,7 +31,7 @@ export default function ProductDetail() {
       setCart(true);
       axios({
         method: "POST",
-        url: `${ServeIP}/cart`,
+        url: `${ServerIP}/cart`,
         data: { productId: product_id, count: 1 },
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -49,7 +49,7 @@ export default function ProductDetail() {
     setCart(false);
     axios({
       method: "DELETE",
-      url: `${ServeIP}/cart/deleteCartItem`,
+      url: `${ServerIP}/cart/deleteCartItem`,
       data: { cartItemId: cartId },
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -61,7 +61,7 @@ export default function ProductDetail() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${ServeIP}/cart`,
+      url: `${ServerIP}/cart`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default function ProductDetail() {
 
   useEffect(() => {
     axios
-      .get(`${ServeIP}/shop/productFindByPId?productId=${product_id}`)
+      .get(`${ServerIP}/shop/productFindByPId?productId=${product_id}`)
       .then((res) => {
         console.log(res.data);
         let temp = [];

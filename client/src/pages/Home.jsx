@@ -7,7 +7,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import banner from "../assets/default_bkg.png";
 
 import bannerImg from "../assets/banner_img.png";
-import { kServerIP, apiKey3 } from "../IP";
+import { ServerIP, apiKey3 } from "../IP";
 import HomeModal from "../components/HomeModal";
 import axios from "axios";
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get(`https://api.spoonacular.com/recipes/random?${apiKey3}&number=10`)
+      .get(`https://api.spoonacular.com/recipes/random?${apiKey3}&number=28`)
       .then((response) => {
         console.log(response);
         setRandomRecipes(response.data.recipes);
@@ -29,7 +29,7 @@ export default function Home() {
     if (accessToken) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServerIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

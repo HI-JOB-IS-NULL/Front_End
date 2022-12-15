@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { kServerIP } from "../IP";
+import { ServerIP } from "../IP";
 import Card from "./Card";
 export default function SavedRecipes() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -10,7 +10,7 @@ export default function SavedRecipes() {
     if (accessToken && savedRecipe.length === 0) {
       axios({
         method: "post",
-        url: `${kServerIP}/auth/recipeBookMarkList`,
+        url: `${ServerIP}/auth/recipeBookMarkList`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

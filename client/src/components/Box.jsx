@@ -4,7 +4,7 @@ import { Button } from "antd";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
-import { ServeIP } from "../IP";
+import { ServerIP } from "../IP";
 
 const BoxLayout = styled.div`
   background: #f8f9fa;
@@ -36,11 +36,11 @@ const TextBodyLayout = styled.div`
   font-size: 18px;
 `;
 function Box({ id, email, body, user }) {
-console.log(user)
-    return (
-      <div style={{marginTop:30}}>
-        <BoxLayout>
-          <div>
+  console.log(user);
+  return (
+    <div style={{ marginTop: 30 }}>
+      <BoxLayout>
+        <div>
           <TextLayout ht={21} mb={12} ai={"center"}>
             <div style={{ height: "21px", marginRight: "12px" }}>
               <b>Comment Id</b>
@@ -59,19 +59,17 @@ console.log(user)
           <TextBodyLayout mb={0} ai={"flex-start"}>
             {body}
           </TextBodyLayout>
-          </div>
-          {
-          email === user
-           ? 
-          <div style={{marginLeft:'50%'}}>
-            <a style={{marginRight:30}}>MODIFY</a>
+        </div>
+        {email === user ? (
+          <div style={{ marginLeft: "50%" }}>
+            <a style={{ marginRight: 30 }}>MODIFY</a>
             <a>DELETE</a>
           </div>
-            :
-            ""
-          }
-        </BoxLayout>
-      </div>
-    );
-  }
-  export default Box;
+        ) : (
+          ""
+        )}
+      </BoxLayout>
+    </div>
+  );
+}
+export default Box;

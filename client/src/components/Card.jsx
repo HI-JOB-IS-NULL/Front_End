@@ -6,7 +6,6 @@ import BeenhereOutlinedIcon from "@mui/icons-material/BeenhereOutlined";
 import BeenhereRoundedIcon from "@mui/icons-material/BeenhereRounded";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
-import { kServerIP } from "../IP";
 import axios from "axios";
 import LoginModal from "./LoginModal";
 import styled from "styled-components";
