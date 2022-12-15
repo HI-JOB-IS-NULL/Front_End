@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import { Button } from 'antd';
 import styled from 'styled-components';
 import {ShoppingOutlined , HeartOutlined, ShoppingFilled, HeartFilled} from '@ant-design/icons'
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import { ServeIP } from '../IP';
 import LoginModal from "../components/LoginModal";
 
@@ -14,6 +14,10 @@ function ItemCard(props){
     const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
     const [loginModal, setLoginModal] = useState(false);
     const [bas, setBas] = useState(props.cart);
+
+  useEffect(()=>{
+    setBas(props.cart)
+  },[props.cart])
 
     const onBasket = () =>{
         if(accessToken != null){
@@ -28,6 +32,7 @@ function ItemCard(props){
             },
             }).then(res => setCart(res.data)) 
             alert(props.items.product_name,'Get Item')
+            window.location.reload();
         }
         else{
             // setLoginModal(true)

@@ -10,7 +10,7 @@ import { Alert, Button, Select } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Shopcss from "../css/Shop.css";
-import { ServerIP } from "../IP";
+import { ServerIP, ServeIP } from "../IP";
 import bg_1 from "../assets/bg_1.jpg";
 
 export default function ShopIngredients() {
@@ -89,7 +89,7 @@ export default function ShopIngredients() {
       } else {
         new Error(res);
       }
-    });
+    },[cart]);
     
   },[])
 console.log(cart)
@@ -293,34 +293,14 @@ console.log(cart)
             </TabList>
           </Box>
 
-          <TabPanel
-            value="1"
-            style={{ textAlign: "center", justifyContent: "center" }}
-          >
-            <div
-              style={{ display: "flex", justifyContent: "center", gap: "40px" }}
-            >
-<<<<<<< HEAD
+          <TabPanel value="1" style={{ textAlign: "center", justifyContent: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
               <h4>Dairy & Eggs</h4>
               <Select
                 onChange={VeSort}
                 style={{ width: "10vw" }}
                 placeholder="Sort"
               >
-                <option value="ao">ascending order</option>
-                <option value="do">descending order</option>
-                <option value="al">alphabetically</option>
-              </Select>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: 30,
-                justifyContent: "center",
-                marginTop: "2%",
-              }}
-=======
               <option value="ao">ascending order</option>
               <option value="do">descending order</option>
               <option value="al">alphabetically</option>
@@ -342,25 +322,7 @@ console.log(cart)
             })}
           </div>
         </TabPanel>
-        <TabPanel value="2">
-          <div
-            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            <h4>FRESH PRODUCE</h4>
-            <Select
-              onChange={FrSort}
-              style={{ width: "10vw" }}
-              placeholder="Sort"
->>>>>>> adc14a6 (final)
-            >
-              {dairy.map((item, i) => {
-                return (
-                  <Product>
-                    <CardItem items={dairy[i]} />
-                  </Product>
-                );
-              })}
-            </div>
-          </TabPanel>
+        
           <TabPanel value="2">
             <div
               style={{
@@ -394,7 +356,13 @@ console.log(cart)
               {vegetables.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem items={vegetables[i]} />
+                    <CardItem cart={cart.some((id) =>{
+                    console.log(id)
+                    console.log(item.product_name)
+                    return id === item.product_name                    ;
+                  })
+                  ? true : false
+                  }  items={vegetables[i]} />
                   </Product>
                 );
               })}
@@ -433,7 +401,13 @@ console.log(cart)
               {meat.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem items={meat[i]} />
+                    <CardItem cart={cart.some((id) =>{
+                    console.log(id)
+                    console.log(item.product_name)
+                    return id === item.product_name                    ;
+                  })
+                  ? true : false
+                  }  items={meat[i]} />
                   </Product>
                 );
               })}
@@ -472,7 +446,13 @@ console.log(cart)
               {frozen.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem items={frozen[i]} />
+                    <CardItem cart={cart.some((id) =>{
+                    console.log(id)
+                    console.log(item.product_name)
+                    return id === item.product_name                    ;
+                  })
+                  ? true : false
+                  }  items={frozen[i]} />
                   </Product>
                 );
               })}
@@ -511,7 +491,13 @@ console.log(cart)
               {snack.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem items={snack[i]} />
+                    <CardItem cart={cart.some((id) =>{
+                    console.log(id)
+                    console.log(item.product_name)
+                    return id === item.product_name                    ;
+                  })
+                  ? true : false
+                  }  items={snack[i]} />
                   </Product>
                 );
               })}
@@ -550,7 +536,13 @@ console.log(cart)
               {pantry.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem items={pantry[i]} />
+                    <CardItem cart={cart.some((id) =>{
+                    console.log(id)
+                    console.log(item.product_name)
+                    return id === item.product_name                    ;
+                  })
+                  ? true : false
+                  }  items={pantry[i]} />
                   </Product>
                 );
               })}

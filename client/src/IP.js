@@ -1,5 +1,6 @@
 export const ServerIP =
   "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com";
+export const ServeIP = "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com";
 export const kServerIP = "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com";
 // export const ServeIP = "http://automealbackend-env.eba-ngihmty2.ap-northeast-2.elasticbeanstalk.com";
 // export const ServeIP = "http://automealbackend-env-1.eba-jh3xikep.ap-northeast-2.elasticbeanstalk.com";
