@@ -42,7 +42,10 @@ export default function Navbar({ isScrolled }) {
   return (
     <Container>
       {/* navbar left side */}
-      <nav className={`${isScrolled ? "scrolled" : ""} flex`}>
+      <nav
+        className={`${isScrolled ? "scrolled" : ""} flex`}
+        style={{ zIndex: "10" }}
+      >
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
             <img src={logo} alt="Logo" className="nav--logo" />
@@ -72,6 +75,7 @@ export default function Navbar({ isScrolled }) {
             <div className="right flex a-center">
               <ShoppingBasketOutlinedIcon
                 className="material-icon margin-right"
+                // style={{ color: "black" }}
                 onClick={() => navigate("/cart")}
               />
 
