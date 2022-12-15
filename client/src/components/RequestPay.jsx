@@ -74,10 +74,9 @@ const Payment = (effect, deps) => {
       pg: "html5_inicis", // PG사 (필수항목)
       pay_method: "card", // 결제수단 (필수항목)
       merchant_uid: `mid_${new Date().getTime()}`,
-      name: `${products.productName}`, // 주문명 (필수항목)
-      // amount: `${products.price}`, // 금액 (필수항목)
-      amount: "100",
-      custom_data: { name: "부가정보", desc: "세부 부가정보" },
+      name:`${products.productName}`, // 주문명 (필수항목)
+      amount: `${products.price}`, // 금액 (필수항목)
+      custom_data: { name: '부가정보', desc: '세부 부가정보' },
       buyer_name: `${userInfo.nickName}`, // 구매자 이름
       buyer_tel: `${userInfo.phoneNum}`, // 구매자 전화번호 (필수항목)
       buyer_email: `${userInfo.userEmail}`, // 구매자 이메일
@@ -101,22 +100,21 @@ const Payment = (effect, deps) => {
     } = response;
     console.log(response);
     if (success) {
-      sessionStorage.setItem("payse", true);
-      alert("결제 성공");
-      axios
-        .post(
-          `${ServerIP}/order`,
-          {
-            productId: products.productId,
-            count: 1,
-            imp_uid: response.imp_uid,
-            preceipt_url: response.receipt_url,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+      sessionStorage.setItem("payse", 'true');
+      alert('결제 성공');
+      axios.post(
+        `${ServeIP}/order`, 
+        {
+          productId: products.productId,
+          count: 1,
+          imp_uid: response.imp_uid,
+          preceipt_url: response.receipt_url
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
           }
+        }
         )
         .then((res) => {
           console.log(res);

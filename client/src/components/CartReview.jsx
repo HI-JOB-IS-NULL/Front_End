@@ -70,42 +70,34 @@ export default function CartReview() {
     sessionStorage.setItem("total", total);
     return total;
   }
-  return (
-    <React.Fragment>
-      <MDBCardBody>
-        {cartItem.map((items) => (
-          <div>
-            <MDBRow>
-              <MDBCol lg="3" md="12" className="mb-4 mb-lg-0">
-                <MDBRipple
-                  rippleTag="div"
-                  rippleColor="light"
-                  className="bg-image rounded hover-zoom hover-overlay"
-                >
-                  <img src={items.imgUrl} className="w-100" />
-                  <a href="#!">
-                    <div
-                      className="mask"
-                      style={{ backgroundColor: "rgba(251, 251, 251, 0.2)" }}
-                    ></div>
-                  </a>
-                </MDBRipple>
-              </MDBCol>
-              <MDBCol lg="5" md="6" className=" mb-4 mb-lg-0">
-                <p>
-                  <strong>{items.productNm}</strong>
-                </p>
-              </MDBCol>
-              <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
-                <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
-                  <MDBInput
-                    onChange={(e) => cntUp(items, e)}
-                    defaultValue={items.count}
-                    min={1}
-                    type="number"
-                    label="Quantity"
-                  />
-                </div>
+    return (
+        <React.Fragment>
+        <MDBCardBody>
+            {cartItem.map((items) => (
+            <div>
+                <MDBRow>
+                <MDBCol lg="3" md="12" className="mb-4 mb-lg-0">
+                    <MDBRipple rippleTag="div" rippleColor="light"
+                    className="bg-image rounded hover-zoom hover-overlay">
+                    <img
+                        src={items.imgUrl}
+                        className="w-100" />
+                    <a href="#!">
+                        <div className="mask" style={{ backgroundColor: "rgba(251, 251, 251, 0.2)", }}>
+                        </div>
+                    </a>
+                    </MDBRipple>
+                </MDBCol>
+                <MDBCol lg="5" md="6" className=" mb-4 mb-lg-0">
+                    <p>
+                    <strong>{items.productNm}</strong>
+                    </p>
+                    
+                </MDBCol>
+                <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
+                    <div className="d-flex mb-4" style={{ maxWidth: "300px" }}>
+                    <MDBInput disabled={true} onChange={(e) => cntUp(items, e)} defaultValue={items.count} min={1} type="number" label="Quantity" />
+                    </div>
 
                 <p className="text-start text-md-center">
                   <strong>₩{items.price * items.count}</strong>

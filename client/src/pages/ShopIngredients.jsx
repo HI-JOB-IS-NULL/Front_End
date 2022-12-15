@@ -21,6 +21,8 @@ export default function ShopIngredients() {
   const [items, setItems] = useState([]);
   const [snack, setSnack] = useState([]);
   const [frozen, setFrozen] = useState([]);
+  const [cart, setCart] = useState([]);
+  const accessToken = sessionStorage.getItem('ACCESS_TOKEN')
 
   useEffect(() => {
     axios({
@@ -66,7 +68,31 @@ export default function ShopIngredients() {
       );
     });
   }, []);
-
+ 
+  useEffect(()=>{
+    axios({
+      method: 'GET',
+      url: `${ServeIP}/cart`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then(function (res) {
+      console.log("sd");
+      if (res.status === 200) {
+        console.log(res.data);
+        let temp = res.data;
+        for(let i=0; i<temp.length; i++){
+          cart.push(temp[i].productNm)
+        }
+      } else if (res.status === 403) {
+        alert("잘못된 접근입니다");
+      } else {
+        new Error(res);
+      }
+    });
+    
+  },[])
+console.log(cart)
   const [value, setValue] = useState("1");
   // const [items, setItems] =r useState([]);
 
@@ -274,6 +300,7 @@ export default function ShopIngredients() {
             <div
               style={{ display: "flex", justifyContent: "center", gap: "40px" }}
             >
+<<<<<<< HEAD
               <h4>Dairy & Eggs</h4>
               <Select
                 onChange={VeSort}
@@ -293,6 +320,37 @@ export default function ShopIngredients() {
                 justifyContent: "center",
                 marginTop: "2%",
               }}
+=======
+              <option value="ao">ascending order</option>
+              <option value="do">descending order</option>
+              <option value="al">alphabetically</option>
+            </Select>
+          </div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
+            {dairy.map((item, i) => {
+              return (
+                <Product>
+                  <CardItem cart={cart.some((id) =>{
+                    console.log(id)
+                    console.log(item.product_name)
+                    return id === item.product_name                    ;
+                  })
+                  ? true : false
+                  } items={dairy[i]} />
+                </Product>
+              );
+            })}
+          </div>
+        </TabPanel>
+        <TabPanel value="2">
+          <div
+            style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
+            <h4>FRESH PRODUCE</h4>
+            <Select
+              onChange={FrSort}
+              style={{ width: "10vw" }}
+              placeholder="Sort"
+>>>>>>> adc14a6 (final)
             >
               {dairy.map((item, i) => {
                 return (

@@ -35,7 +35,7 @@ function communityCard(props) {
         <Container>
         <a href={`/CommunityDetailes/${props.cardInfo.csRecipeId}`} style={{textDecoration:'none', color:'black'}}>
             <Card  style={{width:"500px", display:"flex", flexDirection:"row", height:'230px'}}>
-              <Card.Img className='img' variant="top" src={image != null && props.cardInfo.uploadImgResult.length != 0 ? image[0].realImageUrl : noimage} style={{width:'50%'}}/>
+              <Card.Img className='img' variant="top" src={image != null && props.cardInfo.uploadImgResult.length != 0 ? image[0].realImageUrl : noimage} style={{width:'320px'}}/>
               {/* {console.log(props.cardInfo.uploadImgResult[0].realImageUrl)} */}
               <Card.Body style={{margin:'5%'}}>
                 <Card.Title>{props.cardInfo.recipeT_title}</Card.Title>

@@ -48,28 +48,22 @@ const CartPayment = (effect, deps) => {
     let config = null;
     if (accessToken && accessToken !== null) {
       //headers.append("Authorization",`Bearer ${accessToken}`);//여기 뛰어쓰기 안하면 안됨 주의 요망
-      axios
-        .post(
-          `${ServerIP}/profile`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        )
-        .then(function (res) {
-          console.log("sd");
-          if (res.status === 200) {
-            console.log(res.data);
-            setUserInfo(res.data);
-            // return response.json();
-          } else if (res.status === 403) {
-            //window.location.href = "/login"; // redirect
-          } else {
-            new Error(res);
-          }
-        });
+      axios.post(`${ServeIP}/profile`, {}, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }).then(function (res) {
+        console.log("sd");
+        if (res.status === 200) {
+          console.log(res.data);
+          setUserInfo(res.data);
+          // return response.json();
+        } else if (res.status === 403) {
+          //window.location.href = "/login"; // redirect
+        } else {
+          new Error(res);
+        }
+      }); 
     }
   }, []);
   console.log(userInfo);
