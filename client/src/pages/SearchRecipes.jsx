@@ -80,45 +80,14 @@ export default function SearchRecipes() {
     setImage(Array.from(e.fileList));
   };
 
-  // const uploadImg = () => {
-  //   console.log("search recipe with image");
-  //   const imageData = new FormData();
-  //   image.forEach((item) => {
-  //     imageData.append("uploadFile", item.originFileObj);
-  //   });
-  //   accessToken
-  //     ? axios({
-  //         method: "post",
-  //         url: `${kServerIP}/RecipeDB/foodImageClassification`,
-  //         data: imageData,
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }).then(function (res) {
-  //         console.log(res);
-  //         setData(res);
-  //         setQuery(res.data.query);
-  //         console.log(res.data.query);
-  //       })
-  //     : axios({
-  //         method: "post",
-  //         url: `${kServerIP}/RecipeDB/nser/foodImageClassification`,
-  //         data: imageData,
-  //       }).then(function (res) {
-  //         console.log(res);
-  //         setData(res);
-  //         setQuery(res.data.query);
-  //       });
-  // };
-
-  async function uploadImg() {
+  const uploadImg = () => {
     console.log("search recipe with image");
     const imageData = new FormData();
     image.forEach((item) => {
       imageData.append("uploadFile", item.originFileObj);
     });
     accessToken
-      ? await axios({
+      ? axios({
           method: "post",
           url: `${kServerIP}/RecipeDB/foodImageClassification`,
           data: imageData,
@@ -131,18 +100,49 @@ export default function SearchRecipes() {
           // setQuery(res.data.query);
           // console.log(res.data.query);
         })
-      : await axios({
+      : axios({
           method: "post",
           url: `${kServerIP}/RecipeDB/nser/foodImageClassification`,
           data: imageData,
         }).then(function (res) {
           console.log(res);
-          setData(res);
+          // setData(res);
           // setQuery(res.data.query);
         });
-    setQuery(data.data.query);
-    console.log(data.data.query);
-  }
+  };
+
+  // async function uploadImg() {
+  //   console.log("search recipe with image");
+  //   const imageData = new FormData();
+  //   image.forEach((item) => {
+  //     imageData.append("uploadFile", item.originFileObj);
+  //   });
+  //   accessToken
+  //     ? await axios({
+  //         method: "post",
+  //         url: `${kServerIP}/RecipeDB/foodImageClassification`,
+  //         data: imageData,
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       }).then(function (res) {
+  //         console.log(res);
+  //         setData(res);
+  //         // setQuery(res.data.query);
+  //         // console.log(res.data.query);
+  //       })
+  //     : await axios({
+  //         method: "post",
+  //         url: `${kServerIP}/RecipeDB/nser/foodImageClassification`,
+  //         data: imageData,
+  //       }).then(function (res) {
+  //         console.log(res);
+  //         setData(res);
+  //         // setQuery(res.data.query);
+  //       });
+  //   // setQuery(data.data.query);
+  //   // console.log(data.data.query);
+  // }
 
   useEffect(() => {
     if (accessToken) {

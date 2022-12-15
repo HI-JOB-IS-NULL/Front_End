@@ -10,6 +10,7 @@ import { kServerIP } from "../IP";
 import axios from "axios";
 import LoginModal from "./LoginModal";
 import styled from "styled-components";
+import noImage from "../assets/no_image.png";
 export default function Card(props) {
   console.log(props.bookMark);
   const [isBooked, setIsBooked] = useState(props.bookMark);
@@ -47,7 +48,11 @@ export default function Card(props) {
       <div className="card">
         <div className={`${isCleared ? "disable" : ""}`}>
           <a href={`/recipe/${props.id}/${props.bookMark}`}>
-            <img src={props.image} alt="Food Image" className="card--image" />
+            <img
+              src={`${props.image ? props.image : noImage}`}
+              alt="Food Image"
+              className="card--image"
+            />
             <p className="card--title">{props.title} </p>
           </a>
 

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { kServerIP } from "../IP";
 export default function IngredientInfo(props) {
+  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [isAdded, setIsAdded] = useState(false);
   const us = props.measures.us.amount + " " + props.measures.us.unitShort;
   const metric =
@@ -18,6 +19,18 @@ export default function IngredientInfo(props) {
       setIsAdded(false);
     }
   }, [props.isAllAdded]);
+
+  useEffect(() => {
+    if (isAdded) {
+      axios({
+        method: "get",
+        url: `http://172.16.36.178:5000/cart/orderByCate?productCategory=${props.name}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    }
+  }, [isAdded]);
 
   return (
     <Container>

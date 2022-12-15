@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FloatingButtonWithImage } from "./FloatingButtons";
 import styled from "styled-components";
 
@@ -11,6 +11,10 @@ export default function ImageAnalyzResult(props) {
     ]);
   }
 
+  // useEffect(() => {
+  //   handleClick(detectionList[0]);
+  // }, []);
+
   return (
     <Container>
       <div className="result-wrapper">
@@ -20,7 +24,6 @@ export default function ImageAnalyzResult(props) {
         />
         <div className="bubles-wrapper">
           {detectionList.map((item, index) => {
-            console.log(index);
             return (
               <div
                 className="buble"
