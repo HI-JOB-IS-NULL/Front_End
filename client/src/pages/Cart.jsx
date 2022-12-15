@@ -294,7 +294,7 @@ export default function Cart() {
             </MDBCardBody>
           </MDBCard>
 
-          <MDBCard className="mb-5 mb-lg-1" style={{ width: "250px" }}>
+          <MDBCard className="mb-5 mb-lg-1" style={{ width: "250px", height:'100px' }}>
             <MDBCardBody style={{ width: "250px" }}>
               <p>
                 <strong>We accept</strong>

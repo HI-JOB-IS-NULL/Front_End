@@ -39,7 +39,7 @@ export default function CommentForm(props) {
       headers: {
         Authorization: `Bearer ${accesstoken}`,
       },
-    });
+    }) 
     window.location.reload();
   }
   const InputText = (e) => {

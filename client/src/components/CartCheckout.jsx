@@ -39,6 +39,9 @@ export default function CartCheckout() {
   const [cartId, setCartId] = useState([]);
 
   //const [itemId, setItemId]
+    useEffect(()=>{
+      setAble(true)
+    }, [sessionStorage.getItem("payse")])
 
   useEffect(() => {
     axios({
@@ -163,20 +166,21 @@ export default function CartCheckout() {
                 )}
 
                 {/*버튼 클릭 수정 */}
-                {activeStep === steps.length - 1 ? (
-                  <Button onClick={handleNext} disabled={able} type="primary">
-                    Place order
-                  </Button>
-                ) : (
-                  <Button onClick={handleNext} type="primary">
-                    Next
-                  </Button>
-                )}
-              </Box>
-            </React.Fragment>
-          )}
-        </Paper>
-      </Container>
-    </ThemeProvider>
-  );
-}
+                {
+                  activeStep === steps.length - 1 
+                  ?
+                  true ? 
+                  <Button onClick={handleNext} type="primary">Place order</Button> : ""
+                  :
+                  <Button onClick={handleNext} type="primary">Next</Button>
+                }
+
+                </Box>
+              </React.Fragment>
+            )}
+          </Paper>
+        
+        </Container>
+      </ThemeProvider>
+    );
+  }
