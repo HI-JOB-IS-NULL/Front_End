@@ -9,6 +9,9 @@ import { Chart } from 'primereact/chart';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { kServerIP, ServeIP } from '../IP';
+import oil from '../assets/oil.jpg';
+import styled from 'styled-components';
+import bg_1 from '../assets/bg_1.jpg';
 
 export  default function RecipeNutrition(){
     const [totalSize, setTotalSize] = useState(0);
@@ -205,6 +208,8 @@ export  default function RecipeNutrition(){
     const cancelOptions = {icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined'};
     const {horizontalOptions} = getLightTheme();
     return (
+        <Container>
+            <img style={{objectFit:'cover', height:'400px', width:'1920px', marginTop:'5%'}} src={bg_1}/>
         <Box sx={{ width: 'auto', typography: 'body1', marginTop:'120px'}}>
             <Toast ref={toast}></Toast>
 
@@ -224,5 +229,10 @@ export  default function RecipeNutrition(){
                 <Chart type="bar" data={basicData} options={horizontalOptions} />
             </div>
         </Box>
+        </Container>
     )
 }
+
+const Container = styled.div`
+    marginTop:5%;
+`

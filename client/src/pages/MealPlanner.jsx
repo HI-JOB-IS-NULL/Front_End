@@ -8,6 +8,7 @@ import Card from "../components/Card";
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
 import AdCard from "../components/AdCard";
+import bg_1 from '../assets/bg_1.jpg';
 
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -140,7 +141,8 @@ export default function mealPlanner() {
 
   return (
     <Container>
-      <div  style={{marginLeft:'80%', position:'fixed', zIndex:'10'}}>
+      <img style={{objectFit:'cover', height:'400px', width:'1920px', marginTop:'5%'}} src={bg_1}/>
+      <div  style={{marginLeft:'80%', position:'fixed', zIndex:'10', marginTop:'5%'}}>
         <AdCard/>
       </div>
       {mealPlanCount === true || mealPlanCount === "onlyDay" ? (
