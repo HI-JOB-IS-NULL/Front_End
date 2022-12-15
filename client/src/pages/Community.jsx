@@ -63,7 +63,7 @@ export default function Community() {
       <div style={{display:'flex', marginTop:'4%', width:'70%', marginLeft:'6%'}}>
       <div>
       <div  style={{marginLeft:'65%',marginTop:'15%', position:'absolute', zIndex:'10'}}>
-        <AdCard/>
+ 
       </div>
         <div>
           {/* {loading &&

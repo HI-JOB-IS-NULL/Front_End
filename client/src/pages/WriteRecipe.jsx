@@ -14,7 +14,8 @@ import {
 import axios from 'axios'
 import Item from 'antd/lib/list/Item';
 import { ServeIP } from '../IP';
-
+import banner_img from '../assets/banner_img.png';
+import bg_1 from '../assets/bg_1.jpg';
 const { TextArea } = Input;
 
 
@@ -109,6 +110,8 @@ const WriteRecipe = () => {
 
 
   return (
+    <div style={{marginTop:'5%'}}>
+      <img style={{objectFit:'cover', height:'400px', width:'1920px'}} src={bg_1}/>
     <Container>
       <h2>Introduce your Recipe</h2>
       <br/>
@@ -126,7 +129,7 @@ const WriteRecipe = () => {
             <option value="60">1 hour</option>
           </Select>
 
-      <div style={{display:'flex', width:'auto', justifyContent:'center'}}>
+      <div style={{ width:'auto', justifyContent:'center'}}>
         <div>
           <p>recipe Explan (write in order)</p>
           <CreateListDiv onChange={InputExplan}>
@@ -159,8 +162,7 @@ const WriteRecipe = () => {
                 <PlusOutlined />
                 <div
                   style={{
-                    marginTop: 8,
-                    
+                    marginTop: 8,      
                   }}>
                   Upload
                 </div>
@@ -174,6 +176,7 @@ const WriteRecipe = () => {
           </center>
       </Form>
     </Container>
+    </div>
   );
 };
 
@@ -181,7 +184,7 @@ const WriteRecipe = () => {
 export default WriteRecipe;
 
 const Container = styled.div`
-  margin-top: 8%;
+  margin-top: 3%;
   margin-left: 38%
 `
 const CreateListDiv = styled.div`

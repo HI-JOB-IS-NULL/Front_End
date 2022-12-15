@@ -159,7 +159,7 @@ export default function PantryReadyRecipes() {
       <div
         style={{
           marginLeft: "80%",
-          position: "fixed",
+          position: "absolute",
           zIndex: "10",
           marginTop: "4%",
         }}

@@ -142,7 +142,7 @@ export default function mealPlanner() {
   return (
     <Container>
       <img style={{objectFit:'cover', height:'400px', width:'1920px', marginTop:'5%'}} src={bg_1}/>
-      <div  style={{marginLeft:'80%', position:'fixed', zIndex:'10', marginTop:'5%'}}>
+      <div  style={{marginLeft:'80%', position:'absolute', zIndex:'10', marginTop:'5%'}}>
         <AdCard/>
       </div>
       {mealPlanCount === true || mealPlanCount === "onlyDay" ? (
