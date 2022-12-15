@@ -11,6 +11,7 @@ import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Shopcss from '../css/Shop.css';
 import { ServeIP } from "../IP";
+import bg_1 from "../assets/bg_1.jpg";
 
 export default function ShopIngredients() {
   const [vegetables, setVegetables] = useState([]);
@@ -238,6 +239,8 @@ export default function ShopIngredients() {
 
   console.log(items.data);
   return (
+    <Container style={{width: "100%", marginTop: "120px"}}>
+    <img style={{objectFit:'cover', height:'400px', width:'1920px'}} src={bg_1}/>
     <Box sx={{ width: "100%", typography: "body1", marginTop: "120px" }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: "divider", justifyContent: 'center'}}>
@@ -255,8 +258,7 @@ export default function ShopIngredients() {
           </TabList>
         </Box>
 
-        <TabPanel
-          value="1"
+        <TabPanel value="1"
           style={{ textAlign: "center", justifyContent: "center" }}
         >
           <div
@@ -406,7 +408,9 @@ export default function ShopIngredients() {
         </TabPanel>
       </TabContext>
     </Box>
+    </Container>
   );
 }
 
 const Product = styled.div``;
+const Container = styled.div``;

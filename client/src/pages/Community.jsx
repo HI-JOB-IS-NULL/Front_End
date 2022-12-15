@@ -8,6 +8,7 @@ import Pagination from 'react-js-pagination';
 import axios from 'axios';
 import { ServeIP } from '../IP';
 import AdCard from '../components/AdCard';
+import bg_1 from '../assets/bg_1.jpg';
 
 // const [loading, setLoading] = useState(false)
 const { CheckableTag } = Tag;
@@ -58,9 +59,10 @@ export default function Community() {
 
   return (
     <Container>
-      
+      <img style={{objectFit:'cover', height:'400px', width:'1920px'}} src={bg_1}/>
+      <div style={{display:'flex', marginTop:'4%', width:'70%', marginLeft:'6%'}}>
       <div>
-      <div  style={{marginLeft:'65%',marginTop:'12%', position:'fixed', zIndex:'10'}}>
+      <div  style={{marginLeft:'65%',marginTop:'15%', position:'absolute', zIndex:'10'}}>
         <AdCard/>
       </div>
         <div>
@@ -120,13 +122,13 @@ export default function Community() {
      
       
     </FloatingBtn>
+    </div>
     </Container>
   )
 }
 
 const Container = styled.div`
-  display: flex;
-  margin: 9%;
+  margin-top: 5%;
 `
 const List = styled.div`
   white-space: wrap;

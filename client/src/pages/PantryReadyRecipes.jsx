@@ -17,6 +17,8 @@ import { PlusOutlined } from "@ant-design/icons";
 import ImageAnalyzResult from "../components/ImageAnalyzResult";
 import Spinner from "react-bootstrap/Spinner";
 import { kServerIP } from "../IP";
+import bg_1 from '../assets/bg_1.jpg';
+
 export default function PantryReadyRecipes() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
   const [isFocused, setIsFocused] = useState(false);
@@ -132,7 +134,8 @@ export default function PantryReadyRecipes() {
 
   return (
     <Container>
-      <div  style={{marginLeft:'80%', position:'fixed', zIndex:'10'}}>
+      <img style={{objectFit:'cover', height:'400px', width:'1920px', marginTop:'5%'}} src={bg_1}/>
+      <div  style={{marginLeft:'80%', position:'fixed', zIndex:'10', marginTop:'4%'}}>
         <AdCard/>
       </div>
       <div className="pantry-ready-page">
@@ -264,7 +267,7 @@ export default function PantryReadyRecipes() {
 
 const Container = styled.div`
   .pantry-ready-page {
-    margin: 150px auto 32px;
+    margin: 90px auto 32px;
     max-width: 1340px;
     width: 100%;
     box-sizing: border-box;
