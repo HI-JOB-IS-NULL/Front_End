@@ -34,7 +34,7 @@ export default function CommentForm(props) {
 
     axios({
       method: "POST",
-      url: `${kServerIP}/CustomRecipeReply/register`,
+      url: `${ServerIP}/CustomRecipeReply/register`,
       data: formdata,
       headers: {
         Authorization: `Bearer ${accesstoken}`,
@@ -50,7 +50,7 @@ export default function CommentForm(props) {
   const delet = (i) => {
     axios({
       method: "DELETE",
-      url: `${kServerIP}/CustomRecipeReply/remove`,
+      url: `${ServerIP}/CustomRecipeReply/remove`,
       data: {
         csRecipeId: csRecipeId,
         rp_num: i,
@@ -105,7 +105,7 @@ export default function CommentForm(props) {
 
     axios({
       method: "POST",
-      url: `${kServerIP}/CustomRecipeReply/register`,
+      url: `${ServerIP}/CustomRecipeReply/register`,
       data: formData,
       headers: {
         Authorization: `Bearer ${accesstoken}`,

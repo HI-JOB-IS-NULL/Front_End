@@ -123,7 +123,7 @@ export default function PantryReadyRecipes() {
     });
     axios({
       method: "post",
-      url: `http://10.20.33.142:5000/RecipeDB/nser/ingredientDetection`,
+      url: `${ServerIP}/RecipeDB/nser/ingredientDetection`,
       data: imageData,
     }).then(function (res) {
       console.log(res);
@@ -343,7 +343,7 @@ const Container = styled.div`
             overflow: hidden;
             box-shadow: 0 0 14px rgb(0 0 0 / 8%);
             position: relative;
-            z-index: 100;
+            z-index: 3;
             align-items: center;
           }
 

@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getRecipeInfoById } from "../Fetchers";
 import Direction from "../components/Direction";
 import styled from "styled-components";
+import { RingLoader } from "react-spinners";
 
 export default function Recipe() {
   const { recipeId, isBookMarked } = useParams();
@@ -16,6 +17,17 @@ export default function Recipe() {
   const { data, isLoading } = useQuery("recipeInfo", () =>
     getRecipeInfoById(recipeId)
   );
+  if (isLoading) {
+    return (
+      <div style={{ position: "absolute", marginLeft: "45vw", marginTop: 200 }}>
+        <RingLoader
+          color="hsla(168, 67%, 53%, 1)"
+          size={200}
+          speedMultiplier={1}
+        />
+      </div>
+    );
+  }
 
   if (data) {
     stepsDetail = data?.Recipe_Information.analyzedInstructions;
