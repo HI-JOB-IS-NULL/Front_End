@@ -21,8 +21,6 @@ export default function ShopIngredients() {
   const [items, setItems] = useState([]);
   const [snack, setSnack] = useState([]);
   const [frozen, setFrozen] = useState([]);
-  const [cart, setCart] = useState([]);
-  const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
 
   useEffect(() => {
     axios({
@@ -69,32 +67,6 @@ export default function ShopIngredients() {
     });
   }, []);
 
-  useEffect(() => {
-    axios({
-      method: "GET",
-      url: `${ServerIP}/cart`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }).then(
-      function (res) {
-        console.log("sd");
-        if (res.status === 200) {
-          console.log(res.data);
-          let temp = res.data;
-          for (let i = 0; i < temp.length; i++) {
-            cart.push(temp[i].productNm);
-          }
-        } else if (res.status === 403) {
-          alert("잘못된 접근입니다");
-        } else {
-          new Error(res);
-        }
-      },
-      [cart]
-    );
-  }, []);
-  console.log(cart);
   const [value, setValue] = useState("1");
   // const [items, setItems] =r useState([]);
 
@@ -267,7 +239,7 @@ export default function ShopIngredients() {
 
   console.log(items.data);
   return (
-    <Container style={{ width: "100%", marginTop: "5%" }}>
+    <Container style={{ width: "100%", marginTop: "120px" }}>
       <img
         style={{ objectFit: "cover", height: "400px", width: "1920px" }}
         src={bg_1}
@@ -325,24 +297,12 @@ export default function ShopIngredients() {
               {dairy.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem
-                      cart={
-                        cart.some((id) => {
-                          console.log(id);
-                          console.log(item.product_name);
-                          return id === item.product_name;
-                        })
-                          ? true
-                          : false
-                      }
-                      items={dairy[i]}
-                    />
+                    <CardItem items={dairy[i]} />
                   </Product>
                 );
               })}
             </div>
           </TabPanel>
-
           <TabPanel value="2">
             <div
               style={{
@@ -376,18 +336,7 @@ export default function ShopIngredients() {
               {vegetables.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem
-                      cart={
-                        cart.some((id) => {
-                          console.log(id);
-                          console.log(item.product_name);
-                          return id === item.product_name;
-                        })
-                          ? true
-                          : false
-                      }
-                      items={vegetables[i]}
-                    />
+                    <CardItem items={vegetables[i]} />
                   </Product>
                 );
               })}
@@ -426,18 +375,7 @@ export default function ShopIngredients() {
               {meat.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem
-                      cart={
-                        cart.some((id) => {
-                          console.log(id);
-                          console.log(item.product_name);
-                          return id === item.product_name;
-                        })
-                          ? true
-                          : false
-                      }
-                      items={meat[i]}
-                    />
+                    <CardItem items={meat[i]} />
                   </Product>
                 );
               })}
@@ -476,18 +414,7 @@ export default function ShopIngredients() {
               {frozen.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem
-                      cart={
-                        cart.some((id) => {
-                          console.log(id);
-                          console.log(item.product_name);
-                          return id === item.product_name;
-                        })
-                          ? true
-                          : false
-                      }
-                      items={frozen[i]}
-                    />
+                    <CardItem items={frozen[i]} />
                   </Product>
                 );
               })}
@@ -526,18 +453,7 @@ export default function ShopIngredients() {
               {snack.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem
-                      cart={
-                        cart.some((id) => {
-                          console.log(id);
-                          console.log(item.product_name);
-                          return id === item.product_name;
-                        })
-                          ? true
-                          : false
-                      }
-                      items={snack[i]}
-                    />
+                    <CardItem items={snack[i]} />
                   </Product>
                 );
               })}
@@ -576,18 +492,7 @@ export default function ShopIngredients() {
               {pantry.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem
-                      cart={
-                        cart.some((id) => {
-                          console.log(id);
-                          console.log(item.product_name);
-                          return id === item.product_name;
-                        })
-                          ? true
-                          : false
-                      }
-                      items={pantry[i]}
-                    />
+                    <CardItem items={pantry[i]} />
                   </Product>
                 );
               })}
