@@ -338,5 +338,5 @@ export default function RecipeNutrition() {
 }
 
 const Container = styled.div`
-  margintop: 5%;
+  margin-top: 5%;
 `;
