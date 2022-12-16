@@ -9,6 +9,7 @@ import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
 import AdCard from "../components/AdCard";
 import bg_1 from "../../public/assets/bg_1.jpg";
+import LoginModal from "../components/LoginModal";
 
 export default function mealPlanner() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");
@@ -18,8 +19,12 @@ export default function mealPlanner() {
   const [showResult, setShowResult] = useState(false);
   const [mealPlanCount, setMealPlanCount] = useState();
   const [bookmarkList, setBookmarkList] = useState([]);
+  const [showLogin, setShowLogin] = useState(false);
   console.log(mealPlanCount);
-  if (mealPlanCount === undefined) {
+  if (showLogin && accessToken) {
+    setShowLogin(false);
+  }
+  if (mealPlanCount === undefined && accessToken) {
     console.log("in");
     axios({
       method: "get",
@@ -97,9 +102,13 @@ export default function mealPlanner() {
   };
 
   const handleClick = () => {
-    setIsAddedToPlan(true);
-    addToMealPlan();
-    window.location.reload();
+    if (accessToken) {
+      setIsAddedToPlan(true);
+      addToMealPlan();
+      window.location.reload();
+    } else {
+      setShowLogin(true);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -141,6 +150,7 @@ export default function mealPlanner() {
 
   return (
     <Container>
+      {showLogin && <LoginModal setShowLogin={setShowLogin} />}
       <img
         style={{
           objectFit: "cover",
@@ -160,7 +170,9 @@ export default function mealPlanner() {
       >
         <AdCard />
       </div>
-      {mealPlanCount === true || mealPlanCount === "onlyDay" ? (
+      {mealPlanCount === true ||
+      mealPlanCount === "onlyDay" ||
+      mealPlanCount === undefined ? (
         <div className="meal-planner-page">
           <div className="meal-planner-header">
             <div className="meal-planner-contant">
