@@ -265,7 +265,7 @@ console.log(cart)
 
   console.log(items.data);
   return (
-    <Container style={{ width: "100%", marginTop: "120px" }}>
+    <Container style={{ width: "100%", marginTop: "5%" }}>
       <img
         style={{ objectFit: "cover", height: "400px", width: "1920px" }}
         src={bg_1}

@@ -14,7 +14,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Review from "./Review";
 import AddressForm from "./AddressForm";
 import Payment from "./RequestPay";
-
+import { ServeIP } from "../IP";
 
 const steps = ['Shipping address', 'Review your order', 'Payment'];
   
@@ -36,7 +36,7 @@ function getStepContent(step) {
   export default function Checkout() {
 
     const goMypage = () =>{
-      window.location.href = '../../';
+      window.location.href = '../../mypage/3';
     }
 
     const [able, setAble] = useState(true);
