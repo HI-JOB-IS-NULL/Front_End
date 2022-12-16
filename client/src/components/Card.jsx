@@ -9,7 +9,8 @@ import "tippy.js/dist/tippy.css";
 import axios from "axios";
 import LoginModal from "./LoginModal";
 import styled from "styled-components";
-import noImage from "../assets/no_image.png";
+import { ServerIP } from "../IP";
+import noImage from "../../public/assets/no_image.png";
 export default function Card(props) {
   console.log(props.bookMark);
   const [isBooked, setIsBooked] = useState(props.bookMark);
@@ -28,7 +29,7 @@ export default function Card(props) {
     formData.append("recipe_thumbnail", props.image);
     axios({
       method: "post",
-      url: `${kServerIP}/RecipeDB/ChangeBookmark`,
+      url: `${ServerIP}/RecipeDB/ChangeBookmark`,
       data: formData,
       headers: {
         Authorization: `Bearer ${accessToken}`,

@@ -48,13 +48,13 @@ export default [
   {
     id: 10,
     name: "Tomato paste",
-    image: "tomato_paste.png",
+    image: "tomato (1).png",
   },
 
   {
     id: 11,
     name: "Tuna",
-    image: "tuna.png",
+    image: "canned-food.png",
   },
   {
     id: 12,
@@ -64,7 +64,7 @@ export default [
   {
     id: 13,
     name: "Pasta ",
-    image: "pasta.png",
+    image: "farfalle.png",
   },
   {
     id: 14,
@@ -95,7 +95,7 @@ export default [
   {
     id: 19,
     name: "Vinegars",
-    image: "vinegar.png",
+    image: "apple-cider-vinegar.png",
   },
   {
     id: 20,

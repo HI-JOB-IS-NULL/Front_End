@@ -16,7 +16,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import ImageAnalyzResult from "../components/ImageAnalyzResult";
 import Spinner from "react-bootstrap/Spinner";
 import { ServerIP } from "../IP";
-import bg_1 from "../assets/bg_1.jpg";
+import bg_1 from "../../public/assets/bg_1.jpg";
 
 export default function PantryReadyRecipes() {
   const accessToken = sessionStorage.getItem("ACCESS_TOKEN");

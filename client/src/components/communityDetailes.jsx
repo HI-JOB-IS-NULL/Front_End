@@ -10,7 +10,7 @@ import Comment from "./Comment";
 import { Carousel } from "react-responsive-carousel";
 import "antd/dist/antd.css";
 import { Button, Input, Modal } from "antd";
-import noimg from "../assets/noimage.png";
+import noimg from "../../public/assets/noimage.png";
 import { RingLoader } from "react-spinners";
 
 const { TextArea } = Input;
@@ -30,7 +30,7 @@ function communityDetailes() {
   const { csRecipeId } = useParams();
   const [info, setInfo] = useState([]);
   const [imageData, setImageData] = useState([]);
-  const noimage = "../assets/noimage.png";
+  const noimage = "../../public/assets/noimage.png";
   const [isModal, setIsModal] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [loading, setLoading] = useState(false);

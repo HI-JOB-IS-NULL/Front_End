@@ -21,7 +21,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import axios from "axios";
 import { ServerIP } from "../IP";
-import logo from "../assets/logo.png";
+import logo from "../../public/assets/logo.png";
 import RemoveShoppingCartTwoToneIcon from "@mui/icons-material/RemoveShoppingCartTwoTone";
 import LocalShippingTwoToneIcon from "@mui/icons-material/LocalShippingTwoTone";
 import { RingLoader } from "react-spinners";

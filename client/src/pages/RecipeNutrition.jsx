@@ -9,9 +9,9 @@ import { Chart } from "primereact/chart";
 import Box from "@mui/material/Box";
 import axios from "axios";
 import { ServerIP } from "../IP";
-import oil from "../assets/oil.jpg";
+import oil from "../../public/assets/oil.jpg";
 import styled from "styled-components";
-import bg_1 from "../assets/bg_1.jpg";
+import bg_1 from "../../public/assets/bg_1.jpg";
 
 export default function RecipeNutrition() {
   const [totalSize, setTotalSize] = useState(0);
@@ -338,5 +338,5 @@ export default function RecipeNutrition() {
 }
 
 const Container = styled.div`
-  margintop: 5%;
+  margin-top: 5%;
 `;

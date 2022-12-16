@@ -10,8 +10,8 @@ import { Alert, Button, Select } from "antd";
 import { ShoppingCartOutlined, HeartOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import Shopcss from "../css/Shop.css";
-import { ServerIP, ServeIP } from "../IP";
-import bg_1 from "../assets/bg_1.jpg";
+import { ServerIP } from "../IP";
+import bg_1 from "../../public/assets/bg_1.jpg";
 
 export default function ShopIngredients() {
   const [vegetables, setVegetables] = useState([]);
@@ -21,8 +21,6 @@ export default function ShopIngredients() {
   const [items, setItems] = useState([]);
   const [snack, setSnack] = useState([]);
   const [frozen, setFrozen] = useState([]);
-  const [cart, setCart] = useState([]);
-  const accessToken = sessionStorage.getItem('ACCESS_TOKEN')
 
   useEffect(() => {
     axios({
@@ -68,31 +66,7 @@ export default function ShopIngredients() {
       );
     });
   }, []);
- 
-  useEffect(()=>{
-    axios({
-      method: 'GET',
-      url: `${ServeIP}/cart`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }).then(function (res) {
-      console.log("sd");
-      if (res.status === 200) {
-        console.log(res.data);
-        let temp = res.data;
-        for(let i=0; i<temp.length; i++){
-          cart.push(temp[i].productNm)
-        }
-      } else if (res.status === 403) {
-        alert("잘못된 접근입니다");
-      } else {
-        new Error(res);
-      }
-    },[cart]);
-    
-  },[])
-console.log(cart)
+
   const [value, setValue] = useState("1");
   // const [items, setItems] =r useState([]);
 
@@ -265,7 +239,7 @@ console.log(cart)
 
   console.log(items.data);
   return (
-    <Container style={{ width: "100%", marginTop: "5%" }}>
+    <Container style={{ width: "100%", marginTop: "120px" }}>
       <img
         style={{ objectFit: "cover", height: "400px", width: "1920px" }}
         src={bg_1}
@@ -293,36 +267,42 @@ console.log(cart)
             </TabList>
           </Box>
 
-          <TabPanel value="1" style={{ textAlign: "center", justifyContent: "center" }}>
-            <div style={{ display: "flex", justifyContent: "center", gap: "40px" }}>
+          <TabPanel
+            value="1"
+            style={{ textAlign: "center", justifyContent: "center" }}
+          >
+            <div
+              style={{ display: "flex", justifyContent: "center", gap: "40px" }}
+            >
               <h4>Dairy & Eggs</h4>
               <Select
                 onChange={VeSort}
                 style={{ width: "10vw" }}
                 placeholder="Sort"
               >
-              <option value="ao">ascending order</option>
-              <option value="do">descending order</option>
-              <option value="al">alphabetically</option>
-            </Select>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 30, justifyContent:'center', marginTop:'2%'}}>
-            {dairy.map((item, i) => {
-              return (
-                <Product>
-                  <CardItem cart={cart.some((id) =>{
-                    console.log(id)
-                    console.log(item.product_name)
-                    return id === item.product_name                    ;
-                  })
-                  ? true : false
-                  } items={dairy[i]} />
-                </Product>
-              );
-            })}
-          </div>
-        </TabPanel>
-        
+                <option value="ao">ascending order</option>
+                <option value="do">descending order</option>
+                <option value="al">alphabetically</option>
+              </Select>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 30,
+                justifyContent: "center",
+                marginTop: "2%",
+              }}
+            >
+              {dairy.map((item, i) => {
+                return (
+                  <Product>
+                    <CardItem items={dairy[i]} />
+                  </Product>
+                );
+              })}
+            </div>
+          </TabPanel>
           <TabPanel value="2">
             <div
               style={{
@@ -356,13 +336,7 @@ console.log(cart)
               {vegetables.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem cart={cart.some((id) =>{
-                    console.log(id)
-                    console.log(item.product_name)
-                    return id === item.product_name                    ;
-                  })
-                  ? true : false
-                  }  items={vegetables[i]} />
+                    <CardItem items={vegetables[i]} />
                   </Product>
                 );
               })}
@@ -401,13 +375,7 @@ console.log(cart)
               {meat.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem cart={cart.some((id) =>{
-                    console.log(id)
-                    console.log(item.product_name)
-                    return id === item.product_name                    ;
-                  })
-                  ? true : false
-                  }  items={meat[i]} />
+                    <CardItem items={meat[i]} />
                   </Product>
                 );
               })}
@@ -446,13 +414,7 @@ console.log(cart)
               {frozen.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem cart={cart.some((id) =>{
-                    console.log(id)
-                    console.log(item.product_name)
-                    return id === item.product_name                    ;
-                  })
-                  ? true : false
-                  }  items={frozen[i]} />
+                    <CardItem items={frozen[i]} />
                   </Product>
                 );
               })}
@@ -491,13 +453,7 @@ console.log(cart)
               {snack.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem cart={cart.some((id) =>{
-                    console.log(id)
-                    console.log(item.product_name)
-                    return id === item.product_name                    ;
-                  })
-                  ? true : false
-                  }  items={snack[i]} />
+                    <CardItem items={snack[i]} />
                   </Product>
                 );
               })}
@@ -536,13 +492,7 @@ console.log(cart)
               {pantry.map((item, i) => {
                 return (
                   <Product>
-                    <CardItem cart={cart.some((id) =>{
-                    console.log(id)
-                    console.log(item.product_name)
-                    return id === item.product_name                    ;
-                  })
-                  ? true : false
-                  }  items={pantry[i]} />
+                    <CardItem items={pantry[i]} />
                   </Product>
                 );
               })}

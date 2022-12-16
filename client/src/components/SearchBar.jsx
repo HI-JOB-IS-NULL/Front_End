@@ -3,6 +3,7 @@ import styled from "styled-components";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import RecipeQueryData from "../RecipeQueryData";
 import { useNavigate } from "react-router-dom";
+import { SuggestionInput, Suggestion } from "../components/InputSuggestion";
 export default function SearchBar(props) {
   const { placeholder, setNavigate, inputData } = props;
   const [isFocused, setIsFocused] = useState(false);
@@ -51,35 +52,68 @@ export default function SearchBar(props) {
           </div>
         </div>
         {isFocused && (
-          <div
-            className="input-suggestion"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {suggestions.map((suggestion, index) => {
-              const isMatch =
-                suggestion
-                  .toLocaleLowerCase()
-                  .indexOf(inputValue.toLocaleLowerCase()) > -1;
-              return (
-                <div key={index}>
-                  {isMatch && (
-                    <div
-                      className="suggestion"
-                      onClick={() => {
-                        setNavigate
-                          ? navigateToSearchRecipe(suggestion)
-                          : setInputValue(suggestion);
-                        () => props.changeQuery(inputValue);
-                      }}
-                    >
-                      {suggestion}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <SuggestionInput top={props.top} left={props.left}>
+            <div
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {suggestions.map((suggestion, index) => {
+                const isMatch =
+                  suggestion
+                    .toLocaleLowerCase()
+                    .indexOf(inputValue.toLocaleLowerCase()) > -1;
+                return (
+                  <div key={index}>
+                    {isMatch && (
+                      <Suggestion>
+                        <div
+                          className="suggestion"
+                          onClick={() => {
+                            setNavigate
+                              ? navigateToSearchRecipe(suggestion)
+                              : setInputValue(suggestion);
+                            () => props.changeQuery(inputValue);
+                          }}
+                        >
+                          {suggestion}
+                        </div>
+                      </Suggestion>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </SuggestionInput>
+
+          // <div
+          //   className="input-suggestion"
+          //   onMouseEnter={() => setIsHovered(true)}
+          //   onMouseLeave={() => setIsHovered(false)}
+          // >
+          //   {suggestions.map((suggestion, index) => {
+          //     const isMatch =
+          //       suggestion
+          //         .toLocaleLowerCase()
+          //         .indexOf(inputValue.toLocaleLowerCase()) > -1;
+          //     return (
+          //       <div key={index}>
+          //         {isMatch && (
+          //           <div
+          //             className="suggestion"
+          //             onClick={() => {
+          //               setNavigate
+          //                 ? navigateToSearchRecipe(suggestion)
+          //                 : setInputValue(suggestion);
+          //               () => props.changeQuery(inputValue);
+          //             }}
+          //           >
+          //             {suggestion}
+          //           </div>
+          //         )}
+          //       </div>
+          //     );
+          //   })}
+          // </div>
         )}
       </div>
     </Container>
@@ -111,10 +145,10 @@ const Container = styled.div`
         padding-left: 15px;
       }
     }
-    .input-suggestion {
+    /* .input-suggestion {
       box-shadow: 0 0 14px rgb(0 0 0 / 8%);
       position: absolute;
-      top: 100px;
+      top: 45px;
       left: 10px;
       max-height: 150px;
       overflow-y: auto;
@@ -128,6 +162,6 @@ const Container = styled.div`
           background-color: #f2f3f4;
         }
       }
-    }
+    } */
   }
 `;

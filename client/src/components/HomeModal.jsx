@@ -13,6 +13,9 @@ export default function HomeModal({ setModal }) {
               placeholder="Search Recipes"
               setNavigate={true}
               inputData={""}
+              color={"blue"}
+              top={"45px"}
+              left={"10px"}
             />
           </div>
           <div className="recent-searches">

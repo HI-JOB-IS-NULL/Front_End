@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import IngredientsData from "../IngredientsData";
 import styled from "styled-components";
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-
 export default function SuggestionsInput(props) {
   const suggestions = IngredientsData.map((item) => item.name);
   const [isFocused, setIsFocused] = useState(false);
@@ -94,6 +93,8 @@ const Container = styled.div`
       background: white;
       position: absolute;
       top: 50px;
+      left: 10px;
+      width: 280px;
 
       .suggestion {
         display: flex;

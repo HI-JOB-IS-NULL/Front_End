@@ -7,7 +7,7 @@ import { Form, Input, Button, Select, Upload, Spin } from "antd";
 import axios from "axios";
 import Item from "antd/lib/list/Item";
 import { ServerIP } from "../IP";
-import bg_1 from "../assets/bg_1.jpg";
+import bg_1 from "../../public/assets/bg_1.jpg";
 const { TextArea } = Input;
 
 const WriteRecipe = () => {
@@ -84,7 +84,7 @@ const WriteRecipe = () => {
       formData.append("uploadFiles", item.originFileObj);
     });
 
-    console.log(formData.get("uploadFiles"))
+    console.log(formData.get("uploadFiles"));
     axios({
       method: "POST",
       // url: `${ServerIP}/CustomRecipe/register`,

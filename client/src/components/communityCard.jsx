@@ -5,7 +5,7 @@ import styled from "styled-components";
 import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
 import axios from "axios";
-import noimage from "../assets/noimage.png";
+import noimage from "../../public/assets/noimage.png";
 
 function communityCard(props) {
   // community데이터 받아오
