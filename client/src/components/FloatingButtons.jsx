@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-
+// import image from "../../public/assets/rice.png";
 export function FloatingButtonWithImage(props) {
   return (
     <Container>
@@ -9,7 +9,7 @@ export function FloatingButtonWithImage(props) {
         <div className="ingredient-content">
           {props.image && (
             <img
-              src={`../../public/assets/ingredients/${props.image}`}
+              src={`https://mkc-automeal-s3.s3.ap-northeast-2.amazonaws.com/2022/ingredientsImg/${props.image}`}
               className="ingredient-image"
             />
           )}
