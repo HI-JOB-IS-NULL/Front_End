@@ -138,7 +138,7 @@ const Container = styled.div`
     .tags-input {
       display: flex;
       flex-direction: column;
-      position: relative;
+      /* position: relative; */
       .suggestion-input {
         border: none;
         outline: none;
@@ -157,7 +157,9 @@ const Container = styled.div`
         background: white;
         position: absolute;
         top: 50px;
-        left: -10px;
+        left: 1px;
+        /* top: 50px;
+        left: -10px; */
 
         .suggestion {
           display: flex;

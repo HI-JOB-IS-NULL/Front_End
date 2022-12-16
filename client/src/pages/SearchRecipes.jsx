@@ -184,6 +184,8 @@ export default function SearchRecipes() {
             setNavigate={false}
             inputData={query}
             changeQuery={(query) => setQuery(query)}
+            top={"175px"}
+            left={"300px"}
           />
         </div>
         <div className="filter">
