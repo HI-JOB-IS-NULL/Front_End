@@ -7,7 +7,7 @@ import { Form, Input, Button, Select, Upload, Spin } from "antd";
 import axios from "axios";
 import Item from "antd/lib/list/Item";
 import { ServerIP } from "../IP";
-
+import bg_1 from "../assets/bg_1.jpg";
 const { TextArea } = Input;
 
 const WriteRecipe = () => {
@@ -66,7 +66,7 @@ const WriteRecipe = () => {
   const onsubmit = (e) => {
     const temp = [...recipeExplan].join("");
     text.push(temp);
-    console.log(text);
+    console.log(Image);
 
     e.preventDefault();
     const formData = new FormData();
@@ -83,19 +83,21 @@ const WriteRecipe = () => {
     Image.forEach((item) => {
       formData.append("uploadFiles", item.originFileObj);
     });
+
+    console.log(formData.get("uploadFiles"))
     axios({
       method: "POST",
       // url: `${ServerIP}/CustomRecipe/register`,
       url: `${ServerIP}/CustomRecipe/register`,
       data: formData,
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "multipart/form-data",
       },
     });
-    if (formData != null) {
-      window.location.href = "/community";
-    }
+    // if (formData != null) {
+    //   window.location.href = "/community";
+    // }
   };
 
   return (

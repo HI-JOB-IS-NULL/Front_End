@@ -79,7 +79,7 @@ export default function CartCheckout() {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    window.location.href = "../../";
+    window.location.href = '../../mypage/3';
   };
 
   const [able, setAble] = useState(true);

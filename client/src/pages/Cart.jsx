@@ -252,12 +252,12 @@ export default function Cart() {
                         <strong>{items.productNm}</strong>
                       </p>
 
-                      <MDBBtn
+                      <Button
                         onClick={(e) => deleteItem(items, e)}
-                        style={{ backgroundColor: "red" }}
+                        style={{ backgroundColor: "red", borderRadius:'12%', border:'blue'}}
                       >
-                        <RemoveShoppingCartTwoToneIcon />
-                      </MDBBtn>
+                        <RemoveShoppingCartTwoToneIcon style={{color:'white'}} />
+                      </Button>
                     </MDBCol>
                     <MDBCol lg="4" md="6" className="mb-4 mb-lg-0">
                       <div
@@ -294,7 +294,7 @@ export default function Cart() {
             </MDBCardBody>
           </MDBCard>
 
-          <MDBCard className="mb-5 mb-lg-1" style={{ width: "250px", height:'100px' }}>
+          <MDBCard className="mb-5 mb-lg-1" style={{ width: "250px" }}>
             <MDBCardBody style={{ width: "250px" }}>
               <p>
                 <strong>We accept</strong>
